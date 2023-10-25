@@ -12,12 +12,32 @@
 
 #ifndef FDF_H
 # define FDF_H
-# include "mlx.h"
+# include <mlx.h>
+# include <X11/keysym.h>
 # include "libft.h"
 # include "get_next_line_bonus.h"
 # include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
+
+typedef struct	s_image
+{
+	void	*image_ptr;
+	char	*image_pixel_ptr;
+	int	bit_per_pixel;
+	int	endian;
+	int	line_len;
+}	t_image;
+
+typedef struct	s_mlx_data
+{
+	void	*mlx_ptr;
+	void	*window_ptr;
+	t_image	image;
+}	t_mlx_data;
 
 void	ft_putchar(char c);
-int	deal_key(int key, void *param);
+void    color_screen(t_mlx_data *data, int color);
+int	deal_key(int key, t_mlx_data *data);
 
 #endif

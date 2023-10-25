@@ -14,7 +14,9 @@ SRC =	main.c \
 
 CC =	gcc
 
-CFLAGS = -Wall -Werror -Wextra -lmlx 
+CFLAGS = -Wall -Werror -Wextra 
+
+MLXFLAGS = -lX11 -lXext
 
 OBJ =	$(SRC:.c=.o)
 
@@ -42,7 +44,7 @@ $(NAME): $(OBJ)
 	make -C minilibx-linux
 	cp $(INCLUDELIBFT)$(NAMELIBFT) .
 	cp $(INCLUDEMLX)$(NAMEMLX) .
-	$(CC) $(CFLAGS) $(OBJ) -I $(INCLUDELIBFT) $(NAMELIBFT) -I $(INCLUDEMLX) $(NAMEMLX) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(NAMELIBFT) $(NAMEMLX) $(MLXFLAGS) -o $(NAME)
 
 clean:
 	make clean -C libft
