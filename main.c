@@ -6,7 +6,7 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 03:00:31 by laroges           #+#    #+#             */
-/*   Updated: 2023/10/24 05:15:23 by laroges          ###   ########.fr       */
+/*   Updated: 2023/10/26 21:43:45 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,18 @@ int	main(int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
+//	t_parsing	*list;
+	t_map		*map;
 	t_mlx_data	data;
 
+//	list = NULL;
+	map = malloc(sizeof(t_map));
+	if (map == NULL)
+		return (-1);
+	map->size_x = 0;
+	map->size_y = 0;
+	map->x = 0;
+	map->y = 0;
 	data.mlx_ptr = mlx_init();
 	if (data.mlx_ptr == NULL)
 		return (-1);
