@@ -11,6 +11,11 @@
 # **************************************************************************** #
 
 SRC =	main.c \
+	display.c \
+	linked_list.c \
+	parsing_map.c \
+	values.c \
+	events.c \
 
 CC =	gcc
 
@@ -26,7 +31,7 @@ NAMELIBFT =	libft.a
 
 NAMEMLX =	libmlx_Linux.a
 
-NAMEGNL =	get_next_line
+NAMEGNL =	get_next_line.a
 
 INCLUDELIBFT =	./libft/
 
@@ -42,9 +47,11 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	make -C libft
 	make -C minilibx-linux
+	make -C getnextline
 	cp $(INCLUDELIBFT)$(NAMELIBFT) .
 	cp $(INCLUDEMLX)$(NAMEMLX) .
-	$(CC) $(CFLAGS) $(OBJ) $(NAMELIBFT) $(NAMEMLX) $(MLXFLAGS) -o $(NAME)
+	cp $(INCLUDEGNL)$(NAMEGNL) .
+	$(CC) $(CFLAGS) $(OBJ) -I $(INCLUDELIBFT) $(NAMELIBFT) -I $(INCLUDEGNL) $(NAMEGNL) $(NAMEMLX) $(MLXFLAGS) -o $(NAME)
 
 clean:
 	make clean -C libft

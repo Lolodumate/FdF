@@ -36,11 +36,20 @@ void	color_screen(t_mlx_data *data, int color)
 int	deal_key(int key, t_mlx_data *data)
 {
 	if (key == XK_r)
+	{
 		color_screen(data, 0xff0000);
+		ft_putchar('r');
+	}
 	else if (key == XK_g)
+	{
 		color_screen(data, 0xff00);
+		ft_putchar('g');
+	}
 	else if (key == XK_b)
+	{
 		color_screen(data, 0xff);
+		ft_putchar('b');
+	}
 	else if (key == XK_Escape)
 	{
 		write(1, "Escape\n", 7);
@@ -56,13 +65,13 @@ int	deal_key(int key, t_mlx_data *data)
 
 int	main(int argc, char **argv)
 {
-	(void)argc;
+//	(void)argc;
 	(void)argv;
-//	t_parsing	*list;
+	t_parsing	*list;
 	t_map		*map;
 	t_mlx_data	data;
 
-//	list = NULL;
+	list = NULL;
 	map = malloc(sizeof(t_map));
 	if (map == NULL)
 		return (-1);
@@ -70,6 +79,15 @@ int	main(int argc, char **argv)
 	map->size_y = 0;
 	map->x = 0;
 	map->y = 0;
+	if (argc == 2)
+	{
+		printf("\nMarqueur main condition argc == 2\n");
+		list = pm_read_map(argv, map, list);
+		map = pm_insert_int_values(list, map);	
+	//	display_fdf_file(map);
+	}
+	else
+		printf("Le nombre d'arguments doit etre de deux.\n");
 	data.mlx_ptr = mlx_init();
 	if (data.mlx_ptr == NULL)
 		return (-1);
@@ -84,11 +102,15 @@ int	main(int argc, char **argv)
 	data.image.image_pixel_ptr = mlx_get_data_addr(data.image.image_ptr, &data.image.bit_per_pixel, &data.image.line_len, &data.image.endian);
 	printf("Line_len %d <-> SIDE_LEN %d\nbpp %d\nendian %d\n", data.image.line_len, 500, data.image.bit_per_pixel, data.image.endian);
 	mlx_key_hook(data.window_ptr, deal_key, &data);
-//	mlx_pixel_put(mlx_ptr, window_ptr, int x, int y, int color); // (x, y) = Coordonnees du pixel
+
+	
+	//	mlx_pixel_put(mlx_ptr, window_ptr, int x, int y, int color); // (x, y) = Coordonnees du pixel
+
 	mlx_loop(data.mlx_ptr);
 	mlx_destroy_window(data.mlx_ptr, data.window_ptr);
 	mlx_destroy_display(data.mlx_ptr);
 	free(data.mlx_ptr);
 	free(data.window_ptr);
+	display_int_array(map);
 	return (0);
 }
