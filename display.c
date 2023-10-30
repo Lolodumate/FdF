@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   display.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/30 14:51:39 by laroges           #+#    #+#             */
+/*   Updated: 2023/10/30 19:53:34 by laroges          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 void	display_fdf_file(t_map *map)
@@ -10,7 +22,7 @@ void	display_fdf_file(t_map *map)
 	{
 		while (map->x++ < map->size_x)
 		{
-			printf("[%d] ", map->tab_map[map->y][map->x]);
+			printf("[%d]", map->tab_map[map->y][map->x]);
 		}
 		map->x = 0;
 		printf("\n");

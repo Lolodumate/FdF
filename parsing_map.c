@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_map->c                                      :+:      :+:    :+:   */
+/*   parsing_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 14:48:05 by laroges           #+#    #+#             */
-/*   Updated: 2023/10/26 21:31:58 by laroges          ###   ########.fr       */
+/*   Updated: 2023/10/30 20:34:59 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-// Calculate the x size
+// Calculate the x size of the map
 int	pm_size_map(char *line_map, t_map *map)
 {
 	int		i;
@@ -65,7 +65,6 @@ t_parsing	*pm_parsing(t_parsing *list, t_map *map, char *line)
 				i++;
 			       	k++;
 			}
-			list->parsing_line[j][k] = '\0';
 		}
 		j++;
 		k = 0;
@@ -108,24 +107,17 @@ t_parsing	*pm_read_map(char **argv, t_map *map, t_parsing *list)
 // Create the two dimensions int tab size (called in read_map->function)
 t_map *pm_create_tab_map(t_map *map)
 {
-	int		i;
 	int		j;
 	
-	i = 0;
 	j = 0;
-	map->tab_map[100] = malloc(sizeof(int *) * map->size_y);
-	if (map->tab_map[100] == NULL)
+	map->tab_map[1000] = malloc(sizeof(int *) * map->size_y);
+	if (map->tab_map[1000] == NULL)
 		return (NULL);
 	while (j < map->size_y)
 	{
-		while (i < map->size_x)
-		{
-			map->tab_map[j] = malloc(sizeof(int) * map->size_x);
-			if (map->tab_map[j] == NULL)
-				return (NULL);
-			i++;
-		}
-		i = 0;
+		map->tab_map[j] = malloc(sizeof(int) * map->size_x);
+		if (map->tab_map[j] == NULL)
+			return (NULL);
 		j++;
 	}
 	return (map);

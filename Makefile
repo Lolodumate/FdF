@@ -6,7 +6,7 @@
 #    By: laroges <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 01:52:45 by laroges           #+#    #+#              #
-#    Updated: 2023/10/24 06:00:50 by laroges          ###   ########.fr        #
+#    Updated: 2023/10/30 18:55:54 by laroges          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,10 +16,11 @@ SRC =	main.c \
 	parsing_map.c \
 	values.c \
 	events.c \
+	drawing.c \
 
 CC =	gcc
 
-CFLAGS = -Wall -Werror -Wextra 
+CFLAGS = -Wall -Werror -Wextra -lm
 
 MLXFLAGS = -lX11 -lXext
 

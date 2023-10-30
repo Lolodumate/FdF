@@ -6,7 +6,7 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 20:02:14 by laroges           #+#    #+#             */
-/*   Updated: 2023/10/26 20:29:40 by laroges          ###   ########.fr       */
+/*   Updated: 2023/10/30 20:33:35 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_parsing	*clear_node(t_parsing *list)
 	if (list == NULL)
 		return (NULL);
 	node = list->next;
+	free(list->parsing_line);
 	free(list);
 	return (node);
 }
@@ -57,4 +58,17 @@ void	display_linked_list(t_parsing *list)
 		i = 0;
 		j++;
 	}
+}
+
+void	free_tab_int_map(t_map *map)
+{
+	int		j;
+
+	j = 0;
+	while (j < map->size_y)
+	{
+		free(map->tab_map[j]);
+		j++;
+	}
+	free(map->tab_map[1000]);
 }

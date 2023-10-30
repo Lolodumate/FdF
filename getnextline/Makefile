@@ -6,12 +6,12 @@
 #    By: laroges <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 03:47:58 by laroges           #+#    #+#              #
-#    Updated: 2023/10/24 05:51:40 by laroges          ###   ########.fr        #
+#    Updated: 2023/10/30 14:39:19 by laroges          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC =	get_next_line_bonus.c \
-	get_next_line_utils_bonus.c \
+SRC =	get_next_line.c \
+	get_next_line_utils.c \
 
 CC =	gcc
 
@@ -19,15 +19,16 @@ CFLAGS = -Wall -Werror -Wextra
 
 OBJ =	$(SRC:.c=.o)
 
-NAMEGNL = get_next_line
+NAMEGNL = get_next_line.a
 
-INCLUDEGNL = ./getnextline/
+all: $(NAMEGNL)
 
-%.o: %.c get_next_line_bonus.h
-	$(CC) $(CFLAGS) -I $(INCLUDEGNL) -c $< -o $(<:.c=.o)
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
 $(NAMEGNL): $(OBJ)
-	$(CC) $(CFLAGS) -o $(NAMEGNL)
+	ar rc $(NAMEGNL) $(OBJ)
+	ranlib $(NAMEGNL)
 
 clean:
 	rm -f $(OBJ) $(NAMEGNL)
