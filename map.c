@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   values.c                                           :+:      :+:    :+:   */
+/*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/26 17:13:24 by laroges           #+#    #+#             */
-/*   Updated: 2023/11/02 17:07:19 by laroges          ###   ########.fr       */
+/*   Created: 2023/11/02 16:23:26 by laroges           #+#    #+#             */
+/*   Updated: 2023/11/02 22:35:49 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	values_len_value(char *line, int i)
+t_map	*map_init(t_map *map)
 {
-	int		len;
-
-	len = 0;
-	if (line == NULL)
-		return (-1);
-	if (line[i] == '-')
+	map = malloc(sizeof(t_map));
+	if (map == NULL)
 	{
-		len++;
-		i++;
+		printf("Erreur allocation dynamique\n");
+		return (NULL);
 	}
-	while (line[i] && ft_isdigit(line[i]))
-	{
-		len++;
-		i++;
-	}
-	return (len);
+	map->scale = 20;
+	map->size_x = 0;
+	map->size_y = 0;
+	map->x = 0;
+	map->y = 0;
+	map->position_x = 300;
+	map->position_y = 300;
+	map->rotation = 0;
+	map->tab_map[1000] = NULL;
+	return (map);
 }

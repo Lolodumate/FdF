@@ -6,12 +6,12 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:19:00 by laroges           #+#    #+#             */
-/*   Updated: 2023/10/30 19:18:26 by laroges          ###   ########.fr       */
+/*   Updated: 2023/11/02 19:46:20 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
+/*
 void	drawing_points(t_mlx_data data, t_map *map)
 {
 	int		i;
@@ -30,7 +30,7 @@ void	drawing_points(t_mlx_data data, t_map *map)
 		j++;
 	}
 }
-
+*/
 // Equation of a line : y = ax + b
 void	drawing_line(t_mlx_data data, t_line *line)
 {
@@ -38,37 +38,63 @@ void	drawing_line(t_mlx_data data, t_line *line)
 	float	y;
 
 	x = line->x1;
-	y = 0;
+	y = line->y1;
 	line->dx = line->x2 - line->x1;
 	line->dy = line->y2 - line->y1;
 	line->a = line->dy / line->dx;
 	line->b = line->y1 - (line->a * line->x1);
-	while (x <= line->x2)
+	if (x < line->x2)
 	{
-		y = (line->a * x) + line->b;	
-		mlx_pixel_put(data.mlx_ptr, data.window_ptr, x, y, 0xffffff);
-		x++;
+		while (x <= line->x2)
+		{
+			y = (line->a * x) + line->b;	
+			mlx_pixel_put(data.mlx_ptr, data.window_ptr, x, y, 0xffffff);
+			x++;
+		}
+	}
+	else if (x > line->x2)
+	{
+		while (x >= line->x2)
+		{
+			y = (line->a * x) + line->b;
+			mlx_pixel_put(data.mlx_ptr, data.window_ptr, x, y, 0xffffff);
+			x--;
+		}
+	}
+	else if (x == line->x2)
+	{
+		while (y >= line->y2)
+		{
+			mlx_pixel_put(data.mlx_ptr, data.window_ptr, x, y, 0xffffff);
+			y--;
+		}	
 	}
 }
 
-void	drawing_web(t_mlx_data data, t_map *map, t_line *line)
+/* La variable rotation (dans t_map) permet d'incliner la carte.
+ * Par convention un inclinaison de 30 degres implique une reduction de la taille des segments auxquels il faut appliquer un coefficient de 0.82.
+ * Par ailleurs, une inclinaison de 30 degres d'un carre ou rectangle implique que, du fait de la perspective isometrique, l'angle rectangle s'elargisse a 120 degres. Nous avons donc trois angles de 30, 120 et 30 degres.
+ * */
+void	drawing_web(t_mlx_data data, t_map *map, t_line *web)
 {
 	int		i;
 
 	i = 0;
+	web = line_set_web_y(web, map);
 	while (i < map->size_y)
 	{
-		drawing_line(data, line);
-		line->y1 -= map->scale;
-		line->y2 -= map->scale;
+		drawing_line(data, web);
+		web->y1 -= map->scale;
+		web->y2 -= map->scale;
 		i++;
 	}
 	i = 0;
+	web = line_set_web_x(web, map);
 	while (i < map->size_x)
 	{
-		drawing_line(data, line);
-		line->x1 += map->scale;
-		line->x2 += map->scale;
+		drawing_line(data, web);
+		web->x1 += map->scale;
+		web->x2 += map->scale;
 		i++;
 	}
 }

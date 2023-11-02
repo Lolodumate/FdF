@@ -6,7 +6,7 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 14:48:05 by laroges           #+#    #+#             */
-/*   Updated: 2023/10/30 20:34:59 by laroges          ###   ########.fr       */
+/*   Updated: 2023/11/02 16:21:48 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ t_map *pm_insert_int_values(t_parsing *list, t_map *map)
 			free(value);
 			map->x++;
 		}
-		printf("\n");
+//		printf("\n");
 		map->y--;
 		map->x = 0;
 		list = clear_node(list);

@@ -6,7 +6,7 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 03:00:31 by laroges           #+#    #+#             */
-/*   Updated: 2023/10/30 20:36:13 by laroges          ###   ########.fr       */
+/*   Updated: 2023/11/02 22:38:44 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,6 @@ int	deal_key(int key, t_mlx_data *data)
 		color_screen(data, 0xff);
 		ft_putchar('b');
 	}
-	else if (key == XK_p)
-	{
-//		color_screen(data, 0x000000);
-		put_pixel(data, 0xffffff);
-		ft_putchar('p');
-	}
 	else if (key == XK_Escape)
 	{
 		write(1, "Escape\n", 7);
@@ -97,50 +91,42 @@ int	main(int argc, char **argv)
 	t_mlx_data	data;
 
 	list = NULL;
-	map = malloc(sizeof(t_map));
-	if (map == NULL)
-		return (-1);
-	map->scale = 50;
-	map->size_x = 0;
-	map->size_y = 0;
-	map->x = 0;
-	map->y = 0;
+	map = NULL;
+	line = NULL;
 	if (argc != 2)
 	{
 		printf("Le nombre d'arguments doit etre de deux.\n");
 		return (0);
 	}
+	line = line_init(line);
+	map = map_init(map);
 	list = pm_read_map(argv, map, list);
+	if (list == NULL)
+		return (-1);
 	map = pm_insert_int_values(list, map);
-	line = drawing_init_line(map);
-//	display_fdf_file(map);
+	display_map(map);
 	data.mlx_ptr = mlx_init();
 	if (data.mlx_ptr == NULL)
 		return (-1);
-	data.window_ptr = mlx_new_window(data.mlx_ptr, 1920, 1080, "mlx_42");
+	data.window_ptr = mlx_new_window(data.mlx_ptr, 860, 480, "mlx_42");
 	if (data.window_ptr == NULL)
 	{
 		mlx_destroy_display(data.mlx_ptr);
 		free(data.mlx_ptr);
 		return (-1);
 	}
-	data.image.image_ptr = mlx_new_image(data.mlx_ptr, 1920, 1080);
+	data.image.image_ptr = mlx_new_image(data.mlx_ptr, 860, 480);
 	data.image.image_pixel_ptr = mlx_get_data_addr(data.image.image_ptr, &data.image.bit_per_pixel, &data.image.line_len, &data.image.endian);
 	printf("Line_len %d <-> SIDE_LEN %d\nbpp %d\nendian %d\n", data.image.line_len, 500, data.image.bit_per_pixel, data.image.endian);
 	mlx_key_hook(data.window_ptr, deal_key, &data);
 
-	drawing_points(data, map);
-	drawing_web(data, map, line);
-	//	mlx_pixel_put(mlx_ptr, window_ptr, int x, int y, int color); // (x, y) = Coordonnees du pixel
+//	drawing_web(data, map, line);
+	//printf("Valeur de map->position_x = %d\nValeur de map->position_y = %d\n", map->position_x,     map->position_y);
+
+	line_draw_map_tab_int_y(data, line, map);
+	line_draw_map_tab_int_x(data, line, map);
 
 	mlx_loop(data.mlx_ptr);
-	mlx_destroy_window(data.mlx_ptr, data.window_ptr);
-	mlx_destroy_display(data.mlx_ptr);
-	free(data.mlx_ptr);
-	free(data.window_ptr);
-	free(line);
-	display_int_array(map);
-	free_tab_int_map(map);
-	free(map);
+	clean_memory(&data, line, map);
 	return (0);
 }

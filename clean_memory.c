@@ -1,33 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   values.c                                           :+:      :+:    :+:   */
+/*   clean_memory.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/26 17:13:24 by laroges           #+#    #+#             */
-/*   Updated: 2023/11/02 17:07:19 by laroges          ###   ########.fr       */
+/*   Created: 2023/11/02 17:16:57 by laroges           #+#    #+#             */
+/*   Updated: 2023/11/02 17:22:27 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	values_len_value(char *line, int i)
+void	clean_memory(t_mlx_data *data, t_line *line, t_map *map)
 {
-	int		len;
-
-	len = 0;
-	if (line == NULL)
-		return (-1);
-	if (line[i] == '-')
-	{
-		len++;
-		i++;
-	}
-	while (line[i] && ft_isdigit(line[i]))
-	{
-		len++;
-		i++;
-	}
-	return (len);
+	mlx_destroy_window(data->mlx_ptr, data->window_ptr);
+	mlx_destroy_display(data->mlx_ptr);
+	free(data->mlx_ptr);
+	free(data->window_ptr);
+	free(line);
+	free_tab_int_map(map);
+	free(map);
 }

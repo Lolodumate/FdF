@@ -6,16 +6,16 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 01:38:31 by laroges           #+#    #+#             */
-/*   Updated: 2023/10/30 19:43:38 by laroges          ###   ########.fr       */
+/*   Updated: 2023/11/02 22:13:55 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
-# include <mlx.h>
-# include <X11/keysym.h>
 # include "libft.h"
 # include "get_next_line.h"
+# include <mlx.h>
+# include <X11/keysym.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -50,17 +50,19 @@ typedef struct	s_map
 	int		size_y;
 	int		x;
 	int		y;
+	int		position_x;
+	int		position_y;
+	int		rotation;
 	int		*tab_map[1000]; // Le nombre dans les accolades signifie la taille max du tableau. Voir quelle taille indiquer.
-	char	**char_value;
 	t_line	*line;
 }	t_map;
 
 typedef struct	s_parsing
 {
-	int		index;
-	char	*line;
-	char	**parsing_line;
-	t_map		*map;
+	int				index;
+	char			*line;
+	char			**parsing_line;
+	t_map			*map;
 	struct	s_parsing	*next;
 }	t_parsing;
 
@@ -76,17 +78,21 @@ void			ev_up_and_down(t_map *map);
 t_map			*ev_update_map(t_map *map, int v);
 int			pm_size_mapx(char *line, t_map *map);
 int			values_len_value(char *line, int i);
-char		*values_create_str(int len);
-char		**values_create_value(t_parsing *list, t_map *map);
 void		ft_putchar(char c);
-
+void		clean_memory(t_mlx_data *data, t_line *line, t_map *map);
 void		color_screen(t_mlx_data *data, int color);
-void		drawing_points(t_mlx_data data, t_map *map);
+//void		drawing_points(t_mlx_data data, t_map *map);
 void		put_pixel(t_mlx_data *data, int color);
 void		drawing_line(t_mlx_data data, t_line *line);
-void		drawing_web(t_mlx_data data, t_map *map, t_line *line);
+void		drawing_web(t_mlx_data data, t_map *map, t_line *web);
 void		free_tab_int_map(t_map *map);
+void		line_draw_map_tab_int_y(t_mlx_data data, t_line *line, t_map *map);
+void		line_draw_map_tab_int_x(t_mlx_data data, t_line *line, t_map *map);
 t_line		*drawing_init_line(t_map *map);
+t_line		*line_init(t_line *line);
+t_line		*line_set_web_y(t_line *web, t_map *map);
+t_line		*line_set_web_x(t_line *web, t_map *map);
+t_map		*map_init(t_map *map);
 t_map		*pm_create_tab_map(t_map *map);
 t_map		*pm_insert_int_values(t_parsing *list, t_map *map);
 t_parsing	*clear_node(t_parsing *list);
@@ -98,5 +104,6 @@ t_parsing	*pm_read_map(char **argv, t_map *map, t_parsing *list);
 void		display_fdf_file(t_map *map);
 void		display_linked_list(t_parsing *list);
 void		display_int_array(t_map *map);
+void		display_map(t_map *map);
 
 #endif
