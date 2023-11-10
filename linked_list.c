@@ -59,16 +59,3 @@ void	display_linked_list(t_parsing *list)
 		j++;
 	}
 }
-
-void	free_tab_int_map(t_map *map)
-{
-	int		j;
-
-	j = 0;
-	while (j < map->size_y)
-	{
-		free(map->tab_map[j]);
-		j++;
-	}
-	free(map->tab_map[1000]);
-}

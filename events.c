@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-void	ev_up_and_down(t_map *map)
+void	ev_up_and_down(t_mlx_data *data, t_map *map)
 {
 	int		v;
 	int		i;
@@ -21,11 +21,11 @@ void	ev_up_and_down(t_map *map)
 	v = 0;
 	i = 0;
 	j = 0;
-	map = ev_update_map(map, v);
+	map = ev_update_map(data, map, v);
 	ft_putnbr_fd(map->tab_map[j][i], 1);
 }
 
-t_map	*ev_update_map(t_map *map, int v)
+t_map	*ev_update_map(t_mlx_data *data, t_map *map, int v)
 {
 	int		i;
 	int		j;
@@ -39,10 +39,13 @@ t_map	*ev_update_map(t_map *map, int v)
 			if (map->tab_map[j][i] != 0)
 				map->tab_map[j][i] += v;
 			ft_putnbr_fd(map->tab_map[j][i], 1);
+			write(1, " ", 1);
 			i++;
 		}
+		write(1, "\n", 1);
 		i = 0;
 		j++;
 	}
+	mlx_pixel_put(data->mlx_ptr, data->window_ptr, 0, 0, 0xff0000); // Ligne a effacer 
 	return (map);
 }

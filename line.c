@@ -11,6 +11,76 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
+/*
+t_line	*line_fdfdata(t_mlx_data data, t_line *points, int p_data[4][2])
+{
+	points.p1->x = p_data[0][0];
+	points.p1->y = p_data[0][1];
+	points.p2_p1right->x = p_data[1][0];
+	points.p2_p1right->y = p_data[1][1];
+	points.p3_p1bottom->x = p_data[2][0];
+	points.p3_p1bottom->y = p_data[2][1];
+	points.p4->x = p_data[3][0];
+	points.p4->y = p_data[3][1];
+	drawing_square(data, points);
+	return (line);
+}
+
+t_line	*line_fdfdata_2(t_line *data, float x2, float y2)
+{
+	data->x2 = x2;
+	data->y2 = y2;
+	return (data);
+}
+
+t_line	*line_insert_node(t_line *line, t_map *map, char eol)
+{
+	t_line	*node;
+
+	node = malloc(sizeof(t_line));
+	if (node == NULL)
+		return (NULL);
+	node->p1 = NULL;
+	node->p2_p1right = NULL;
+	node->p3_p1bottom = NULL;
+	node->dx = 0;
+	node->dy = 0;
+	node->a = 0;
+	node->b = 0;
+	node->map = map;
+	node->end_of_line = eol;
+	node->next = line;
+	return (node);
+}
+
+t_line	*line_fill_data(t_line *line)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	while (line->map->tab_map[j])
+	{
+		while (line->map->tab_map[j][i])
+		{
+			
+		}
+		i = 0;
+		j++;
+	}	
+	return (line);
+}
+
+t_line	*line_clean_node(t_line *line)
+{
+	t_line	*node;
+
+	node = line->next;
+	free(line);
+	return (node);
+}
+*/
 
 t_line	*line_init(t_line *line)
 {
@@ -27,30 +97,20 @@ t_line	*line_init(t_line *line)
 	line->b = 0;
 	return (line);
 }
-
+/*
 t_line	*line_set_web_y(t_line *web, t_map *map)
 {
-/*	web->x1 = map->scale;
-	web->y1 = (map->size_y * map->scale);
-	web->x2 = (map->size_x * map->scale);
-	web->y2 = (map->size_y * map->scale);
-*/
 	web->x1 = map->position_x;
-	web->y1 = map->position_y/* + (map->size_y * map->scale)*/;
+	web->y1 = map->position_y;
 	web->x2 = map->position_x + map->scale;
-	web->y2 = map->position_y/* + (map->size_y * map->scale)*/;
+	web->y2 = map->position_y;
 	return (web);
 }
 
 t_line	*line_set_web_x(t_line *web, t_map *map)
 {
-/*	web->x1 = map->scale;
-	web->y1 = (map->size_y * map->scale);
-	web->x2 = map->scale;
-	web->y2 = 0;
-*/
 	web->x1 = map->position_x;
-	web->y1 = map->position_y/* + (map->size_y * map->scale)*/;
+	web->y1 = map->position_y;
 	web->x2 = map->position_x;
 	web->y2 = web->y1 - map->scale;
 	return (web);
@@ -66,9 +126,8 @@ void	line_draw_map_tab_int_y(t_mlx_data data, t_line *line, t_map *map)
 	line_set_web_y(line, map);
 	while (j < map->size_y)
 	{
-		while (i < map->size_x)
+		while (i < map->size_x - 1)
 		{
-//			map->tab_map[j][i]
 			line->x2 = line->x1 + map->scale;
 			drawing_line(data, line);
 			line->x1 = line->x2;
@@ -92,10 +151,8 @@ void	line_draw_map_tab_int_x(t_mlx_data data, t_line *line, t_map *map)
 	line_set_web_x(line, map);
 	while (j < map->size_x)
 	{
-		while (i < map->size_y)
+		while (i < map->size_y - 1)
 		{
-//			map->tab_map[j][x]
-			printf("Check\n");
 			line->y2 = line->y1 - map->scale;
 			drawing_line(data, line);
 			line->y1 = line->y2;
@@ -107,4 +164,4 @@ void	line_draw_map_tab_int_x(t_mlx_data data, t_line *line, t_map *map)
 		i = 0;
 		j++;
 	}
-}
+}*/

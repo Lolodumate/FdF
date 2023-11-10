@@ -24,7 +24,7 @@ SRC =	main.c \
 
 CC =	gcc
 
-CFLAGS = -Wall -Werror -Wextra -lm
+CFLAGS = -Wall -Werror -Wextra
 
 MLXFLAGS = -lX11 -lXext
 
@@ -56,7 +56,7 @@ $(NAME): $(OBJ)
 	cp $(INCLUDELIBFT)$(NAMELIBFT) .
 	cp $(INCLUDEMLX)$(NAMEMLX) .
 	cp $(INCLUDEGNL)$(NAMEGNL) .
-	$(CC) $(CFLAGS) $(OBJ) -I $(INCLUDELIBFT) $(NAMELIBFT) -I $(INCLUDEGNL) $(NAMEGNL) $(NAMEMLX) $(MLXFLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) -I $(INCLUDELIBFT) $(NAMELIBFT) -I $(INCLUDEGNL) $(NAMEGNL) $(NAMEMLX) $(MLXFLAGS) -o $(NAME) -lm
 
 clean:
 	make clean -C libft

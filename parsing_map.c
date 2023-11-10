@@ -117,7 +117,10 @@ t_map *pm_create_tab_map(t_map *map)
 	{
 		map->tab_map[j] = malloc(sizeof(int) * map->size_x);
 		if (map->tab_map[j] == NULL)
+		{
+			free(map->tab_map[1000]);
 			return (NULL);
+		}
 		j++;
 	}
 	return (map);
@@ -133,6 +136,7 @@ t_map *pm_insert_int_values(t_parsing *list, t_map *map)
 	if (list == NULL || map == NULL)
 		return (NULL);
 	display_linked_list(list);
+	map_init_matrix(map);
 	map->y = map->size_y - 1;
 	while (list && (map->y >= 0))
 	{

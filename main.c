@@ -53,7 +53,7 @@ void	put_pixel(t_mlx_data *data, int color)
 	}
 }
 
-int	deal_key(int key, t_mlx_data *data)
+int	deal_key(int key, t_mlx_data *data, t_map *map)
 {
 	if (key == XK_r)
 	{
@@ -69,6 +69,11 @@ int	deal_key(int key, t_mlx_data *data)
 	{
 		color_screen(data, 0xff);
 		ft_putchar('b');
+	}
+	else if (key == XK_Up)
+	{
+		ev_update_map(data, map, 1);
+		ft_putchar('U');
 	}
 	else if (key == XK_Escape)
 	{
@@ -108,24 +113,20 @@ int	main(int argc, char **argv)
 	data.mlx_ptr = mlx_init();
 	if (data.mlx_ptr == NULL)
 		return (-1);
-	data.window_ptr = mlx_new_window(data.mlx_ptr, 860, 480, "mlx_42");
+	data.window_ptr = mlx_new_window(data.mlx_ptr, 800, 800, "mlx_42");
 	if (data.window_ptr == NULL)
 	{
 		mlx_destroy_display(data.mlx_ptr);
 		free(data.mlx_ptr);
 		return (-1);
 	}
-	data.image.image_ptr = mlx_new_image(data.mlx_ptr, 860, 480);
+	data.image.image_ptr = mlx_new_image(data.mlx_ptr, 800, 800);
 	data.image.image_pixel_ptr = mlx_get_data_addr(data.image.image_ptr, &data.image.bit_per_pixel, &data.image.line_len, &data.image.endian);
 	printf("Line_len %d <-> SIDE_LEN %d\nbpp %d\nendian %d\n", data.image.line_len, 500, data.image.bit_per_pixel, data.image.endian);
 	mlx_key_hook(data.window_ptr, deal_key, &data);
 
-//	drawing_web(data, map, line);
-	//printf("Valeur de map->position_x = %d\nValeur de map->position_y = %d\n", map->position_x,     map->position_y);
-
-	line_draw_map_tab_int_y(data, line, map);
-	line_draw_map_tab_int_x(data, line, map);
-
+	map_fill_matrix(map, line);
+	drawing_web(data, map, line);
 	mlx_loop(data.mlx_ptr);
 	clean_memory(&data, line, map);
 	return (0);
