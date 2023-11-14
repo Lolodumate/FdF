@@ -92,12 +92,12 @@ void	drawing_web(t_mlx_data data, t_map *map, t_line *line)
 			x++;
 			if (x < map->size_x)
 			{
-				printf("x[%d]y[%d] ", x, y);
+	//			printf("x[%d]y[%d] ", x, y);
 				line->x2 = map->matrix[y][x][0];
 				line->y2 = map->matrix[y][x][1] - map->matrix[y][x][2];
 				drawing_line(data, line);
 			}
-			printf("\n");
+	//		printf("\n");
 		}
 		x = 0;
 		y++;
@@ -118,12 +118,12 @@ void	drawing_web(t_mlx_data data, t_map *map, t_line *line)
 			y++;
 			if (y < map->size_y)
 			{
-				printf("x[%d]y[%d] ", x, y);
+			//	printf("x[%d]y[%d] ", x, y);
 				line->x2 = map->matrix[y][x][0];
 				line->y2 = map->matrix[y][x][1] - map->matrix[y][x][2];
 				drawing_line(data, line);
 			}
-			printf("\n");
+		//	printf("\n");
 		}
 		y = 0;
 		x++;

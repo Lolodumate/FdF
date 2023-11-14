@@ -16,11 +16,8 @@ t_map	*map_init(t_map *map)
 {
 	map = malloc(sizeof(t_map));
 	if (map == NULL)
-	{
-		printf("Erreur allocation dynamique\n");
 		return (NULL);
-	}
-	map->scale = 5;
+	map->scale = 10;
 	map->size_x = 0;
 	map->size_y = 0;
 	map->x = 0;
@@ -28,7 +25,7 @@ t_map	*map_init(t_map *map)
 	map->position_x = 200;
 	map->position_y = 50;
 	map->rotation = 0;
-	map->tab_map[1000] = NULL;
+	map->tab_map = NULL;
 	return (map);
 }
 
@@ -41,35 +38,23 @@ t_map	*map_init_matrix(t_map *map)
 	y = 0;
 	map->matrix = malloc(sizeof(int **) * map->size_y); // Pour les lignes
 	if (map->matrix == NULL)
-	{
-		printf("Erreur allocation dynamique y\n");
 		return (NULL);
-	}
 	while (y < map->size_y) // Allocation memoire du nombre de colonnes necessaire pour chaque ligne
 	{
 		map->matrix[y] = malloc(sizeof(int *) * map->size_x);
 		if (map->matrix[y] == NULL)
-		{
-			printf("Erreur allocation dynamique x\n");
 			return (NULL);
-		}
-		else
-			printf("Allocation map->matrix[%d] OK\n", y);
 		while (x < map->size_x) // Pour les valeurs x, y et value du fichier fdf
 		{
 			map->matrix[y][x] = malloc(sizeof(int) * 3);
 			if (map->matrix[y][x] == NULL)
-			{
-				printf("Erreur allocation dynamique\n");
 				return (NULL);
-			}
-			else
-				printf("Allocation map->matrix[%d][%d] OK\n", y, x);
 			x++;
 		}
 		x = 0;
 		y++;
 	}
+	printf("\n\n>>>>>>>>>>>>>>>>>  Creation Matrix OK  <<<<<<<<<<<<<<<<<<<<<\n\n");
 	return (map);
 }
 
@@ -77,8 +62,8 @@ t_map	*map_data_matrix(t_map *map, int x, int y, int *tab)
 {
 	map->matrix[y][x][0] = tab[0];
 	map->matrix[y][x][1] = tab[1];
-	map->matrix[y][x][2] = tab[2] * 2;
-	printf("[%3d][%3d][%2d] ", map->matrix[y][x][0], map->matrix[y][x][1], map->matrix[y][x][2]);
+	map->matrix[y][x][2] = tab[2];
+//	printf("[%3d][%3d][%2d] ", map->matrix[y][x][0], map->matrix[y][x][1], map->matrix[y][x][2]);
 	return (map);
 }
 
@@ -105,7 +90,7 @@ t_map	*map_fill_matrix(t_map *map, t_line *line)
 		tab[0] = line->x1;
 		tab[1] = line->y1;
 		tab[2] = map->tab_map[y][x];
-		printf("x[%d]y[%d] ", x, y);
+	//	printf("x[%d]y[%d] ", x, y);
 		map = map_data_matrix(map, x, y, tab);
 		while (x < map->size_x)
 		{
@@ -114,21 +99,22 @@ t_map	*map_fill_matrix(t_map *map, t_line *line)
 			tab[0] = line->x2;
 			tab[1] = line->y2;
 			tab[2] = map->tab_map[y][x];
-			printf("#%2d - x1 = %3f y1 = %3f - x2 = %3f y2 = %3f\n", x, line->x1, line->y1, line->x2, line->y2);
-			printf("x[%d]y[%d]:", x, y);
+	//		printf("#%2d - x1 = %3f y1 = %3f - x2 = %3f y2 = %3f\n", x, line->x1, line->y1, line->x2, line->y2);
+//			printf("x[%d]y[%d]:", x, y);
 			map = map_data_matrix(map, x, y, tab);
 			line->y1 = line->y2;
 			line->x1 = line->x2;
 			x++;
 		}
-		printf("#%d - x1 = %f y1 = %f - x2 = %f y2 = %f\n", x, line->x1, line->y1, line->x2, line->y2);
-		printf("\n-----------------------------------------------------------------------------\n");
+	//	printf("#%d - x1 = %f y1 = %f - x2 = %f y2 = %f\n", x, line->x1, line->y1, line->x2, line->y2);
+//		printf("\n-----------------------------------------------------------------------------\n");
 		line->x1 = tmpx - map->scale + map->rotation;
 		line->y1 = tmpy + map->rotation;
 		x = 0;
 		y++;
 	}
 //	display_matrix(map);
+//	printf("********************map->size_y = %d \n", map->size_y);
 	return (map);
 }
 

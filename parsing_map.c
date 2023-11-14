@@ -34,7 +34,7 @@ int	pm_size_map(char *line_map, t_map *map)
 	return (map->size_x); 
 }
 
-// Cut the line in order to create as strings as values
+/* Cut the line in order to create as strings as values
 t_parsing	*pm_parsing(t_parsing *list, t_map *map, char *line)
 {
 	int		i;
@@ -71,7 +71,7 @@ t_parsing	*pm_parsing(t_parsing *list, t_map *map, char *line)
 	}
 	return (list);
 }
-
+*/
 // Calculate the map->(x, y) size and create a linked list containing the lines of the *.fdf file
 t_parsing	*pm_read_map(char **argv, t_map *map, t_parsing *list)
 {
@@ -88,10 +88,11 @@ t_parsing	*pm_read_map(char **argv, t_map *map, t_parsing *list)
 	map->size_x = pm_size_map(line_map, map);
 	while (line_map != NULL)
 	{
-		list = insert_node(list, map, line_map);
+		list = insert_node(list,/* map,*/ line_map);
 		index_++;
 		list->index = index_;
-		list = pm_parsing(list, map, line_map);
+//		printf("pm_read_map - i = %2d - line = %s", list->index, line_map);
+//		list = pm_parsing(list, map, line_map);
 		while (i < map->size_x)
 			i++;
 		i = 0;
@@ -100,28 +101,28 @@ t_parsing	*pm_read_map(char **argv, t_map *map, t_parsing *list)
 		line_map = get_next_line(fd);
 	}
 	map = pm_create_tab_map(map);
-	list->map = map;
+//	list->map = map;
 	return (list);
 }
 
 // Create the two dimensions int tab size (called in read_map->function)
 t_map *pm_create_tab_map(t_map *map)
 {
-	int		j;
+	int		y;
 	
-	j = 0;
-	map->tab_map[1000] = malloc(sizeof(int *) * map->size_y);
-	if (map->tab_map[1000] == NULL)
+	y = 0;
+	map->tab_map = malloc(sizeof(int *) * map->size_y);
+	if (map->tab_map == NULL)
 		return (NULL);
-	while (j < map->size_y)
+	while (y < map->size_y)
 	{
-		map->tab_map[j] = malloc(sizeof(int) * map->size_x);
-		if (map->tab_map[j] == NULL)
+		map->tab_map[y] = malloc(sizeof(int) * map->size_x);
+		if (map->tab_map[y] == NULL)
 		{
-			free(map->tab_map[1000]);
+			free(map->tab_map);
 			return (NULL);
 		}
-		j++;
+		y++;
 	}
 	return (map);
 }
@@ -135,23 +136,24 @@ t_map *pm_insert_int_values(t_parsing *list, t_map *map)
 
 	if (list == NULL || map == NULL)
 		return (NULL);
-	display_linked_list(list);
+	display_linked_list(map, list);
 	map_init_matrix(map);
 	map->y = map->size_y - 1;
 	while (list && (map->y >= 0))
 	{
-		while (map->x < map->size_x)
+		while (map && (map->x < map->size_x))
 		{
 			value = list->parsing_line[map->x];
 			map->tab_map[map->y][map->x] = ft_atoi(list->parsing_line[map->x]);
-//			printf("%3d ", map->tab_map[map->y][map->x]);
+			printf("%3d ", map->tab_map[map->y][map->x]);
 			free(value);
 			map->x++;
 		}
-//		printf("\n");
+		printf("\n");
 		map->y--;
 		map->x = 0;
 		list = clear_node(list);
+		printf("map->y = %d\n", map->y);
 	}
 	map->y++;
 	return (map);

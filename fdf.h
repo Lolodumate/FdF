@@ -21,7 +21,7 @@
 # include <stdio.h>
 # include <limits.h>
 # include <math.h>
-
+/*
 typedef struct	s_image
 {
 	void	*image_ptr;
@@ -36,7 +36,7 @@ typedef struct	s_point
 	int	x;
 	int	y;
 }	t_point;
-
+*/
 typedef struct	s_line
 {
 	float	x1;
@@ -47,8 +47,6 @@ typedef struct	s_line
 	float	dy;
 	float	a;
 	float	b;
-	int	value_fdf;
-	char	end_of_line;
 }	t_line;
 
 typedef struct	s_map
@@ -61,9 +59,9 @@ typedef struct	s_map
 	int		position_x;
 	int		position_y;
 	float		rotation;
-	int		*tab_map[1000]; // Le nombre dans les accolades signifie la taille max du tableau. Voir quelle taille indiquer.
+	int		**tab_map; // Le nombre dans les accolades signifie la taille max du tableau. Voir quelle taille indiquer.
 	int		***matrix;
-	t_line	*line;
+//	t_line	*line;
 }	t_map;
 
 typedef struct	s_parsing
@@ -71,7 +69,7 @@ typedef struct	s_parsing
 	int				index;
 	char			*line;
 	char			**parsing_line;
-	t_map			*map;
+//	t_map			*map;
 	struct	s_parsing	*next;
 }	t_parsing;
 
@@ -79,21 +77,24 @@ typedef struct	s_mlx_data
 {
 	void	*mlx_ptr;
 	void	*window_ptr;
-	t_image	image;
+	t_line	*line;
+	t_map	*map;
+//	t_image	image;
 }	t_mlx_data;
 
-int			deal_key(int key, t_mlx_data *data, t_map *map);
+int			deal_key(int key, t_mlx_data *data);
 float			iso_rotation(float ab);
 int			pm_size_mapx(char *line, t_map *map);
 int			values_len_value(char *line, int i);
 void		ft_putchar(char c);
-void		clean_memory(t_mlx_data *data, t_line *line, t_map *map);
+void		clean_map_line(t_line *line, t_map *map, int size_y);
+void		clean_memory(t_mlx_data *data);
 void		color_screen(t_mlx_data *data, int color);
 void		put_pixel(t_mlx_data *data, int color);
 void		drawing_line(t_mlx_data data, t_line *line);
 void		drawing_web(t_mlx_data data, t_map *map, t_line *web);
-void		clean_tab_int_map(t_map *map);
-void		clean_map_matrix(t_map *map);
+void		clean_tab_int_map(t_map *map, int size_y);
+void		clean_map_matrix(t_map *map, int size_y);
 void		ev_up_and_down(t_mlx_data *data, t_map *map);
 t_line		*drawing_init_line(t_map *map);
 t_line		*line_init(t_line *line);
@@ -109,12 +110,12 @@ t_map		*pm_create_tab_map(t_map *map);
 t_map		*map_fill_matrix(t_map *map, t_line *line);
 t_map		*pm_insert_int_values(t_parsing *list, t_map *map);
 t_parsing	*clear_node(t_parsing *list);
-t_parsing	*pm_parsing(t_parsing *list, t_map *map, char *line);
-t_parsing	*insert_node(t_parsing *list, t_map *map, char *line_map);
+//t_parsing	*pm_parsing(t_parsing *list, t_map *map, char *line);
+t_parsing	*insert_node(t_parsing *list,/* t_map *map,*/ char *line_map);
 t_parsing	*pm_read_map(char **argv, t_map *map, t_parsing *list);
 
 void		display_fdf_file(t_map *map);
-void		display_linked_list(t_parsing *list);
+void		display_linked_list(t_map *map, t_parsing *list);
 void		display_int_array(t_map *map);
 void		display_map(t_map *map);
 void		display_matrix(t_map *map);
