@@ -6,7 +6,7 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 01:38:31 by laroges           #+#    #+#             */
-/*   Updated: 2023/11/02 22:13:55 by laroges          ###   ########.fr       */
+/*   Updated: 2023/11/21 20:17:52 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,17 @@ typedef struct	s_line
 	float	dy;
 	float	a;
 	float	b;
+	float	ex;
+	float	ey;
 }	t_line;
+
+typedef struct	s_data_matrix
+{
+	int		x;
+	int		y;
+	int		z;
+	char	color[8];
+}	t_data_matrix;
 
 typedef struct	s_map
 {
@@ -60,7 +70,8 @@ typedef struct	s_map
 	int		position_y;
 	float		rotation;
 	int		**tab_map; // Le nombre dans les accolades signifie la taille max du tableau. Voir quelle taille indiquer.
-	int		***matrix;
+//	int		***matrix;
+	t_data_matrix	***matrix;
 //	t_line	*line;
 }	t_map;
 

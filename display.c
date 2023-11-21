@@ -6,7 +6,7 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 14:51:39 by laroges           #+#    #+#             */
-/*   Updated: 2023/11/02 22:13:34 by laroges          ###   ########.fr       */
+/*   Updated: 2023/11/21 19:11:16 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	display_matrix(t_map *map)
 		{
 			while (value < 3)
 			{
-				printf("matrix[%d][%d][%d] = %d\n", y, x, value, map->matrix[y][x][value]);
+//				printf("matrix[%d][%d][%d] = %d\n", y, x, value, map->matrix[y][x][value]);
 				value++;
 			}
 			value = 0;

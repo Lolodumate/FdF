@@ -6,7 +6,7 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 03:00:31 by laroges           #+#    #+#             */
-/*   Updated: 2023/11/02 22:38:44 by laroges          ###   ########.fr       */
+/*   Updated: 2023/11/21 20:45:31 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	deal_key(int key, t_mlx_data *data)
 	if (key == XK_Escape)
 	{
 		write(1, "Escape\n", 7);
-		printf("Avant clean_map_line : map->size_y = %d\n", data->map->size_y);
 		mlx_destroy_window(data->mlx_ptr, data->window_ptr);
 		mlx_destroy_display(data->mlx_ptr);
 		free(data->mlx_ptr);
@@ -95,7 +94,7 @@ int	main(int argc, char **argv)
 	data.mlx_ptr = mlx_init();
 	if (data.mlx_ptr == NULL)
 		return (-1);
-	data.window_ptr = mlx_new_window(data.mlx_ptr, 800, 800, "mlx_42");
+	data.window_ptr = mlx_new_window(data.mlx_ptr, 1800, 1000, "mlx_42");
 	if (data.window_ptr == NULL)
 	{
 		mlx_destroy_display(data.mlx_ptr);

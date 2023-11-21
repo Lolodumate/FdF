@@ -6,7 +6,7 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:16:57 by laroges           #+#    #+#             */
-/*   Updated: 2023/11/02 17:22:27 by laroges          ###   ########.fr       */
+/*   Updated: 2023/11/21 19:59:04 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,14 @@ void	clean_map_matrix(t_map *map, int size_y)
 
 	x = 0;
 	y = 0;
-//	printf("map->size_x = %d \n", map->size_x);
 	while (y < size_y)
 	{
 		while (map->size_x && x < map->size_x)
 		{
 			free(map->matrix[y][x]);
-	//		printf("free(map->matrix[%d][%d] OK\n", y, x);
 			x++;
 		}
 		free(map->matrix[y]);
-//		printf("free(map->matrix[%d] OK - map->size_y = %d\n", y, size_y);
 		x = 0;
 		y++;
 	}
