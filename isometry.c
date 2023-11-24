@@ -21,8 +21,9 @@
  *
  *   Exemples de conversions Radians en degres : 
  *   	- Pi * Rad = 180 degres
- *   	- 1 * Rad = 57,29578 degres
- *   	- 1 degre = 0,0174533 (soit Pi / 180)
+ *   	- 1 * Rad = 57.29578 degres
+ *   	- 1 degres = 0.0174533 radians (soit Pi / 180)
+ *   	- 120 degres = (Pi / 180) * 120 = 2.09439510 radians
  */
 /*
 t_map	*iso_rotation(t_map *map, t_line *web)
@@ -45,22 +46,42 @@ t_map	*iso_rotation(t_map *map, t_line *web)
  *	A_______________________|B
  */	
 
-float	iso_rotation(float ab) // ab == map->scale
+void	iso_view(float *x, float *y, int z, int shift)
 {
-	float		bc;
-	float		ac_h;
-	float		radian_30;
+	*x = (*x - *y) * cos(0.816540) + shift;
+	*y = (*x + *y) * sin(0.816540) - z + shift;
+}
+
+double	iso_rotation(double ab, int angle) // ab == map->scale
+{
+	double		bc;
+	double		ac_h;
+	double		radian_35;
 
 	bc = 1;
 	ac_h = ab;
-	radian_30 = 30 / 57.29578;
-	printf("cos(radian_30) = %f\n", cos(radian_30));
-	while (ab / ac_h > cos(radian_30))
-		ac_h += 0.001;
-	printf("Valeur de map->scale = %f - ", ab);
+	radian_35 = /*35.26*/ angle / 57.29578;
+	printf("cos(radian_35) = %f\n", cos(radian_35));
+	while (ab / ac_h > cos(radian_35))
+		ac_h += 1;
+	printf("Valeur de ab = %f - ", ab);
 	printf("Valeur de ac_h = %f\n", ac_h);
 	while ((bc * bc) < (ac_h * ac_h) - (ab * ab))
-		bc += 0.1;
+		bc += 1;
 	printf("Valeur de bc = %f\n", bc);
 	return (bc);
+}
+
+// Hypothenuse must be equal to map->scale
+double	iso_correction_hypothenuse(double scale, double ab, int angle)
+{
+	double	radian_35;
+
+	radian_35 = /*35.26*/ angle / 57.29578;
+	while (ab / scale > cos(radian_35))
+	{
+		ab -= 1;
+	}
+	printf("Correction hypothenuse - Valeur de ab = %f\n", ab);
+	return (ab);
 }

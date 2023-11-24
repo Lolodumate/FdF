@@ -97,6 +97,36 @@ t_line	*line_init(t_line *line)
 	line->b = 0;
 	return (line);
 }
+
+int	line_setx(t_line *line, t_map *map, int x, int y)
+{
+	line->x1 = x * map->zoom;
+	line->y1 = y * map->zoom;
+	iso_view(&line->x1, &line->y1, map->tab_map[y][x], line->shift);
+	x++;
+	if (x < map->size_x)
+	{
+		line->x2 = x * map->zoom;
+		line->y2 = y * map->zoom;
+		iso_view(&line->x2, &line->y2, map->tab_map[y][x], line->shift);
+	}
+	return (x);
+}
+
+int	line_sety(t_line *line, t_map *map, int x, int y)
+{
+	line->x1 = x * map->zoom;
+	line->y1 = y * map->zoom;
+	iso_view(&line->x1, &line->y1, map->tab_map[y][x], line->shift);
+	y++;
+	if (y < map->size_y)
+	{
+		line->x2 = x * map->zoom;
+		line->y2 = y * map->zoom;
+		iso_view(&line->x2, &line->y2, map->tab_map[y][x], line->shift);
+	}
+	return (y);
+}
 /*
 t_line	*line_set_web_y(t_line *web, t_map *map)
 {

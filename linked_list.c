@@ -18,14 +18,10 @@ t_parsing	*insert_node(t_parsing *list,/* t_map *map,*/ char *line_map)
 
 	node = malloc(sizeof(t_parsing));
 	if (node == NULL)
-	{
-		printf("Erreur allocation list\n");
 		return (NULL);
-	}
 	node->index = 0;
 	node->line = line_map;
 	node->parsing_line = ft_split(line_map, ' ');
-//	node->map = map;
 	node->next = list;
 	return (node);
 }

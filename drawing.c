@@ -31,45 +31,23 @@ void	drawing_points(t_mlx_data data, t_map *map)
 	}
 }
 */
-/* Equation of a line : y = ax + b
-void	drawing_line(t_mlx_data data, t_line *line)
-{
-	float	x;
-	float	y;
 
-	x = line->x1;
-	y = line->y1;
-	line->dx = line->x2 - line->x1;
-	line->dy = line->y2 - line->y1;
-	line->a = line->dy / line->dx;
-	line->b = line->y1 - (line->a * line->x1);
-	if (x < line->x2)
-	{
-		while (x <= line->x2)
-		{
-			y = (line->a * x) + line->b;	
-			mlx_pixel_put(data.mlx_ptr, data.window_ptr, x, y, 0xffffff);
-			x++;
-		}
-	}
-	else if (x > line->x2)
-	{
-		while (x >= line->x2)
-		{
-			y = (line->a * x) + line->b;
-			mlx_pixel_put(data.mlx_ptr, data.window_ptr, x, y, 0xffffff);
-			x--;
-		}
-	}
-	else if (x == line->x2)
-	{
-		while (y >= line->y2)
-		{
-			mlx_pixel_put(data.mlx_ptr, data.window_ptr, x, y, 0xffffff);
-			y--;
-		}	
-	}
-}*/
+t_mlx_data	*drawing_get_color(t_mlx_data *data, int z1, int z2)
+{
+	if (z1 == 0 && z2 == 0)
+		data->color = 0xffffff;
+	else if (z1 < 0 || z2 < 0)
+		data->color = 0x00aaaa;
+	else
+		data->color = 0xff0000;
+	return (data);
+}
+
+// https://htmlcolorcodes.com/fr/
+//	matrix->color = "0xffffff";
+	// Plus z est grand, plus il tend vers le rouge
+	// blanc vers le rouge = decremention de color[4] et color[6] de f vers 0, puis reinitialisation avec decrementation de color[3] et color[5]
+//	Plus z est petit, plus il tend vers le bleu
 
  /* https://www.youtube.com/watch?v=nQbnYl7xgb8
         * Deux cas :
@@ -118,7 +96,7 @@ void	drawing_line(t_mlx_data data, t_line *line)
         * Note : essayer d'utiliser des doubles au lieu des float pour voir s'il y a un gain de performance.
         *
         */
-void	drawing_line(t_mlx_data data, t_line *line)
+void	drawing_line(t_mlx_data data, t_line *line, int z)
 {
 	int		xi;
 	int		yi;
@@ -127,7 +105,7 @@ void	drawing_line(t_mlx_data data, t_line *line)
 	int		tmpy;
 	float		x;
 	float		y;
-	
+
 	xi = 1;
 	yi = 1;
 	i = 0;
@@ -153,7 +131,7 @@ void	drawing_line(t_mlx_data data, t_line *line)
 	{
 		while (i <= tmpx)
 		{
-			mlx_pixel_put(data.mlx_ptr, data.window_ptr, x, y, 0xffffff);
+			mlx_pixel_put(data.mlx_ptr, data.window_ptr, x, y, z);
 			x += xi;
 			line->ex -= line->dy;
 			if (line->ex < 0)
@@ -168,7 +146,7 @@ void	drawing_line(t_mlx_data data, t_line *line)
         {
                 while (i <= tmpy)
                 {
-                        mlx_pixel_put(data.mlx_ptr, data.window_ptr, x, y, 0xffffff);
+                        mlx_pixel_put(data.mlx_ptr, data.window_ptr, x, y, z);
                         y += yi;
                         line->ey -= line->dx;
                         if (line->ey < 0)
@@ -182,38 +160,21 @@ void	drawing_line(t_mlx_data data, t_line *line)
 
 }
 
-void	drawing_web(t_mlx_data data, t_map *map, t_line *line)
+void	drawing_web(t_mlx_data data, t_map *map, t_line *line, int shift)
 {
 	int		x;
 	int		y;
 
 	x = 0;
 	y = 0;
+	line->shift = shift;
 	while (y < map->size_y)
 	{
-		printf("map->size_x = %d \n", map->size_x);
-		printf("map->size_y = %d \n", map->size_y);
 		while (x < map->size_x)
 		{
-/*			printf("Valeur de map->matrix[y%d][x%d] = %d\n", y, 0, map->matrix[y][x][0]);
-			printf("Valeur de map->matrix[y%d][x%d] = %d\n", y, 1, map->matrix[y][x][1]);
-			printf("Valeur de map->matrix[y%d][x%d] = %d\n", y, 2, map->matrix[y][x][2]);
-*/
-//			line->x1 = map->matrix[y][x][0];
-//			line->y1 = map->matrix[y][x][1] - map->matrix[y][x][2];
-			line->x1 = map->matrix[y][x]->x;
-			line->y1 = map->matrix[y][x]->y - map->matrix[y][x]->z;
-			x++;
-			if (x < map->size_x)
-			{
-				printf("x[%d]y[%d] ", x, y);
-//				line->x2 = map->matrix[y][x][0];
-//				line->y2 = map->matrix[y][x][1] - map->matrix[y][x][2];
-				line->x2 = map->matrix[y][x]->x;
-				line->y2 = map->matrix[y][x]->y - map->matrix[y][x]->z;
-				drawing_line(data, line);
-			}
-			printf("\n");
+			drawing_get_color(&data, map->tab_map[y][x], map->tab_map[y][x + 1]);
+			x = line_setx(line, map, x, y);
+			drawing_line(data, line, data.color);
 		}
 		x = 0;
 		y++;
@@ -222,44 +183,16 @@ void	drawing_web(t_mlx_data data, t_map *map, t_line *line)
 	y = 0;
 	while (x < map->size_x)
 	{
-		printf("map->size_x = %d \n", map->size_x);
-		printf("map->size_y = %d \n", map->size_y);
 		while (y < map->size_y)
 		{
-/*			printf("Valeur de map->matrix[y%d][x%d] = %d\n", y, 0, map->matrix[y][x][0]);
-			printf("Valeur de map->matrix[y%d][x%d] = %d\n", y, 1, map->matrix[y][x][1]);
-			printf("Valeur de map->matrix[y%d][x%d] = %d\n", y, 2, map->matrix[y][x][2]);
-*/
-//			line->x1 = map->matrix[y][x][0];
-//			line->y1 = map->matrix[y][x][1] - map->matrix[y][x][2];
-			line->x1 = map->matrix[y][x]->x;
-			line->y1 = map->matrix[y][x]->y - map->matrix[y][x]->z;
-			y++;
-			if (y < map->size_y)
-			{
-			//	printf("x[%d]y[%d] ", x, y);
-//				line->x2 = map->matrix[y][x][0];
-//				line->y2 = map->matrix[y][x][1] - map->matrix[y][x][2];
-				line->x2 = map->matrix[y][x]->x;
-				line->y2 = map->matrix[y][x]->y - map->matrix[y][x]->z;
-				drawing_line(data, line);
-			}
-			printf("\n");
+			drawing_get_color(&data, map->tab_map[y][x], map->tab_map[y + 1][x]);
+			y = line_sety(line, map, x, y);
+			drawing_line(data, line, data.color);
 		}
 		y = 0;
 		x++;
 	}
-
 }
-
-
-/*
-void	drawing_square(t_mlx_data data, t_line *points)
-{
-	int		x1;
-	int			
-}
-*/
 
 /* La variable rotation (dans t_map) permet d'incliner la carte.
  * Par convention un inclinaison de 30 degres implique une reduction de la taille des segments auxquels il faut appliquer un coefficient de 0.82.

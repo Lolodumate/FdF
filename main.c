@@ -81,16 +81,12 @@ int	main(int argc, char **argv)
 		return (0);
 	line = line_init(line);
 	map = map_init(map);
-// Leak de 1 byte dans la liste chainee
-// *******************************************
 	list = pm_read_map(argv, map, list);
 	if (list == NULL)
 		return (-1);
-// *******************************************
 	map = pm_insert_int_values(list, map);
 	printf("map->map_size_y = %d\n", map->size_y);
 	display_map(map);
-
 	data.mlx_ptr = mlx_init();
 	if (data.mlx_ptr == NULL)
 		return (-1);
@@ -101,12 +97,11 @@ int	main(int argc, char **argv)
 		free(data.mlx_ptr);
 		return (-1);
 	}
-//	data.image.image_ptr = mlx_new_image(data.mlx_ptr, 800, 800);
+//	data.image.image_ptr = mlx_new_image(data.mlx_ptr, 1800, 1000);
 //	data.image.image_pixel_ptr = mlx_get_data_addr(data.image.image_ptr, &data.image.bit_per_pixel, &data.image.line_len, &data.image.endian);
 //	printf("Line_len %d <-> SIDE_LEN %d\nbpp %d\nendian %d\n", data.image.line_len, 500, data.image.bit_per_pixel, data.image.endian);
 	mlx_key_hook(data.window_ptr, deal_key, &data);
-	map_fill_matrix(map, line);
-	drawing_web(data, map, line);
+	drawing_web(data, map, line, 250);
 	clean_map_line(line, map, map->size_y);
 	mlx_loop(data.mlx_ptr);
 	return (0);
