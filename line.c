@@ -60,9 +60,9 @@ t_line	*line_fill_data(t_line *line)
 
 	i = 0;
 	j = 0;
-	while (line->map->tab_map[j])
+	while (data->data->tab_map[j])
 	{
-		while (line->map->tab_map[j][i])
+		while (data->data->tab_map[j][i])
 		{
 			
 		}
@@ -76,73 +76,76 @@ t_line	*line_clean_node(t_line *line)
 {
 	t_line	*node;
 
-	node = line->next;
+	node = data->next;
 	free(line);
 	return (node);
 }
 */
 
-t_line	*line_init(t_line *line)
+void	line_init(t_mlx_data *data)
 {
-	line = malloc(sizeof(t_line));
-	if (line == NULL)
-		return (NULL);
-	line->x1 = 0;
-	line->y1 = 0;
-	line->x2 = 0;
-	line->y2 = 0;
-	line->dx = 0;
-	line->dy = 0;
-	line->a = 0;
-	line->b = 0;
-	return (line);
+//	data->xi = 1;
+//	data->yi = 1;
+//	data->tmpx = 0;
+//	data->tmpy = 0;
+	data->x1 = 0;
+	data->y1 = 0;
+	data->x2 = 0;
+	data->y2 = 0;
+	data->up = 0;
+//	data->dx = 0;
+//	data->dy = 0;
+//	data->a = 0;
+//	data->b = 0;
+//	data->ex = 0;
+//	data->ey = 0;
 }
 
-int	line_setx(t_line *line, t_map *map, int x, int y)
+int	line_setx(t_mlx_data *data, int x, int y)
 {
-	line->x1 = x * map->zoom;
-	line->y1 = y * map->zoom;
-	iso_view(&line->x1, &line->y1, map->tab_map[y][x], line->shift);
+	data->x1 = x * data->zoom;
+	data->y1 = y * data->zoom;
+	iso_view(data, &data->x1, &data->y1, data->tab_map[y][x]);
 	x++;
-	if (x < map->size_x)
+	if (x < data->size_x)
 	{
-		line->x2 = x * map->zoom;
-		line->y2 = y * map->zoom;
-		iso_view(&line->x2, &line->y2, map->tab_map[y][x], line->shift);
+		data->x2 = x * data->zoom;
+		data->y2 = y * data->zoom;
+		iso_view(data, &data->x2, &data->y2, data->tab_map[y][x]);
 	}
 	return (x);
 }
 
-int	line_sety(t_line *line, t_map *map, int x, int y)
+int	line_sety(t_mlx_data *data, int x, int y)
 {
-	line->x1 = x * map->zoom;
-	line->y1 = y * map->zoom;
-	iso_view(&line->x1, &line->y1, map->tab_map[y][x], line->shift);
+	data->x1 = x * data->zoom;
+	data->y1 = y * data->zoom;
+	iso_view(data, &data->x1, &data->y1, data->tab_map[y][x]);
 	y++;
-	if (y < map->size_y)
+	if (y < data->size_y)
 	{
-		line->x2 = x * map->zoom;
-		line->y2 = y * map->zoom;
-		iso_view(&line->x2, &line->y2, map->tab_map[y][x], line->shift);
+		data->x2 = x * data->zoom;
+		data->y2 = y * data->zoom;
+		iso_view(data, &data->x2, &data->y2, data->tab_map[y][x]);
 	}
 	return (y);
 }
 /*
 t_line	*line_set_web_y(t_line *web, t_map *map)
 {
-	web->x1 = map->position_x;
-	web->y1 = map->position_y;
-	web->x2 = map->position_x + map->scale;
-	web->y2 = map->position_y;
+	web->x1 = data->position_x;
+	web->y1 = data->position_y;
+	web->x2 = data->position_x + data->scale;
+	web->y2 = data->position_y;
 	return (web);
 }
 
 t_line	*line_set_web_x(t_line *web, t_map *map)
 {
-	web->x1 = map->position_x;
-	web->y1 = map->position_y;
-	web->x2 = map->position_x;
-	web->y2 = web->y1 - map->scale;
+	web->x1 = data->position_x;
+	web->y1 = data->position_y;
+	web->x2 = data->position_x;
+	web->y2 = web->y1 - data->scale;
 	return (web);
 }
 
@@ -154,18 +157,18 @@ void	line_draw_map_tab_int_y(t_mlx_data data, t_line *line, t_map *map)
 	i = 0;
 	j = 0;
 	line_set_web_y(line, map);
-	while (j < map->size_y)
+	while (j < data->size_y)
 	{
-		while (i < map->size_x - 1)
+		while (i < data->size_x - 1)
 		{
-			line->x2 = line->x1 + map->scale;
+			data->x2 = data->x1 + data->scale;
 			drawing_line(data, line);
-			line->x1 = line->x2;
+			data->x1 = data->x2;
 			i++;
 		}
-		line->x1 = map->position_x;
-		line->y1 -= map->scale;
-		line->y2 -= map->scale;
+		data->x1 = data->position_x;
+		data->y1 -= data->scale;
+		data->y2 -= data->scale;
 		i = 0;
 		j++;
 	}
@@ -179,18 +182,18 @@ void	line_draw_map_tab_int_x(t_mlx_data data, t_line *line, t_map *map)
 	i = 0;
 	j = 0;
 	line_set_web_x(line, map);
-	while (j < map->size_x)
+	while (j < data->size_x)
 	{
-		while (i < map->size_y - 1)
+		while (i < data->size_y - 1)
 		{
-			line->y2 = line->y1 - map->scale;
+			data->y2 = data->y1 - data->scale;
 			drawing_line(data, line);
-			line->y1 = line->y2;
+			data->y1 = data->y2;
 			i++;
 		}
-		line->y1 = map->position_y;
-		line->x1 += map->scale;
-		line->x2 += map->scale;
+		data->y1 = data->position_y;
+		data->x1 += data->scale;
+		data->x2 += data->scale;
 		i = 0;
 		j++;
 	}

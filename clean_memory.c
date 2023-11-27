@@ -21,22 +21,20 @@ void	clean_memory(t_mlx_data *data)
 	free(data->window_ptr);
 }
 */
-void	clean_map_line(t_line *line, t_map *map, int size_y)
+void	clean_map_line(t_mlx_data data, int size_y)
 {
-	free(line);
-	clean_tab_int_map(map, size_y);
-	free(map);
+	clean_tab_int_map(data, size_y);
 }
 
-void	clean_tab_int_map(t_map *map, int size_y)
+void	clean_tab_int_map(t_mlx_data data, int size_y)
 {
 	int		y;
 
 	y = 0;
 	while (y <= size_y)
 	{
-		free(map->tab_map[y]);
+		free(data.tab_map[y]);
 		y++;
 	}
-	free(map->tab_map);
+	free(data.tab_map);
 }

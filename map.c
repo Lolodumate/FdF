@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
+/*   data.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,29 +12,32 @@
 
 #include "fdf.h"
 
-t_map	*map_init(t_map *map)
+t_mlx_data	map_init(t_mlx_data data)
 {
-	map = malloc(sizeof(t_map));
-	if (map == NULL)
-		return (NULL);
-	map->scale = 5;
-	map->size_x = 0;
-	map->size_y = 0;
-	map->x = 0;
-	map->y = 0;
-	map->position_x = 500;
-	map->position_y = 200;
-	map->greatest_z = 0;
-	map->rotation = 0;
-	map->tab_map = NULL;
-	map->zoom = 3;
-	return (map);
+//	data.= malloc(sizeof(t_data.);
+//	if (data.== NULL)
+//		return (NULL);
+	data.scale = 5;
+	data.size_x = 0;
+	data.size_y = 0;
+	data.x = 0;
+	data.y = 0;
+	data.position_x = 500;
+	data.position_y = 200;
+//	data.greatest_z = 0;
+//	data.smallest_z = 0;
+	data.rotation = 0;
+	data.tab_map = NULL;
+	data.zoom = 40;
+	data.up = 0;
+	data.right = 0;
+	return (data);
 }
-
-t_map	*map_scale(t_map *map)
+/*
+t_data.*data.scale(t_data.*data.
 {
-	map->scale = (1000 / map->size_y) / 2;
-//	map->position_x = 1800 / map->scale * (map->size_x * 2 / 3);
-//	map->position_y = 1000 / map->scale * map->size_y;
-	return (map);
-}
+	data.scale = (1000 / data.size_y) / 2;
+	data.position_x = 1800 / data.scale * (data.size_x * 2 / 3);
+	data.position_y = 1000 / data.scale * data.size_y;
+	return (data.;
+}*/

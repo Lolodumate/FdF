@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
-
+/*
 void	ev_up_and_down(t_mlx_data *data, t_map *map)
 {
 	int		v;
@@ -46,6 +46,5 @@ t_map	*ev_update_map(t_mlx_data *data, t_map *map, int v)
 		i = 0;
 		j++;
 	}
-	mlx_pixel_put(data->mlx_ptr, data->window_ptr, 0, 0, 0xff0000); // Ligne a effacer 
 	return (map);
-}
+}*/

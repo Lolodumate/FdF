@@ -32,17 +32,6 @@ void	drawing_points(t_mlx_data data, t_map *map)
 }
 */
 
-t_mlx_data	*drawing_get_color(t_mlx_data *data, int z1, int z2)
-{
-	if (z1 == 0 && z2 == 0)
-		data->color = 0xffffff;
-	else if (z1 < 0 || z2 < 0)
-		data->color = 0x00aaaa;
-	else
-		data->color = 0xff0000;
-	return (data);
-}
-
 // https://htmlcolorcodes.com/fr/
 //	matrix->color = "0xffffff";
 	// Plus z est grand, plus il tend vers le rouge
@@ -96,63 +85,54 @@ t_mlx_data	*drawing_get_color(t_mlx_data *data, int z1, int z2)
         * Note : essayer d'utiliser des doubles au lieu des float pour voir s'il y a un gain de performance.
         *
         */
-void	drawing_line(t_mlx_data data, t_line *line, int z)
-{
-	int		xi;
-	int		yi;
-	int		i;
-	int		tmpx;
-	int		tmpy;
-	float		x;
-	float		y;
 
-	xi = 1;
-	yi = 1;
+void	drawing_line(t_mlx_data *data, int z)
+{
+	int		i;
+	double		x;
+	double		y;
+
+	data->xi = 1;
+	data->yi = 1;
 	i = 0;
-	tmpx = 0;
-	tmpy = 0;
-	x = line->x1;
-	y = line->y1;
-	line->ex = line->x2 - line->x1;
-	if (line->ex < 0)
-		line->ex *= -1;
-	line->ey = line->y2 - line->y1;
-	if (line->ey < 0)
-		line->ey *= -1;
-	tmpx = line->ex;
-	tmpy = line->ey;
-	line->dx = 2 * line->ex;
-	line->dy = 2 * line->ey;
-	if (x > line->x2)
-		xi = -1;
-	if (y > line->y2)
-		yi = -1;
-	if (tmpx >= tmpy)
+	x = data->x1;
+	y = data->y1;
+	data->ex = abs(data->x2 - data->x1);
+	data->ey = abs(data->y2 - data->y1);
+	data->tmpx = data->ex;
+	data->tmpy = data->ey;
+	data->dx = 2 * data->ex;
+	data->dy = 2 * data->ey;
+	if (x > data->x2)
+		data->xi = -1;
+	if (y > data->y2)
+		data->yi = -1;
+	if (data->tmpx >= data->tmpy)
 	{
-		while (i <= tmpx)
+		while (i <= data->tmpx)
 		{
-			mlx_pixel_put(data.mlx_ptr, data.window_ptr, x, y, z);
-			x += xi;
-			line->ex -= line->dy;
-			if (line->ex < 0)
+			mlx_pixel_put(data->mlx_ptr, data->window_ptr, x, y, z);
+			x += data->xi;
+			data->ex -= data->dy;
+			if (data->ex < 0)
 			{
-				y += yi;
-				line->ex += line->dx;
+				y += data->yi;
+				data->ex += data->dx;
 			}
 			i++;
 		}
 	}
-	if (tmpx < tmpy)
+	if (data->tmpx < data->tmpy)
         {
-                while (i <= tmpy)
+                while (i <= data->tmpy)
                 {
-                        mlx_pixel_put(data.mlx_ptr, data.window_ptr, x, y, z);
-                        y += yi;
-                        line->ey -= line->dx;
-                        if (line->ey < 0)
+                        mlx_pixel_put(data->mlx_ptr, data->window_ptr, x, y, z);
+                        y += data->yi;
+                        data->ey -= data->dx;
+                        if (data->ey < 0)
                         {
-                                x += xi;
-                                line->ey += line->dy;
+                                x += data->xi;
+                                data->ey += data->dy;
                         }
                         i++;
                 }
@@ -160,37 +140,46 @@ void	drawing_line(t_mlx_data data, t_line *line, int z)
 
 }
 
-void	drawing_web(t_mlx_data data, t_map *map, t_line *line, int shift)
+t_mlx_data	*drawing_get_color(t_mlx_data *data, int z1, int z2)
+{
+	if (z1 == 0 && z2 == 0)
+		data->color = 0xffffff;
+	else if (z1 < 0 || z2 < 0)
+		data->color = 0x00aaaa;
+	else
+		data->color = 0xff0000;
+	return (data);
+}
+
+void	drawing_web(t_mlx_data *data, int shift)
 {
 	int		x;
 	int		y;
 
-	x = 0;
-	y = 0;
-	line->shift = shift;
-	while (y < map->size_y)
+	y = -1;
+	data->shift = shift;
+	while (++y < data->size_y)
 	{
-		while (x < map->size_x)
-		{
-			drawing_get_color(&data, map->tab_map[y][x], map->tab_map[y][x + 1]);
-			x = line_setx(line, map, x, y);
-			drawing_line(data, line, data.color);
-		}
 		x = 0;
-		y++;
-	}
-	x = 0;
-	y = 0;
-	while (x < map->size_x)
-	{
-		while (y < map->size_y)
+		while (x < data->size_x)
 		{
-			drawing_get_color(&data, map->tab_map[y][x], map->tab_map[y + 1][x]);
-			y = line_sety(line, map, x, y);
-			drawing_line(data, line, data.color);
+			//data->tab_map[y][x] += data->up;
+			drawing_get_color(data, data->tab_map[y][x]/* + data->up*/, data->tab_map[y][x + 1]);
+			x = line_setx(data, x, y);
+			drawing_line(data, data->color);
 		}
+	}
+	x = -1;
+	while (++x < data->size_x)
+	{
 		y = 0;
-		x++;
+		while (y < data->size_y)
+		{
+			//data->tab_map[y][x] += data->up;
+			drawing_get_color(data, data->tab_map[y][x]/* + data->up*/, data->tab_map[y + 1][x]);
+			y = line_sety(data, x, y);
+			drawing_line(data, data->color);
+		}
 	}
 }
 
@@ -198,23 +187,3 @@ void	drawing_web(t_mlx_data data, t_map *map, t_line *line, int shift)
  * Par convention un inclinaison de 30 degres implique une reduction de la taille des segments auxquels il faut appliquer un coefficient de 0.82.
  * Par ailleurs, une inclinaison de 30 degres d'un carre ou rectangle implique que, du fait de la perspective isometrique, l'angle rectangle s'elargisse a 120 degres. Nous avons donc trois angles de 30, 120 et 30 degres.
  * */
-
-t_line	*drawing_init_line(t_map *map)
-{
-	t_line	*line;
-
-	if (map == NULL)
-		return (NULL);
-	line = malloc(sizeof(t_line));
-	if (line == NULL)
-		return (NULL);
-	line->x1 = map->scale;
-	line->y1 = map->size_y - map->scale;
-	line->x2 = line->x1 + map->size_x;
-	line->y2 = line->y1 - map->size_y;
-	line->dx = 0;
-	line->dy = 0;
-	line->a = 0;
-	line->b = 0;
-	return (line);
-}

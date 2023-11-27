@@ -46,42 +46,29 @@ t_map	*iso_rotation(t_map *map, t_line *web)
  *	A_______________________|B
  */	
 
-void	iso_view(float *x, float *y, int z, int shift)
+void	iso_view(t_mlx_data *data, int *x, int *y, int z)
 {
-	*x = (*x - *y) * cos(0.816540) + shift;
-	*y = (*x + *y) * sin(0.816540) - z + shift;
+	*x = (*x - *y) * cos(0.816540) + data->shift + data->right;
+	*y = (*x + *y) * sin(0.816540) - z + data->shift - data->up;
 }
-
-double	iso_rotation(double ab, int angle) // ab == map->scale
+/*
+void	iso_map_update(t_map *map)
 {
-	double		bc;
-	double		ac_h;
-	double		radian_35;
+	int		x;
+	int		y;
 
-	bc = 1;
-	ac_h = ab;
-	radian_35 = /*35.26*/ angle / 57.29578;
-	printf("cos(radian_35) = %f\n", cos(radian_35));
-	while (ab / ac_h > cos(radian_35))
-		ac_h += 1;
-	printf("Valeur de ab = %f - ", ab);
-	printf("Valeur de ac_h = %f\n", ac_h);
-	while ((bc * bc) < (ac_h * ac_h) - (ab * ab))
-		bc += 1;
-	printf("Valeur de bc = %f\n", bc);
-	return (bc);
-}
-
-// Hypothenuse must be equal to map->scale
-double	iso_correction_hypothenuse(double scale, double ab, int angle)
-{
-	double	radian_35;
-
-	radian_35 = /*35.26*/ angle / 57.29578;
-	while (ab / scale > cos(radian_35))
+	x = 0;
+	y = 0;
+	while (y < map->size_y)
 	{
-		ab -= 1;
+		while (x < map->size_x)
+		{
+			map->tab_map[y][x]++;
+			if (map->tab_map[y][x] == 0)
+				map->tab_map[y][x]--;
+			x++;
+		}
+		x = 0;
+		y++;
 	}
-	printf("Correction hypothenuse - Valeur de ab = %f\n", ab);
-	return (ab);
-}
+}*/

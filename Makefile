@@ -21,6 +21,7 @@ SRC =	main.c \
 	line.c \
 	clean_memory.c \
 	isometry.c \
+	split.c \
 
 CC =	gcc
 
