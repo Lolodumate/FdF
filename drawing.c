@@ -146,25 +146,53 @@ t_mlx_data	*drawing_get_color(t_mlx_data *data, int z1, int z2)
 		data->color = 0xffffff;
 	else if (z1 < 0 || z2 < 0)
 		data->color = 0x00aaaa;
-	else
+	else if (z1 > 8 || z2 > 8)
 		data->color = 0xff0000;
+	else if (z1 > 15 || z2 > 15)
+		data->color = 0xff1000;
+	else if (z1 > 14 || z2 > 14)
+		data->color = 0xff2000;
+	else if (z1 > 13 || z2 > 13)
+		data->color = 0xff3000;
+	else if (z1 > 12 || z2 > 12)
+		data->color = 0xff4000;
+	else if (z1 > 11 || z2 > 11)
+		data->color = 0xff5000;
+	else if (z1 > 10 || z2 > 10)
+		data->color = 0xff6000;
+	else if (z1 > 9 || z2 > 9)
+		data->color = 0xff7000;
+	else if (z1 > 8 || z2 > 8)
+		data->color = 0xff8000;
+	else if (z1 > 7 || z2 > 7)
+		data->color = 0xff9000;
+	else if (z1 > 6 || z2 > 6)
+		data->color = 0xff0f00;
+	else if (z1 > 5 || z2 > 5)
+		data->color = 0xff1f00;
+	else if (z1 > 4 || z2 > 4)
+		data->color = 0xff2f00;
+	else if (z1 > 3 || z2 > 3)
+		data->color = 0xff3f00;
+	else if (z1 > 2 || z2 > 2)
+		data->color = 0xff4f00;
+	else if (z1 > 1 || z2 > 1)
+		data->color = 0xff5f00;
 	return (data);
 }
 
-void	drawing_web(t_mlx_data *data, int shift)
+void	drawing_web(t_mlx_data *data)
 {
 	int		x;
 	int		y;
 
 	y = -1;
-	data->shift = shift;
 	while (++y < data->size_y)
 	{
 		x = 0;
 		while (x < data->size_x)
 		{
-			//data->tab_map[y][x] += data->up;
-			drawing_get_color(data, data->tab_map[y][x]/* + data->up*/, data->tab_map[y][x + 1]);
+			drawing_get_color(data, data->tab_map[y][x], data->tab_map[y][x + 1]);
 			x = line_setx(data, x, y);
 			drawing_line(data, data->color);
 		}
@@ -175,8 +203,7 @@ void	drawing_web(t_mlx_data *data, int shift)
 		y = 0;
 		while (y < data->size_y)
 		{
-			//data->tab_map[y][x] += data->up;
-			drawing_get_color(data, data->tab_map[y][x]/* + data->up*/, data->tab_map[y + 1][x]);
+			drawing_get_color(data, data->tab_map[y][x], data->tab_map[y + 1][x]);
 			y = line_sety(data, x, y);
 			drawing_line(data, data->color);
 		}

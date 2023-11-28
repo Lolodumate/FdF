@@ -70,15 +70,23 @@ void pm_create_tab_map(t_mlx_data *data)
 	y = 0;
 	data->tab_map = ft_calloc(sizeof(int *), data->size_y + 1);
 	if (data->tab_map == NULL)
+	{
+		printf("Erreur allocation dynamique data->tab_map\n");
 		return ;
+	}
+	else
+		printf("Allocation dynamique data->tab_map OK\n");
 	while (y <= data->size_y)
 	{
 		data->tab_map[y] = ft_calloc(sizeof(int), data->size_x + 1);
 		if (data->tab_map[y] == NULL)
 		{
+			printf("Erreur allocation dynanique data->tab_map[y]\n");
 			free(data->tab_map);
 			return ;
 		}
+		else
+			printf("Allocation dynanique data->tab_map[%d] OK\n", y);
 		y++;
 	}
 }

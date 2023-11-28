@@ -48,8 +48,12 @@ t_map	*iso_rotation(t_map *map, t_line *web)
 
 void	iso_view(t_mlx_data *data, int *x, int *y, int z)
 {
-	*x = (*x - *y) * cos(0.816540) + data->shift + data->right;
-	*y = (*x + *y) * sin(0.816540) - z + data->shift - data->up;
+	*x = (*x - *y) * cos(0.816540) + data->shiftx + data->right;
+	*x += data->right_KP;
+	*x += data->zoom;
+	*y = (*x + *y) * sin(0.816540) - z + data->shifty - data->up;
+	*y += data->up_KP;
+	*x += data->zoom;
 }
 /*
 void	iso_map_update(t_map *map)

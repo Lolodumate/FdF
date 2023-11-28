@@ -72,7 +72,9 @@ typedef struct	s_mlx_data
 	int		**tab_map;
 	int		color;
 	int		up;
+	int		up_KP;
 	int		right;
+	int		right_KP;
 	int		x;
 	int		y;
 	int		position_x;
@@ -91,7 +93,8 @@ typedef struct	s_mlx_data
 	int		dy;
 	int		ex;
 	int		ey;
-	int		shift;
+	int		shiftx;
+	int		shifty;
 	t_image	image;
 }	t_mlx_data;
 
@@ -104,12 +107,12 @@ t_mlx_data		*drawing_get_color(t_mlx_data *data, int z1, int z2);
 int			drawing_color(t_mlx_data *data, int z);
 char		**split_line(char *line, int size);
 void		ft_putchar(char c);
-void		clean_map_line(t_mlx_data data, int size_y);
+void		clean_map_line(t_mlx_data *data, int size_y);
 void		clean_memory(t_mlx_data *data);
 void		color_screen(t_mlx_data *data, int color);
 void		put_pixel(t_mlx_data *data, int color);
 void		drawing_line(t_mlx_data *data, int z);
-void		drawing_web(t_mlx_data *data, int shift);
+void		drawing_web(t_mlx_data *data);
 void		clean_tab_int_map(t_mlx_data data, int size_y);
 void		iso_view(t_mlx_data *data, int *x, int *y, int z);
 int		line_setx(t_mlx_data *data, int x, int y);

@@ -21,10 +21,13 @@ void	clean_memory(t_mlx_data *data)
 	free(data->window_ptr);
 }
 */
-void	clean_map_line(t_mlx_data data, int size_y)
+/*
+void	clean_map_line(t_mlx_data *data, int size_y)
 {
 	clean_tab_int_map(data, size_y);
 }
+*/
+
 
 void	clean_tab_int_map(t_mlx_data data, int size_y)
 {
@@ -33,6 +36,7 @@ void	clean_tab_int_map(t_mlx_data data, int size_y)
 	y = 0;
 	while (y <= size_y)
 	{
+		printf("clean_tab_int_map - free(data->tab_map[%d] OK\n", y);
 		free(data.tab_map[y]);
 		y++;
 	}

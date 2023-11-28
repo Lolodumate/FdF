@@ -28,9 +28,13 @@ t_mlx_data	map_init(t_mlx_data data)
 //	data.smallest_z = 0;
 	data.rotation = 0;
 	data.tab_map = NULL;
-	data.zoom = 40;
+	data.zoom = 5;
 	data.up = 0;
+	data.up_KP = 0;
 	data.right = 0;
+	data.right_KP = 0;
+	data.shiftx = 800;
+	data.shifty = -300;
 	return (data);
 }
 /*
