@@ -66,7 +66,6 @@ typedef struct	s_mlx_data
 {
 	void	*mlx_ptr;
 	void	*window_ptr;
-	float		scale;
 	int		size_x;
 	int		size_y;
 	int		**tab_map;
@@ -79,6 +78,7 @@ typedef struct	s_mlx_data
 	int		y;
 	int		position_x;
 	int		position_y;
+	int		altitude;
 	int		rotation;
 	int		zoom;
 	int		xi;

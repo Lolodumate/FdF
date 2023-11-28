@@ -14,18 +14,13 @@
 
 t_mlx_data	map_init(t_mlx_data data)
 {
-//	data.= malloc(sizeof(t_data.);
-//	if (data.== NULL)
-//		return (NULL);
-	data.scale = 5;
 	data.size_x = 0;
 	data.size_y = 0;
 	data.x = 0;
 	data.y = 0;
 	data.position_x = 500;
 	data.position_y = 200;
-//	data.greatest_z = 0;
-//	data.smallest_z = 0;
+	data.altitude = 0;
 	data.rotation = 0;
 	data.tab_map = NULL;
 	data.zoom = 5;

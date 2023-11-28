@@ -187,11 +187,20 @@ void	drawing_web(t_mlx_data *data)
 	int		y;
 
 	y = -1;
+	printf("data->altitude = %d\n", data->altitude);
 	while (++y < data->size_y)
 	{
 		x = 0;
 		while (x < data->size_x)
 		{
+			if (data->tab_map[y][x] !=  0)
+			{
+				data->tab_map[y][x] += data->altitude;
+				if (data->tab_map[y][x] == 0 && data->altitude > 0)
+					data->tab_map[y][x] = -1;
+				if (data->tab_map[y][x] == 0 && data->altitude < 0)
+					data->tab_map[y][x] = 1;
+			}
 			drawing_get_color(data, data->tab_map[y][x], data->tab_map[y][x + 1]);
 			x = line_setx(data, x, y);
 			drawing_line(data, data->color);
@@ -203,7 +212,17 @@ void	drawing_web(t_mlx_data *data)
 		y = 0;
 		while (y < data->size_y)
 		{
-			drawing_get_color(data, data->tab_map[y][x], data->tab_map[y + 1][x]);
+/*			if (data->tab_map[y][x] !=  0)
+			{
+				data->tab_map[y][x] += data->altitude;
+				if (data->tab_map[y][x] == 0 && data->altitude > 0)
+					data->tab_map[y][x] = -1;
+				if (data->tab_map[y][x] == 0 && data->altitude < 0)
+					data->tab_map[y][x] = 1;
+
+				printf("data->tab_mp[y][x] = %d\n", data->tab_map[y][x]);
+			}
+*/			drawing_get_color(data, data->tab_map[y][x], data->tab_map[y + 1][x]);
 			y = line_sety(data, x, y);
 			drawing_line(data, data->color);
 		}

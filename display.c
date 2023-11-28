@@ -35,7 +35,6 @@ void	display_int_array(t_mlx_data data)
 
 void	display_map(t_mlx_data data)
 {
-	printf("map.scale = %f\n", data.scale);
 	printf("map.size_x = %d\n", data.size_x);
 	printf("map.size_y = %d\n", data.size_y);
 	printf("map.x = %d\n", data.x);

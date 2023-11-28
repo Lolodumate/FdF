@@ -64,8 +64,23 @@ int	deal_key(int key, t_mlx_data *data)
 		mlx_destroy_display(data->mlx_ptr);
 		free(data->mlx_ptr);
 		clean_tab_int_map((*data), (*data).size_y);
-		printf("deal_key - Check Check\n");
-		exit(1);
+		exit(0);
+	}
+	else if (key == XK_u)
+	{
+		data->altitude = 2;
+		write(1, "u\n", 2);
+		printf("Valeur de data->altitude = %d\n", data->altitude);
+	}
+	else if (key == XK_d)
+	{
+		data->altitude = -2;
+		write(1, "d\n", 2);
+		printf("Valeur de data->altitude = %d\n", data->altitude);
+	}
+	else if (key == XK_Down)
+	{
+		data->up += -10;
 	}
 	else if (key == XK_Up)
 	{
@@ -117,20 +132,22 @@ int	deal_key(int key, t_mlx_data *data)
 	}
 	else if (key == XK_F5)
 	{
-		data->zoom += 1;
+		data->zoom += 2;
 		write(1, "Zoom_F5\n", 8);
 		printf("Valeur de data->zoom = %d\n", data->zoom);
 	}
 	else if (key == XK_F6)
 	{
-		data->zoom += -1;
+		data->zoom += -2;
 		write(1, "Zoom_F5\n", 8);
 		printf("Valeur de data->zoom = %d\n", data->zoom);
 	}
 	else
 		ft_putchar('x');
 	drawing_web(data);
+	display_map(*data);
 	data->image.image_ptr = mlx_new_image(data->mlx_ptr, 1800, 1000);
+	data->altitude = 0;
 	return (0);
 }
 
