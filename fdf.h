@@ -68,6 +68,7 @@ typedef struct	s_mlx_data
 	void	*window_ptr;
 	int		size_x;
 	int		size_y;
+	int		**altitude_reset;
 	int		**tab_map;
 	int		color;
 	int		up;
@@ -95,6 +96,7 @@ typedef struct	s_mlx_data
 	int		ey;
 	int		shiftx;
 	int		shifty;
+	char	*map_name;
 	t_image	image;
 }	t_mlx_data;
 
@@ -115,13 +117,15 @@ void		drawing_line(t_mlx_data *data, int z);
 void		drawing_web(t_mlx_data *data);
 void		clean_tab_int_map(t_mlx_data data, int size_y);
 void		iso_view(t_mlx_data *data, int *x, int *y, int z);
+void		menu(t_mlx_data *data);
+void		pm_reset_map(t_mlx_data *data);
 int		line_setx(t_mlx_data *data, int x, int y);
 int		line_sety(t_mlx_data *data, int x, int y);
 void		line_init(t_mlx_data *data);
 //t_map		*ev_update_map(t_mlx_data *data, t_map *map, int v);
 //t_map		*map_data_matrix(t_map *map, int x, int y, int *tab);
 //t_map		*map_init_matrix(t_map *map);
-t_mlx_data	map_init(t_mlx_data data);
+t_mlx_data	map_init(t_mlx_data data, char **argv);
 //t_map		*map_scale(t_map *map);
 void		pm_create_tab_map(t_mlx_data *data);
 //t_map		*map_fill_matrix(t_map *map, t_line *line);

@@ -66,6 +66,12 @@ int	deal_key(int key, t_mlx_data *data)
 		clean_tab_int_map((*data), (*data).size_y);
 		exit(0);
 	}
+	else if (key == XK_F12)
+	{
+		pm_reset_map(data);
+		write(1, "Reset\n", 6);
+		printf("Reset de l'altitude");
+	}
 	else if (key == XK_u)
 	{
 		data->altitude = 2;
@@ -144,8 +150,9 @@ int	deal_key(int key, t_mlx_data *data)
 	}
 	else
 		ft_putchar('x');
+	menu(data);
 	drawing_web(data);
-	display_map(*data);
+//	display_map(*data);
 	data->image.image_ptr = mlx_new_image(data->mlx_ptr, 1800, 1000);
 	data->altitude = 0;
 	return (0);
@@ -162,13 +169,13 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (0);
 	line_init(&data);
-	data = map_init(data);
+	data = map_init(data, argv);
 	list = pm_read_map(&data, argv, list);
 	if (list == NULL)
 		return (-1);
 	pm_insert_int_values(list, &data);
 	printf("data->size_y = %d\n", data.size_y);
-	display_map(data);
+//	display_map(data);
 	data.mlx_ptr = mlx_init();
 	if (data.mlx_ptr == NULL)
 		return (-1);
@@ -179,6 +186,7 @@ int	main(int argc, char **argv)
 		free(data.mlx_ptr);
 		return (-1);
 	}
+	menu(&data);
 	data.image.image_ptr = mlx_new_image(data.mlx_ptr, 1800, 1000);
 	drawing_web(&data);
 //	data.image.image_pixel_ptr = mlx_get_data_addr(data.image.image_ptr, &data.image.bit_per_pixel, &data.image.line_len, &data.image.endian);
@@ -186,12 +194,12 @@ int	main(int argc, char **argv)
 	mlx_key_hook(data.window_ptr, deal_key, &data);
 	mlx_loop(data.mlx_ptr);
 	printf("Check\n");
-	mlx_clear_window(data.mlx_ptr, data.window_ptr);
+/*	mlx_clear_window(data.mlx_ptr, data.window_ptr);
 	mlx_destroy_image(data.mlx_ptr, data.image.image_ptr);
 	mlx_destroy_window(data.mlx_ptr, data.window_ptr);
 	clean_tab_int_map(data, data.size_y);
 	free(data.image.image_ptr);
 	free(data.window_ptr);
 	free(data.mlx_ptr);
-	return (0);
+*/	return (0);
 }

@@ -38,7 +38,9 @@ void	clean_tab_int_map(t_mlx_data data, int size_y)
 	{
 		printf("clean_tab_int_map - free(data->tab_map[%d] OK\n", y);
 		free(data.tab_map[y]);
+		free(data.altitude_reset[y]);
 		y++;
 	}
 	free(data.tab_map);
+	free(data.altitude_reset);
 }

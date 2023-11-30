@@ -22,6 +22,7 @@ SRC =	main.c \
 	clean_memory.c \
 	isometry.c \
 	split.c \
+	menu.c \
 
 CC =	gcc
 

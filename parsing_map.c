@@ -69,17 +69,19 @@ void pm_create_tab_map(t_mlx_data *data)
 	
 	y = 0;
 	data->tab_map = ft_calloc(sizeof(int *), data->size_y + 1);
-	if (data->tab_map == NULL)
+	data->altitude_reset = ft_calloc(sizeof(int *), data->size_y + 1);
+	if (data->tab_map == NULL || data->altitude_reset == NULL)
 	{
 		printf("Erreur allocation dynamique data->tab_map\n");
 		return ;
 	}
 	else
-		printf("Allocation dynamique data->tab_map OK\n");
+		printf("Allocation dynamique data->tab_map et data->altitude_reset OK\n");
 	while (y <= data->size_y)
 	{
 		data->tab_map[y] = ft_calloc(sizeof(int), data->size_x + 1);
-		if (data->tab_map[y] == NULL)
+		data->altitude_reset[y] = ft_calloc(sizeof(int), data->size_x + 1);
+		if (data->tab_map[y] == NULL || data->altitude_reset[y] == NULL)
 		{
 			printf("Erreur allocation dynanique data->tab_map[y]\n");
 			free(data->tab_map);
@@ -87,6 +89,25 @@ void pm_create_tab_map(t_mlx_data *data)
 		}
 		else
 			printf("Allocation dynanique data->tab_map[%d] OK\n", y);
+		y++;
+	}
+}
+
+void	pm_reset_map(t_mlx_data *data)
+{
+	int		x;
+	int		y;
+
+	x = 0;
+	y = 0;
+	while (y <= data->size_y)
+	{
+		while (x < data->size_x)
+		{
+			data->tab_map[y][x] = data->altitude_reset[y][x];
+			x++;
+		}
+		x = 0;
 		y++;
 	}
 }
@@ -106,12 +127,10 @@ void pm_insert_int_values(t_parsing *list, t_mlx_data *data)
 		while (data->x < data->size_x)
 		{
 			value = list->parsing_line[data->x];
+			printf("value = %s\n", value);
 			data->tab_map[data->y][data->x] = ft_atoi(list->parsing_line[data->x]);
-/*			if (map->tab_map[map->y][map->x] > map->greatest_z)
-				map->greatest_z = map->tab_map[map->y][map->x];
-			if (map->tab_map[map->y][map->x] < map->smallest_z)
-				map->smallest_z = map->tab_map[map->y][map->x];
-*/			free(value);
+			data->altitude_reset[data->y][data->x] = ft_atoi(list->parsing_line[data->x]);
+			free(value);
 			data->x++;
 		}
 		data->y--;

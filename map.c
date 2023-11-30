@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-t_mlx_data	map_init(t_mlx_data data)
+t_mlx_data	map_init(t_mlx_data data, char **argv)
 {
 	data.size_x = 0;
 	data.size_y = 0;
@@ -22,6 +22,7 @@ t_mlx_data	map_init(t_mlx_data data)
 	data.position_y = 200;
 	data.altitude = 0;
 	data.rotation = 0;
+	data.altitude_reset = NULL;
 	data.tab_map = NULL;
 	data.zoom = 5;
 	data.up = 0;
@@ -30,6 +31,7 @@ t_mlx_data	map_init(t_mlx_data data)
 	data.right_KP = 0;
 	data.shiftx = 800;
 	data.shifty = -300;
+	data.map_name = argv[1];
 	return (data);
 }
 /*
