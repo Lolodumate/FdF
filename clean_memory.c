@@ -37,7 +37,7 @@ void	clean_tab_int_map(t_mlx_data data, int size_y)
 	y = 0;
 	while (y <= size_y)
 	{
-		printf("clean_tab_int_map - free(data->tab_map[%d] OK\n", y);
+//		printf("clean_tab_int_map - free(data->tab_map[%d] OK\n", y);
 		free(data.tab_map[y]);
 		free(data.altitude_reset[y]);
 		y++;
@@ -57,11 +57,11 @@ void	clean_tab_colors(t_mlx_data data, int size_y)
 	{
 		while (x <= data.size_x)
 		{
-			printf("clean_tab_colors - free(data.tab_colors[%d][%d] OK\n", y, x);
+//			printf("clean_tab_colors - free(data.tab_colors[%d][%d] OK\n", y, x);
 			free(data.tab_colors[y][x]);
 			x++;
 		}
-		printf("clean_tab_colors - free(data.tab_colors[%d] OK\n", y);
+//		printf("clean_tab_colors - free(data.tab_colors[%d] OK\n", y);
 		free(data.tab_colors[y]);
 		x = 0;
 		y++;

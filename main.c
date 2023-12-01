@@ -162,11 +162,9 @@ int	deal_key(int key, t_mlx_data *data)
 int	main(int argc, char **argv)
 {
 	t_parsing	*list;
-//	t_map		map;
 	t_mlx_data	data;
 
 	list = NULL;
-//	map = NULL;
 	if (argc != 2)
 		return (0);
 	line_init(&data);

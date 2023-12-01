@@ -20,17 +20,27 @@ int	pm_size_map(char *line_map, t_mlx_data *data)
 	i = 0;
 	while (line_map[i] && line_map[i] == ' ')
 		i++;
-	while (line_map[++i])
+	while (line_map[i++])
 	{
-		if (line_map[i] && !ft_isdigit(line_map[i]))
+		if (line_map[i] && line_map[i] == ',')
 		{
+			i++;
+			while (line_map[i] && ft_isalnum(line_map[i]))
+				i++;
+			while(line_map[i] && line_map[i] == ' ')
+				i++;
 			data->size_x++;
-			while (line_map[i] && line_map[i] == ' ')
+		}
+		else
+		{
+			while (ft_isdigit(line_map[i]))
+				i++;
+			if (line_map[i] == ' ')
+				data->size_x++;
+			while (line_map[i] == ' ')
 				i++;
 		}
 	}
-	if (line_map[i] && line_map[i] != ' ')
-		data->size_x++;
 	printf("pm_size_map - Valeur de map->size_x = %d\n", data->size_x);
 	return (data->size_x); 
 }
@@ -85,8 +95,8 @@ void	pm_create_tab_map(t_mlx_data *data)
 		printf("Erreur allocation dynamique data->tab_map\n");
 		return ;
 	}
-	else
-		printf("Allocation dynamique data->tab_map et data->altitude_reset OK\n");
+//	else
+//		printf("Allocation dynamique data->tab_map et data->altitude_reset OK\n");
 	while (y <= data->size_y)
 	{
 		data->tab_map[y] = ft_calloc(sizeof(int), data->size_x + 1);
@@ -97,8 +107,8 @@ void	pm_create_tab_map(t_mlx_data *data)
 			free(data->tab_map);
 			return ;
 		}
-		else
-			printf("Allocation dynanique data->tab_map[%d] OK\n", y);
+//		else
+//			printf("Allocation dynanique data->tab_map[%d] OK\n", y);
 		y++;
 	}
 }
@@ -137,7 +147,7 @@ void pm_insert_int_values(t_parsing *list, t_mlx_data *data)
 		while (data->x < data->size_x)
 		{
 			value = list->parsing_value[data->x];
-		//	printf("data->x = %d - value = %s - printf = %d\n", data->x, value, printf("data->x = %d - value = %s\n", data->x, value));
+//			printf("data->x = %d - value = %s\n", data->x, value);
 			data->tab_map[data->y][data->x] = ft_atoi(list->parsing_value[data->x]);
 			data->altitude_reset[data->y][data->x] = data->tab_map[data->y][data->x];
 			free(value);

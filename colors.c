@@ -13,8 +13,8 @@ void	colors_create_tab_colors(t_mlx_data *data)
 		printf("Erreur allocation dynamique data->tab_colors\n");
 		return ;
 	}
-	else
-		printf("Allocation dynamique data->tab_colors OK\n");
+//	else
+//		printf("Allocation dynamique data->tab_colors OK\n");
 	while (y <= data->size_y)
 	{
 		data->tab_colors[y] = ft_calloc(sizeof(char *), data->size_x + 1);
@@ -23,8 +23,8 @@ void	colors_create_tab_colors(t_mlx_data *data)
 			printf("Erreur allocation dynamique tab_colors[%d]\n", y);
 			return ;
 		}
-		else
-			printf("Allocation dynamique tab_colors[%d] OK\n", y);
+//		else
+//			printf("Allocation dynamique tab_colors[%d] OK\n", y);
 		while (x <= data->size_x)
 		{
 			data->tab_colors[y][x] = ft_calloc(sizeof(char), 8 + 1);
@@ -35,8 +35,8 @@ void	colors_create_tab_colors(t_mlx_data *data)
 				free(data->tab_colors);
 				return ;
 			}
-			else
-				printf("Allocation dynamique data->tab_colors[%d][%d] OK\n", y, x);
+//			else
+//				printf("Allocation dynamique data->tab_colors[%d][%d] OK\n", y, x);
 			x++;
 		}
 		x = 0;
@@ -58,7 +58,8 @@ t_parsing	*colors_insert_colors(t_parsing *list, t_mlx_data *data)
 		while (data->x < data->size_x)
 		{
 			ft_strlcpy(data->tab_colors[data->y][data->x], list->parsing_color[data->x], 8);
-			printf("data->tab_colors[%d] = %s\n", data->y, data->tab_colors[data->y][data->x]);
+			printf("list->parsing_color[%d] = %s\n", data->x, list->parsing_color[data->x]);
+//			printf("data->tab_colors[%d] = %s\n", data->y, data->tab_colors[data->y][data->x]);
 			free(list->parsing_color[data->x]);
 			data->x++;
 		}

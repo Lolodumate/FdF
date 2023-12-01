@@ -41,6 +41,5 @@ void	display_map(t_mlx_data data)
 	printf("map.x = %d\n", data.x);
 	printf("map.position_x = %d\n", data.position_x);
 	printf("map.position_y = %d\n", data.position_y);
-//	printf("map.rotation = %f\n", data.rotation);
 	display_int_array(data);
 }
