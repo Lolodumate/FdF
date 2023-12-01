@@ -18,6 +18,7 @@
 # include <X11/keysym.h>
 # include <unistd.h>
 # include <stdlib.h>
+
 # include <stdio.h>
 # include <limits.h>
 # include <math.h>
@@ -29,6 +30,11 @@ typedef enum	e_color
 	RED = 0xff00000
 } t_color;
 
+typedef enum	e_bool
+{
+	false,
+	true
+} t_bool;
 
 typedef struct	s_image
 {
@@ -58,10 +64,17 @@ typedef struct	s_parsing
 {
 	int				index;
 	char			*line;
-	char			**parsing_line;
+	char			**parsing_value;
+	char			**parsing_color;
 	struct	s_parsing	*next;
 }	t_parsing;
-
+/*
+typedef struct s_mapline_data
+{
+	int		value;
+	char	*color;
+} t_mapline_data;
+*/
 typedef struct	s_mlx_data
 {
 	void	*mlx_ptr;
@@ -70,6 +83,7 @@ typedef struct	s_mlx_data
 	int		size_y;
 	int		**altitude_reset;
 	int		**tab_map;
+	int		map_contain_colors;
 	int		color;
 	int		up;
 	int		up_KP;
@@ -96,26 +110,32 @@ typedef struct	s_mlx_data
 	int		ey;
 	int		shiftx;
 	int		shifty;
+	char	***tab_colors;
 	char	*map_name;
 	t_image	image;
 }	t_mlx_data;
 
 int			deal_key(int key, t_mlx_data *data);
+int			split_map_contain_colors(char *line);
 double			iso_rotation(double ab, int angle);
 double			iso_correction_hypothenuse(double scale, double ab, int angle);
 int			pm_size_map(char *line_map, t_mlx_data *data);
 int			values_len_value(char *line, int i);
 t_mlx_data		*drawing_get_color(t_mlx_data *data, int z1, int z2);
 int			drawing_color(t_mlx_data *data, int z);
-char		**split_line(char *line, int size);
+char		**split_get_value(char *line, int size);
+char		**split_get_color(char *line, int size);
 void		ft_putchar(char c);
-void		clean_map_line(t_mlx_data *data, int size_y);
+void		clean_map(t_mlx_data data, int size_y);
+void		clean_tab_int_map(t_mlx_data data, int size_y);
+void		clean_tab_colors(t_mlx_data data, int size_y);
 void		clean_memory(t_mlx_data *data);
-void		color_screen(t_mlx_data *data, int color);
+//void		color_screen(t_mlx_data *data, int color);
+void		colors_create_tab_colors(t_mlx_data *data);
+t_parsing	*colors_insert_colors(t_parsing *list, t_mlx_data *data);
 void		put_pixel(t_mlx_data *data, int color);
 void		drawing_line(t_mlx_data *data, int z);
 void		drawing_web(t_mlx_data *data);
-void		clean_tab_int_map(t_mlx_data data, int size_y);
 void		iso_view(t_mlx_data *data, int *x, int *y, int z);
 void		menu(t_mlx_data *data);
 void		pm_reset_map(t_mlx_data *data);

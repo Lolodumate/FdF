@@ -23,6 +23,7 @@ SRC =	main.c \
 	isometry.c \
 	split.c \
 	menu.c \
+	colors.c \
 
 CC =	gcc
 

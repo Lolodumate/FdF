@@ -23,7 +23,9 @@ t_mlx_data	map_init(t_mlx_data data, char **argv)
 	data.altitude = 0;
 	data.rotation = 0;
 	data.altitude_reset = NULL;
+	data.map_contain_colors = false;
 	data.tab_map = NULL;
+	data.tab_colors = NULL;
 	data.zoom = 5;
 	data.up = 0;
 	data.up_KP = 0;

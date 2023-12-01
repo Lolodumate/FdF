@@ -21,12 +21,13 @@ void	clean_memory(t_mlx_data *data)
 	free(data->window_ptr);
 }
 */
-/*
-void	clean_map_line(t_mlx_data *data, int size_y)
+
+void	clean_map(t_mlx_data data, int size_y)
 {
 	clean_tab_int_map(data, size_y);
+	clean_tab_colors(data, size_y);
 }
-*/
+
 
 
 void	clean_tab_int_map(t_mlx_data data, int size_y)
@@ -43,4 +44,27 @@ void	clean_tab_int_map(t_mlx_data data, int size_y)
 	}
 	free(data.tab_map);
 	free(data.altitude_reset);
+}
+
+void	clean_tab_colors(t_mlx_data data, int size_y)
+{
+	int		x;
+	int		y;
+
+	x = 0;
+	y = 0;
+	while (y <= size_y)
+	{
+		while (x <= data.size_x)
+		{
+			printf("clean_tab_colors - free(data.tab_colors[%d][%d] OK\n", y, x);
+			free(data.tab_colors[y][x]);
+			x++;
+		}
+		printf("clean_tab_colors - free(data.tab_colors[%d] OK\n", y);
+		free(data.tab_colors[y]);
+		x = 0;
+		y++;
+	}
+	free(data.tab_colors);
 }

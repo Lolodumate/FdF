@@ -21,7 +21,8 @@ t_parsing	*insert_node(t_parsing *list, char *line_map, int size)
 		return (NULL);
 	node->index = 0;
 	node->line = line_map;
-	node->parsing_line = split_line(line_map, size);
+	node->parsing_value = split_get_value(line_map, size);
+	node->parsing_color = split_get_color(line_map, size);
 	node->next = list;
 	return (node);
 }
@@ -33,7 +34,8 @@ t_parsing	*clear_node(t_parsing *list)
 	if (list == NULL)
 		return (NULL);
 	node = list->next;
-	free(list->parsing_line);
+	free(list->parsing_value);
+	free(list->parsing_color);
 	free(list);
 	return (node);
 }
@@ -48,7 +50,7 @@ void	display_linked_list(t_mlx_data data, t_parsing *list)
 		while (list && (i < data.size_x))
 		{
 //			printf("Index LL[%2d] - i = %d - parsing_line = %s\n", list->index, i, list->parsing_line[i]);
-			printf("%3s ", list->parsing_line[i]);
+			printf("%3s ", list->parsing_value[i]);
 			i++;
 		}
 		printf("\n");

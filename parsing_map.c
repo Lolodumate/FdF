@@ -49,6 +49,8 @@ t_parsing	*pm_read_map(t_mlx_data *data, char **argv, t_parsing *list)
 	data->size_x = pm_size_map(line_map, data);
 	while (line_map != NULL)
 	{
+		if (data->map_contain_colors == false)
+			data->map_contain_colors = split_map_contain_colors(line_map);
 		list = insert_node(list, line_map, data->size_x);
 //		printf("pm_read_map - i = %2d - line = %s", list->index, line_map);
 		while (i < data->size_x)
@@ -59,11 +61,19 @@ t_parsing	*pm_read_map(t_mlx_data *data, char **argv, t_parsing *list)
 		line_map = get_next_line(fd);
 	}
 	pm_create_tab_map(data);
+	printf(">>>>>>>>>>>>>>>>>>>Pointeur list = %p\n", list);
+	colors_create_tab_colors(data);
+	printf(">>>>>>>>>>>>>>>>>>>Pointeur list = %p\n", list);
+/*****************************************************************************/
+	list = colors_insert_colors(list, data);
+	printf(">>>>>>>>>>>>>>>>>>>Pointeur list = %p\n", list);
+	pm_insert_int_values(list, data);
+//	printf("\n******************************Valeur de data->map_contain_colors = %d\n\n", data->map_contain_colors);
 	return (list);
 }
 
 // Create the two dimensions int tab size (called in read_map->function)
-void pm_create_tab_map(t_mlx_data *data)
+void	pm_create_tab_map(t_mlx_data *data)
 {
 	int		y;
 	
@@ -126,10 +136,10 @@ void pm_insert_int_values(t_parsing *list, t_mlx_data *data)
 	{
 		while (data->x < data->size_x)
 		{
-			value = list->parsing_line[data->x];
-			printf("value = %s\n", value);
-			data->tab_map[data->y][data->x] = ft_atoi(list->parsing_line[data->x]);
-			data->altitude_reset[data->y][data->x] = ft_atoi(list->parsing_line[data->x]);
+			value = list->parsing_value[data->x];
+		//	printf("data->x = %d - value = %s - printf = %d\n", data->x, value, printf("data->x = %d - value = %s\n", data->x, value));
+			data->tab_map[data->y][data->x] = ft_atoi(list->parsing_value[data->x]);
+			data->altitude_reset[data->y][data->x] = data->tab_map[data->y][data->x];
 			free(value);
 			data->x++;
 		}
@@ -137,5 +147,5 @@ void pm_insert_int_values(t_parsing *list, t_mlx_data *data)
 		data->x = 0;
 		list = clear_node(list);
 	}
-	data->y++;
+	data->y = 0;
 }

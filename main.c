@@ -63,7 +63,8 @@ int	deal_key(int key, t_mlx_data *data)
 		mlx_destroy_window(data->mlx_ptr, data->window_ptr);
 		mlx_destroy_display(data->mlx_ptr);
 		free(data->mlx_ptr);
-		clean_tab_int_map((*data), (*data).size_y);
+//		clean_tab_int_map((*data), (*data).size_y);
+		clean_map(*data, (*data).size_y);
 		exit(0);
 	}
 	else if (key == XK_F12)
@@ -173,7 +174,6 @@ int	main(int argc, char **argv)
 	list = pm_read_map(&data, argv, list);
 	if (list == NULL)
 		return (-1);
-	pm_insert_int_values(list, &data);
 	printf("data->size_y = %d\n", data.size_y);
 //	display_map(data);
 	data.mlx_ptr = mlx_init();
@@ -193,13 +193,5 @@ int	main(int argc, char **argv)
 	//	printf("Line_len %d <-> SIDE_LEN %d\nbpp %d\nendian %d\n", data.image.line_len, 500, data.image.bit_per_pixel, data.image.endian);
 	mlx_key_hook(data.window_ptr, deal_key, &data);
 	mlx_loop(data.mlx_ptr);
-	printf("Check\n");
-/*	mlx_clear_window(data.mlx_ptr, data.window_ptr);
-	mlx_destroy_image(data.mlx_ptr, data.image.image_ptr);
-	mlx_destroy_window(data.mlx_ptr, data.window_ptr);
-	clean_tab_int_map(data, data.size_y);
-	free(data.image.image_ptr);
-	free(data.window_ptr);
-	free(data.mlx_ptr);
-*/	return (0);
+	return (0);
 }
