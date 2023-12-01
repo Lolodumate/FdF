@@ -6,7 +6,7 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:23:26 by laroges           #+#    #+#             */
-/*   Updated: 2023/12/01 18:32:21 by laroges          ###   ########.fr       */
+/*   Updated: 2023/12/01 20:14:32 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_mlx_data	map_init(t_mlx_data data, char **argv)
 	data.tab_map = NULL;
 	data.tab_colors = NULL;
 	data.zoom = 5;
+	data.color = 0xffffff;
 	data.up = 0;
 	data.upkp = 0;
 	data.right = 0;
