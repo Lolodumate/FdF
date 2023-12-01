@@ -6,7 +6,7 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 01:38:31 by laroges           #+#    #+#             */
-/*   Updated: 2023/11/21 20:17:52 by laroges          ###   ########.fr       */
+/*   Updated: 2023/12/01 19:29:10 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,36 +23,29 @@
 # include <limits.h>
 # include <math.h>
 
-typedef enum	e_color
+typedef enum e_color
 {
 	WHITE = 0xffffff,
 	SALMON = 0xff8080,
 	RED = 0xff00000
-} t_color;
+}	t_color;
 
-typedef enum	e_bool
+typedef enum e_bool
 {
 	false,
 	true
-} t_bool;
+}	t_bool;
 
-typedef struct	s_image
+typedef struct s_image
 {
+	int		bit_per_pixel;
+	int		endian;
+	int		line_len;
 	void	*image_ptr;
 	char	*image_pixel_ptr;
-	int	bit_per_pixel;
-	int	endian;
-	int	line_len;
 }	t_image;
-/*
-typedef struct	s_point
-{
-	int	x;
-	int	y;
-}	t_point;
-*/
 
-typedef struct	s_data_matrix
+typedef struct s_data_matrix
 {
 	int		x;
 	int		y;
@@ -60,22 +53,16 @@ typedef struct	s_data_matrix
 	char	color[8];
 }	t_data_matrix;
 
-typedef struct	s_parsing
+typedef struct s_parsing
 {
-	int				index;
-	char			*line;
-	char			**parsing_value;
-	char			**parsing_color;
-	struct	s_parsing	*next;
+	int					index;
+	char				*line;
+	char				**parsing_value;
+	char				**parsing_color;
+	struct s_parsing	*next;
 }	t_parsing;
-/*
-typedef struct s_mapline_data
-{
-	int		value;
-	char	*color;
-} t_mapline_data;
-*/
-typedef struct	s_mlx_data
+
+typedef struct s_mlx_data
 {
 	void	*mlx_ptr;
 	void	*window_ptr;
@@ -86,9 +73,9 @@ typedef struct	s_mlx_data
 	int		map_contain_colors;
 	int		color;
 	int		up;
-	int		up_KP;
+	int		upkp;
 	int		right;
-	int		right_KP;
+	int		rightkp;
 	int		x;
 	int		y;
 	int		position_x;
@@ -117,12 +104,13 @@ typedef struct	s_mlx_data
 
 int			deal_key(int key, t_mlx_data *data);
 int			split_map_contain_colors(char *line);
-double			iso_rotation(double ab, int angle);
-double			iso_correction_hypothenuse(double scale, double ab, int angle);
 int			pm_size_map(char *line_map, t_mlx_data *data);
 int			values_len_value(char *line, int i);
-t_mlx_data		*drawing_get_color(t_mlx_data *data, int z1, int z2);
+int			line_setx(t_mlx_data *data, int x, int y);
+int			line_sety(t_mlx_data *data, int x, int y);
 int			drawing_color(t_mlx_data *data, int z);
+double		iso_rotation(double ab, int angle);
+double		iso_correction_hypothenuse(double scale, double ab, int angle);
 char		**split_get_value(char *line, int size);
 char		**split_get_color(char *line, int size);
 void		ft_putchar(char c);
@@ -134,18 +122,20 @@ void		clean_memory(t_mlx_data *data);
 void		colors_create_tab_colors(t_mlx_data *data);
 t_parsing	*colors_insert_colors(t_parsing *list, t_mlx_data *data);
 void		put_pixel(t_mlx_data *data, int color);
-void		drawing_line(t_mlx_data *data, int z);
+void		drawing_line_x(t_mlx_data *data, int z);
+void		drawing_line_y(t_mlx_data *data, int z);
 void		drawing_web(t_mlx_data *data);
 void		iso_view(t_mlx_data *data, int *x, int *y, int z);
-void		menu(t_mlx_data *data);
+void		menu_move(t_mlx_data *data);
+void		menu_change(t_mlx_data *data);
 void		pm_reset_map(t_mlx_data *data);
-int		line_setx(t_mlx_data *data, int x, int y);
-int		line_sety(t_mlx_data *data, int x, int y);
 void		line_init(t_mlx_data *data);
 //t_map		*ev_update_map(t_mlx_data *data, t_map *map, int v);
 //t_map		*map_data_matrix(t_map *map, int x, int y, int *tab);
 //t_map		*map_init_matrix(t_map *map);
 t_mlx_data	map_init(t_mlx_data data, char **argv);
+t_mlx_data	*drawing_init_data(t_mlx_data *data, double x, double y);
+t_mlx_data	*drawing_get_color(t_mlx_data *data, int z1, int z2);
 //t_map		*map_scale(t_map *map);
 void		pm_create_tab_map(t_mlx_data *data);
 //t_map		*map_fill_matrix(t_map *map, t_line *line);

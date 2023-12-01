@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   data.c                                              :+:      :+:    :+:   */
+/*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:23:26 by laroges           #+#    #+#             */
-/*   Updated: 2023/11/21 20:47:16 by laroges          ###   ########.fr       */
+/*   Updated: 2023/12/01 18:32:21 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ t_mlx_data	map_init(t_mlx_data data, char **argv)
 	data.tab_colors = NULL;
 	data.zoom = 5;
 	data.up = 0;
-	data.up_KP = 0;
+	data.upkp = 0;
 	data.right = 0;
-	data.right_KP = 0;
+	data.rightkp = 0;
 	data.shiftx = 800;
 	data.shifty = -300;
 	data.map_name = argv[1];

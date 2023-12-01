@@ -6,7 +6,7 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 14:48:05 by laroges           #+#    #+#             */
-/*   Updated: 2023/11/02 16:21:48 by laroges          ###   ########.fr       */
+/*   Updated: 2023/12/01 19:01:14 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	pm_size_map(char *line_map, t_mlx_data *data)
 			i++;
 			while (line_map[i] && ft_isalnum(line_map[i]))
 				i++;
-			while(line_map[i] && line_map[i] == ' ')
+			while (line_map[i] && line_map[i] == ' ')
 				i++;
 			data->size_x++;
 		}
@@ -42,16 +42,17 @@ int	pm_size_map(char *line_map, t_mlx_data *data)
 		}
 	}
 	printf("pm_size_map - Valeur de map->size_x = %d\n", data->size_x);
-	return (data->size_x); 
+	return (data->size_x);
 }
 
 // Calculate the map->(x, y) size and create a linked list containing the lines of the *.fdf file
 t_parsing	*pm_read_map(t_mlx_data *data, char **argv, t_parsing *list)
 {
+	int		i;
 	int		fd;
 	char	*line_map;
-	int	i = 0;
 
+	i = 0;
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
 		return (NULL);
@@ -71,14 +72,9 @@ t_parsing	*pm_read_map(t_mlx_data *data, char **argv, t_parsing *list)
 		line_map = get_next_line(fd);
 	}
 	pm_create_tab_map(data);
-	printf(">>>>>>>>>>>>>>>>>>>Pointeur list = %p\n", list);
 	colors_create_tab_colors(data);
-	printf(">>>>>>>>>>>>>>>>>>>Pointeur list = %p\n", list);
-/*****************************************************************************/
 	list = colors_insert_colors(list, data);
-	printf(">>>>>>>>>>>>>>>>>>>Pointeur list = %p\n", list);
 	pm_insert_int_values(list, data);
-//	printf("\n******************************Valeur de data->map_contain_colors = %d\n\n", data->map_contain_colors);
 	return (list);
 }
 
@@ -91,24 +87,16 @@ void	pm_create_tab_map(t_mlx_data *data)
 	data->tab_map = ft_calloc(sizeof(int *), data->size_y + 1);
 	data->altitude_reset = ft_calloc(sizeof(int *), data->size_y + 1);
 	if (data->tab_map == NULL || data->altitude_reset == NULL)
-	{
-		printf("Erreur allocation dynamique data->tab_map\n");
 		return ;
-	}
-//	else
-//		printf("Allocation dynamique data->tab_map et data->altitude_reset OK\n");
 	while (y <= data->size_y)
 	{
 		data->tab_map[y] = ft_calloc(sizeof(int), data->size_x + 1);
 		data->altitude_reset[y] = ft_calloc(sizeof(int), data->size_x + 1);
 		if (data->tab_map[y] == NULL || data->altitude_reset[y] == NULL)
 		{
-			printf("Erreur allocation dynanique data->tab_map[y]\n");
 			free(data->tab_map);
 			return ;
 		}
-//		else
-//			printf("Allocation dynanique data->tab_map[%d] OK\n", y);
 		y++;
 	}
 }
@@ -135,7 +123,7 @@ void	pm_reset_map(t_mlx_data *data)
 /* At this point, we got the size (x, y) of the map->and the **int tab. 
  * The following function Inserts int values in the **int tab
  */
-void pm_insert_int_values(t_parsing *list, t_mlx_data *data)
+void	pm_insert_int_values(t_parsing *list, t_mlx_data *data)
 {
 	char	*value;
 
@@ -148,7 +136,7 @@ void pm_insert_int_values(t_parsing *list, t_mlx_data *data)
 		{
 			value = list->parsing_value[data->x];
 //			printf("data->x = %d - value = %s\n", data->x, value);
-			data->tab_map[data->y][data->x] = ft_atoi(list->parsing_value[data->x]);
+			data->tab_map[data->y][data->x] = ft_atoi(value);
 			data->altitude_reset[data->y][data->x] = data->tab_map[data->y][data->x];
 			free(value);
 			data->x++;

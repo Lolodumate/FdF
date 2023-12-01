@@ -6,52 +6,16 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 03:00:31 by laroges           #+#    #+#             */
-/*   Updated: 2023/11/21 20:45:31 by laroges          ###   ########.fr       */
+/*   Updated: 2023/12/01 19:45:24 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-/*
- * Compilation : cc -I $(INCLUDE) main.c -L $(INCLUDEMLX) -lmlx -framework OpenGL -framework AppKit
- *
- * */
-
 void	ft_putchar(char c)
 {
 	write(1, &c, 1);
 }
-/*
-void	color_screen(t_mlx_data *data, int color)
-{
-	for (int y = 0; y < 1080; ++y)
-	{
-		for (int x = 0; x < 1920; ++x)
-		{
-			mlx_pixel_put(data->mlx_ptr, data->window_ptr, x, y, color);
-		}
-	}
-}
-*/
-/*
-void	put_pixel(t_mlx_data *data, int color)
-{
-	int		i;
-	int		j;
-	
-	i = 0;
-	j = 0;
-	while (j < 20)
-	{
-		while (i < 20)
-		{
-			mlx_pixel_put(data->mlx_ptr, data->window_ptr, i + 100, j + 100, color);
-			i++;
-		}
-		i = 0;
-		j++;
-	}
-}*/
 
 int	deal_key(int key, t_mlx_data *data)
 {
@@ -63,7 +27,6 @@ int	deal_key(int key, t_mlx_data *data)
 		mlx_destroy_window(data->mlx_ptr, data->window_ptr);
 		mlx_destroy_display(data->mlx_ptr);
 		free(data->mlx_ptr);
-//		clean_tab_int_map((*data), (*data).size_y);
 		clean_map(*data, (*data).size_y);
 		exit(0);
 	}
@@ -115,27 +78,27 @@ int	deal_key(int key, t_mlx_data *data)
 	}
 	else if (key == XK_F1)
 	{
-		data->up_KP += 50;
+		data->upkp += 50;
 		write(1, "Up_F1\n", 6);
-		printf("Valeur de data->up_KP = %d\n", data->up_KP);
+		printf("Valeur de data->upkp = %d\n", data->upkp);
 	}
 	else if (key == XK_F2)
 	{
-		data->up_KP += -50;
+		data->upkp += -50;
 		write(1, "Down_F2\n", 8);
-		printf("Valeur de data->up_KP = %d\n", data->up_KP);
+		printf("Valeur de data->upkp = %d\n", data->upkp);
 	}
 	else if (key == XK_F3)
 	{
-		data->right_KP += 50;
+		data->rightkp += 50;
 		write(1, "Right_F3\n", 9);
-		printf("Valeur de data->right_KP = %d\n", data->up_KP);
+		printf("Valeur de data->rightkp = %d\n", data->upkp);
 	}
 	else if (key == XK_F4)
 	{
-		data->right_KP += -50;
+		data->rightkp += -50;
 		write(1, "Left_F4\n", 8);
-		printf("Valeur de data->right_KP = %d\n", data->up_KP);
+		printf("Valeur de data->rightkp = %d\n", data->upkp);
 	}
 	else if (key == XK_F5)
 	{
@@ -151,10 +114,15 @@ int	deal_key(int key, t_mlx_data *data)
 	}
 	else
 		ft_putchar('x');
-	menu(data);
+	menu_move(data);
+	menu_change(data);
 	drawing_web(data);
-//	display_map(*data);
 	data->image.image_ptr = mlx_new_image(data->mlx_ptr, 1800, 1000);
+	if (data->image.image_ptr == NULL)
+	{
+		clean_map(*data, (*data).size_y);
+		exit(1);
+	}
 	data->altitude = 0;
 	return (0);
 }
@@ -184,11 +152,15 @@ int	main(int argc, char **argv)
 		free(data.mlx_ptr);
 		return (-1);
 	}
-	menu(&data);
+	menu_move(&data);
+	menu_change(&data);
 	data.image.image_ptr = mlx_new_image(data.mlx_ptr, 1800, 1000);
+	if (data.image.image_ptr == NULL)
+	{
+		clean_map(data, data.size_y);
+		exit(1);
+	}
 	drawing_web(&data);
-//	data.image.image_pixel_ptr = mlx_get_data_addr(data.image.image_ptr, &data.image.bit_per_pixel, &data.image.line_len, &data.image.endian);
-	//	printf("Line_len %d <-> SIDE_LEN %d\nbpp %d\nendian %d\n", data.image.line_len, 500, data.image.bit_per_pixel, data.image.endian);
 	mlx_key_hook(data.window_ptr, deal_key, &data);
 	mlx_loop(data.mlx_ptr);
 	return (0);

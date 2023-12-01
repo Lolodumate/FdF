@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   split.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/01 18:38:11 by laroges           #+#    #+#             */
+/*   Updated: 2023/12/01 18:51:43 by laroges          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 int	split_map_contain_colors(char *line)
@@ -26,7 +38,6 @@ char	**split_get_value(char *line, int size)
 	j = 0;
 	k = 0;
 	len = 0;
-//	printf("ft_strlen(line) = %ld\n", ft_strlen(line));
 	value = malloc(sizeof(char *) * size);
 	if (line == NULL || value == NULL)
 		return (NULL);
@@ -34,9 +45,8 @@ char	**split_get_value(char *line, int size)
 	{
 		while (line[i] && !ft_isdigit(line[i]))
 			i++;
-//		printf("Valeur de i = %d\n", i);
 		len = values_len_value(line, i);
-		value[j] = ft_calloc(sizeof(char), len + 1) ;
+		value[j] = ft_calloc(sizeof(char), len + 1);
 		if (value[j] == NULL)
 		{
 			free(value);
@@ -45,7 +55,6 @@ char	**split_get_value(char *line, int size)
 		while (line[i] && ft_isdigit(line[i]))
 		{
 			value[j][k] = line[i];
-//			printf("Valeur de i = %d\n", i);
 			i++;
 			k++;
 		}
@@ -95,7 +104,7 @@ char	**split_get_color(char *line, int size)
 			}
 			k = 0;
 		}
-		color[j][8] = '\0';
+		color[j][k] = '\0';
 		j++;
 	}
 	return (color);

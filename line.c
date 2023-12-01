@@ -6,7 +6,7 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:51:09 by laroges           #+#    #+#             */
-/*   Updated: 2023/11/02 22:38:29 by laroges          ###   ########.fr       */
+/*   Updated: 2023/12/01 18:54:56 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,11 @@
 
 void	line_init(t_mlx_data *data)
 {
-//	data->xi = 1;
-//	data->yi = 1;
-//	data->tmpx = 0;
-//	data->tmpy = 0;
 	data->x1 = 0;
 	data->y1 = 0;
 	data->x2 = 0;
 	data->y2 = 0;
 	data->up = 0;
-//	data->dx = 0;
-//	data->dy = 0;
-//	data->a = 0;
-//	data->b = 0;
-//	data->ex = 0;
-//	data->ey = 0;
 }
 
 int	line_setx(t_mlx_data *data, int x, int y)

@@ -1,24 +1,40 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   menu.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/01 17:55:13 by laroges           #+#    #+#             */
+/*   Updated: 2023/12/01 18:07:55 by laroges          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
-/*	Nom de la map
- *	Fonctions interactives :
- *	- Monter/Descendre : touches directionnelles ou F1/F2
- *	- Translation Gauche/Droite : touches directionnelles ou F3/F4
- *	- Altitude +/- : U/D
- *	- Zoom +/- : F5/F6
- *	
- *
- *
- * 
- */
-void	menu(t_mlx_data *data)
+void	menu_move(t_mlx_data *data)
 {
-	mlx_string_put(data->mlx_ptr, data->window_ptr, 50, 80, 0xffffff, data->map_name);
-	mlx_string_put(data->mlx_ptr, data->window_ptr, 50, 120, 0xffffff, "Fonctions interactives :");
-	mlx_string_put(data->mlx_ptr, data->window_ptr, 50, 140, 0xffffff, " - Monter/Descendre : F1/F2");
-	mlx_string_put(data->mlx_ptr, data->window_ptr, 50, 160, 0xffffff, " - Translation Gauche/Droite : F3/F4");
-	mlx_string_put(data->mlx_ptr, data->window_ptr, 50, 180, 0xffffff, " - Altitude +/- : u/d");
-	mlx_string_put(data->mlx_ptr, data->window_ptr, 50, 200, 0xffffff, " - Zoom +/- : F5/F6");
-	mlx_string_put(data->mlx_ptr, data->window_ptr, 50, 220, 0xffffff, " - Reset altitude : F12");
+	int		c;
+	char	fct[50] = "Fonctions interactives :";
+	char	md[50] = " - Monter/Descendre : F1/F2";
+	char	gd[50] = " - Translation Gauche/Droite : F3/F4";
 
+	c = 0xffffff;
+	mlx_string_put(data->mlx_ptr, data->window_ptr, 50, 80, c, data->map_name);
+	mlx_string_put(data->mlx_ptr, data->window_ptr, 50, 120, c, fct);
+	mlx_string_put(data->mlx_ptr, data->window_ptr, 50, 140, c, md);
+	mlx_string_put(data->mlx_ptr, data->window_ptr, 50, 160, c, gd);
+}
+
+void	menu_change(t_mlx_data *data)
+{
+	int		c;
+	char	alt[50] = " - Altitude +/- : u/d";
+	char	zoom[50] = " - Zoom +/- : F5/F6";
+	char	rs[50] = " - Reset altitude : F12";
+
+	c = 0xffffff;
+	mlx_string_put(data->mlx_ptr, data->window_ptr, 50, 180, c, alt);
+	mlx_string_put(data->mlx_ptr, data->window_ptr, 50, 200, c, zoom);
+	mlx_string_put(data->mlx_ptr, data->window_ptr, 50, 220, c, rs);
 }

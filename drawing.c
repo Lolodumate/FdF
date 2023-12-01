@@ -6,23 +6,16 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:19:00 by laroges           #+#    #+#             */
-/*   Updated: 2023/11/21 20:19:45 by laroges          ###   ########.fr       */
+/*   Updated: 2023/12/01 19:38:11 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	drawing_line(t_mlx_data *data, int z)
+t_mlx_data	*drawing_init_data(t_mlx_data *data, double x, double y)
 {
-	int		i;
-	double		x;
-	double		y;
-
 	data->xi = 1;
 	data->yi = 1;
-	i = 0;
-	x = data->x1;
-	y = data->y1;
 	data->ex = abs(data->x2 - data->x1);
 	data->ey = abs(data->y2 - data->y1);
 	data->tmpx = data->ex;
@@ -33,6 +26,19 @@ void	drawing_line(t_mlx_data *data, int z)
 		data->xi = -1;
 	if (y > data->y2)
 		data->yi = -1;
+	return (data);
+}
+
+void	drawing_line_x(t_mlx_data *data, int z)
+{
+	int			i;
+	double		x;
+	double		y;
+
+	i = 0;
+	x = data->x1;
+	y = data->y1;
+	drawing_init_data(data, x, y);
 	if (data->tmpx >= data->tmpy)
 	{
 		while (i <= data->tmpx)
@@ -48,22 +54,33 @@ void	drawing_line(t_mlx_data *data, int z)
 			i++;
 		}
 	}
-	if (data->tmpx < data->tmpy)
-        {
-                while (i <= data->tmpy)
-                {
-                        mlx_pixel_put(data->mlx_ptr, data->window_ptr, x, y, z);
-                        y += data->yi;
-                        data->ey -= data->dx;
-                        if (data->ey < 0)
-                        {
-                                x += data->xi;
-                                data->ey += data->dy;
-                        }
-                        i++;
-                }
-        }
+}
 
+void	drawing_line_y(t_mlx_data *data, int z)
+{
+	int			i;
+	double		x;
+	double		y;
+
+	i = 0;
+	x = data->x1;
+	y = data->y1;
+	drawing_init_data(data, x, y);
+	if (data->tmpx < data->tmpy)
+	{
+		while (i <= data->tmpy)
+		{
+			mlx_pixel_put(data->mlx_ptr, data->window_ptr, x, y, z);
+			y += data->yi;
+			data->ey -= data->dx;
+			if (data->ey < 0)
+			{
+				x += data->xi;
+				data->ey += data->dy;
+			}
+			i++;
+		}
+	}
 }
 
 t_mlx_data	*drawing_get_color(t_mlx_data *data, int z1, int z2)
@@ -119,7 +136,7 @@ void	drawing_web(t_mlx_data *data)
 		x = 0;
 		while (x < data->size_x)
 		{
-			if (data->tab_map[y][x] !=  0)
+			if (data->tab_map[y][x] != 0)
 			{
 				data->tab_map[y][x] += data->altitude;
 				if (data->tab_map[y][x] == 0 && data->altitude > 0)
@@ -129,7 +146,8 @@ void	drawing_web(t_mlx_data *data)
 			}
 			drawing_get_color(data, data->tab_map[y][x], data->tab_map[y][x + 1]);
 			x = line_setx(data, x, y);
-			drawing_line(data, data->color);
+			drawing_line_x(data, data->color);
+			drawing_line_y(data, data->color);
 		}
 	}
 	x = -1;
@@ -140,7 +158,8 @@ void	drawing_web(t_mlx_data *data)
 		{
 			drawing_get_color(data, data->tab_map[y][x], data->tab_map[y + 1][x]);
 			y = line_sety(data, x, y);
-			drawing_line(data, data->color);
+			drawing_line_x(data, data->color);
+			drawing_line_y(data, data->color);
 		}
 	}
 }
