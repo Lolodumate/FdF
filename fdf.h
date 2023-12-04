@@ -97,12 +97,16 @@ typedef struct s_mlx_data
 	int		ey;
 	int		shiftx;
 	int		shifty;
+	int		mouse;
+	int	**colorx;
 	char	***tab_colors;
 	char	*map_name;
 	t_image	image;
 }	t_mlx_data;
 
+int			values_abs(int n);
 int			deal_key(int key, t_mlx_data *data);
+int			mouse_hook(int k, int x, int y, t_mlx_data *data);
 int			split_map_contain_colors(char *line);
 int			pm_size_map(char *line_map, t_mlx_data *data);
 int			values_len_value(char *line, int i);
@@ -118,7 +122,6 @@ void		clean_map(t_mlx_data data, int size_y);
 void		clean_tab_int_map(t_mlx_data data, int size_y);
 void		clean_tab_colors(t_mlx_data data, int size_y);
 void		clean_memory(t_mlx_data *data);
-//void		color_screen(t_mlx_data *data, int color);
 void		colors_create_tab_colors(t_mlx_data *data);
 t_parsing	*colors_insert_colors(t_parsing *list, t_mlx_data *data);
 void		put_pixel(t_mlx_data *data, int color);
@@ -130,26 +133,17 @@ void		menu_move(t_mlx_data *data);
 void		menu_change(t_mlx_data *data);
 void		pm_reset_map(t_mlx_data *data);
 void		line_init(t_mlx_data *data);
-//t_map		*ev_update_map(t_mlx_data *data, t_map *map, int v);
-//t_map		*map_data_matrix(t_map *map, int x, int y, int *tab);
-//t_map		*map_init_matrix(t_map *map);
 t_mlx_data	map_init(t_mlx_data data, char **argv);
 t_mlx_data	*drawing_init_data(t_mlx_data *data, double x, double y);
 t_mlx_data	*drawing_get_color(t_mlx_data *data, int z1, int z2);
-//t_map		*map_scale(t_map *map);
 void		pm_create_tab_map(t_mlx_data *data);
-//t_map		*map_fill_matrix(t_map *map, t_line *line);
 void		pm_insert_int_values(t_parsing *list, t_mlx_data *data);
 t_parsing	*clear_node(t_parsing *list);
-//t_parsing	*pm_parsing(t_parsing *list, t_map *map, char *line);
 t_parsing	*insert_node(t_parsing *list, char *line_map, int size);
 t_parsing	*pm_read_map(t_mlx_data *data, char **argv, t_parsing *list);
 
 void		display_linked_list(t_mlx_data data, t_parsing *list);
 void		display_int_array(t_mlx_data data);
 void		display_map(t_mlx_data data);
-//void		display_matrix(t_map *map);
-//void		display_tab3(int tab[3]);
-//void		display_matrix(t_map *map);
 
 #endif

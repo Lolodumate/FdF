@@ -27,7 +27,7 @@ int	deal_key(int key, t_mlx_data *data)
 		mlx_destroy_window(data->mlx_ptr, data->window_ptr);
 		mlx_destroy_display(data->mlx_ptr);
 		free(data->mlx_ptr);
-		clean_map(*data, (*data).size_y);
+		clean_map(*data, data->size_y);
 		exit(0);
 	}
 	else if (key == XK_F12)
@@ -120,13 +120,39 @@ int	deal_key(int key, t_mlx_data *data)
 	data->image.image_ptr = mlx_new_image(data->mlx_ptr, 1800, 1000);
 	if (data->image.image_ptr == NULL)
 	{
-		clean_map(*data, (*data).size_y);
+		mlx_destroy_window(data->mlx_ptr, data->window_ptr);
+		mlx_destroy_display(data->mlx_ptr);
+		free(data->mlx_ptr);
+		clean_map(*data, data->size_y);
 		exit(1);
 	}
 	data->altitude = 0;
 	return (0);
 }
 
+int	mouse_hook(int k, int x, int y, t_mlx_data *data)
+{
+	if (k == 1)
+	{
+		if (x > 1700 && x <= 1800 && y >= 0 && y < 100)
+		{
+			printf("k == 1\n");
+			data->mouse = 1;
+		}
+		data->image.image_ptr = mlx_new_image(data->mlx_ptr, 1800, 1000);
+		if (data->image.image_ptr == NULL)
+		{
+			mlx_destroy_window(data->mlx_ptr, data->window_ptr);
+			mlx_destroy_display(data->mlx_ptr);
+			free(data->mlx_ptr);
+			clean_map(*data, data->size_y);
+			exit(1);
+		}
+	}
+	return (0);
+}
+
+// mlx_get_color_value : It takes a standard RGB color and return an unsigned int value.
 int	main(int argc, char **argv)
 {
 	t_parsing	*list;
@@ -144,24 +170,29 @@ int	main(int argc, char **argv)
 //	display_map(data);
 	data.mlx_ptr = mlx_init();
 	if (data.mlx_ptr == NULL)
-		return (-1);
+		exit(1);
 	data.window_ptr = mlx_new_window(data.mlx_ptr, 1800, 1000, "mlx_42");
 	if (data.window_ptr == NULL)
 	{
 		mlx_destroy_display(data.mlx_ptr);
 		free(data.mlx_ptr);
-		return (-1);
+		clean_map(data, data.size_y);
+		exit(1);
 	}
 	menu_move(&data);
 	menu_change(&data);
 	data.image.image_ptr = mlx_new_image(data.mlx_ptr, 1800, 1000);
 	if (data.image.image_ptr == NULL)
 	{
+		mlx_destroy_window(data.mlx_ptr, data.window_ptr);
+		mlx_destroy_display(data.mlx_ptr);
+		free(data.mlx_ptr);
 		clean_map(data, data.size_y);
 		exit(1);
 	}
 	drawing_web(&data);
 	mlx_key_hook(data.window_ptr, deal_key, &data);
+	mlx_mouse_hook(data.window_ptr, mouse_hook, &data);
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }

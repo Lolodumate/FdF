@@ -27,10 +27,12 @@ void	clean_tab_int_map(t_mlx_data data, int size_y)
 	{
 		free(data.tab_map[y]);
 		free(data.altitude_reset[y]);
+		free(data.colorx[y]);
 		y++;
 	}
 	free(data.tab_map);
 	free(data.altitude_reset);
+	free(data.colorx);
 }
 
 void	clean_tab_colors(t_mlx_data data, int size_y)

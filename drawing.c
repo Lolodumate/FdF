@@ -16,8 +16,8 @@ t_mlx_data	*drawing_init_data(t_mlx_data *data, double x, double y)
 {
 	data->xi = 1;
 	data->yi = 1;
-	data->ex = abs(data->x2 - data->x1);
-	data->ey = abs(data->y2 - data->y1);
+	data->ex = values_abs(data->x2 - data->x1);
+	data->ey = values_abs(data->y2 - data->y1);
 	data->tmpx = data->ex;
 	data->tmpy = data->ey;
 	data->dx = 2 * data->ex;
@@ -43,6 +43,9 @@ void	drawing_line_x(t_mlx_data *data, int z)
 	{
 		while (i <= data->tmpx)
 		{
+	//		printf("%s\n", data->tab_colors[data->tmpy][i]);
+	//		z = ft_atoi(data->tab_colors[data->tmpy][i]);
+	//		z = data->tab_colors[data->tmpy][i];
 			mlx_pixel_put(data->mlx_ptr, data->window_ptr, x, y, z);
 			x += data->xi;
 			data->ex -= data->dy;

@@ -31,3 +31,10 @@ int	values_len_value(char *line, int i)
 	}
 	return (len);
 }
+
+int	values_abs(int n)
+{
+	if (n >= 0)
+		return (n);
+	return (n * -1);
+}

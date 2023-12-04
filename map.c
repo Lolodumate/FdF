@@ -26,6 +26,7 @@ t_mlx_data	map_init(t_mlx_data data, char **argv)
 	data.map_contain_colors = false;
 	data.tab_map = NULL;
 	data.tab_colors = NULL;
+	data.colorx = NULL;
 	data.zoom = 5;
 	data.color = 0xffffff;
 	data.up = 0;
@@ -35,6 +36,7 @@ t_mlx_data	map_init(t_mlx_data data, char **argv)
 	data.shiftx = 800;
 	data.shifty = -300;
 	data.map_name = argv[1];
+	data.mouse = 0;
 	return (data);
 }
 /*

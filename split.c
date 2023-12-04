@@ -80,12 +80,12 @@ char	**split_get_color(char *line, int size)
 	i = 0;
 	j = 0;
 	k = 0;
-	color = malloc(sizeof(char *) * size);
+	color = malloc(sizeof(char **) * size);
 	if (line == NULL || color == NULL)
 		return (NULL);
 	while (j < size)
 	{
-		color[j] = ft_calloc(sizeof(char), 8 + 1);
+		color[j] = ft_calloc(sizeof(char *), 8 + 1);
 		if (color[j] == NULL)
 		{
 			free(color);
@@ -102,9 +102,11 @@ char	**split_get_color(char *line, int size)
 				i++;
 				k++;
 			}
+			//printf("******color = %s\n", color[j]);
+			color[j][k] = '\0';
 			k = 0;
+			//printf("\n");
 		}
-		color[j][k] = '\0';
 		j++;
 	}
 	return (color);
