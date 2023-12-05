@@ -77,9 +77,9 @@ t_parsing	*colors_insert_colors(t_parsing *list, t_mlx_data *data)
 		while (data->x < data->size_x)
 		{
 			tmp = list->parsing_color[data->x];
-			data->colorx[data->y][data->x] = mlx_get_color_value(data, data->colorx[data->y][data->x]);
-			printf("tmp = %s\n", tmp);
-			printf("colorx = %d\n", data->colorx[data->y][data->x]);
+			data->colorx[data->y][data->x] = 0x49ff00;
+		//	printf("tmp = %s\n", tmp);
+		//	printf("colorx = %u\n", data->colorx[data->y][data->x]);
 			free(tmp);
 			data->x++;
 		}

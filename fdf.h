@@ -26,7 +26,7 @@
 typedef enum e_color
 {
 	WHITE = 0xffffff,
-	SALMON = 0xff8080,
+	BLUE = 0x0000ff,
 	RED = 0xff00000
 }	t_color;
 
@@ -98,7 +98,7 @@ typedef struct s_mlx_data
 	int		shiftx;
 	int		shifty;
 	int		mouse;
-	int	**colorx;
+	unsigned int	**colorx;
 	char	***tab_colors;
 	char	*map_name;
 	t_image	image;
@@ -123,22 +123,23 @@ void		clean_tab_int_map(t_mlx_data data, int size_y);
 void		clean_tab_colors(t_mlx_data data, int size_y);
 void		clean_memory(t_mlx_data *data);
 void		colors_create_tab_colors(t_mlx_data *data);
-t_parsing	*colors_insert_colors(t_parsing *list, t_mlx_data *data);
 void		put_pixel(t_mlx_data *data, int color);
 void		drawing_line_x(t_mlx_data *data, int z);
 void		drawing_line_y(t_mlx_data *data, int z);
 void		drawing_web(t_mlx_data *data);
 void		iso_view(t_mlx_data *data, int *x, int *y, int z);
+void		map_resize_init(t_mlx_data *data);
 void		menu_move(t_mlx_data *data);
 void		menu_change(t_mlx_data *data);
+void		pm_create_tab_map(t_mlx_data *data);
+void		pm_insert_int_values(t_parsing *list, t_mlx_data *data);
 void		pm_reset_map(t_mlx_data *data);
 void		line_init(t_mlx_data *data);
 t_mlx_data	map_init(t_mlx_data data, char **argv);
 t_mlx_data	*drawing_init_data(t_mlx_data *data, double x, double y);
 t_mlx_data	*drawing_get_color(t_mlx_data *data, int z1, int z2);
-void		pm_create_tab_map(t_mlx_data *data);
-void		pm_insert_int_values(t_parsing *list, t_mlx_data *data);
 t_parsing	*clear_node(t_parsing *list);
+t_parsing	*colors_insert_colors(t_parsing *list, t_mlx_data *data);
 t_parsing	*insert_node(t_parsing *list, char *line_map, int size);
 t_parsing	*pm_read_map(t_mlx_data *data, char **argv, t_parsing *list);
 

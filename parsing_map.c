@@ -63,7 +63,6 @@ t_parsing	*pm_read_map(t_mlx_data *data, char **argv, t_parsing *list)
 		if (data->map_contain_colors == false)
 			data->map_contain_colors = split_map_contain_colors(line_map);
 		list = insert_node(list, line_map, data->size_x);
-//		printf("pm_read_map - i = %2d - line = %s", list->index, line_map);
 		while (i < data->size_x)
 			i++;
 		i = 0;

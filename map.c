@@ -39,11 +39,13 @@ t_mlx_data	map_init(t_mlx_data data, char **argv)
 	data.mouse = 0;
 	return (data);
 }
-/*
-t_data.*data.scale(t_data.*data.
+
+void	map_resize_init(t_mlx_data *data)
 {
-	data.scale = (1000 / data.size_y) / 2;
-	data.position_x = 1800 / data.scale * (data.size_x * 2 / 3);
-	data.position_y = 1000 / data.scale * data.size_y;
-	return (data.;
-}*/
+	int		n;
+
+	n = data->size_x;
+	if (data->size_y >data->size_x)
+		n = data->size_y;
+	data->zoom = (1000 / n);
+}

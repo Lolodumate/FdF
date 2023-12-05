@@ -139,15 +139,13 @@ int	mouse_hook(int k, int x, int y, t_mlx_data *data)
 			printf("k == 1\n");
 			data->mouse = 1;
 		}
-		data->image.image_ptr = mlx_new_image(data->mlx_ptr, 1800, 1000);
-		if (data->image.image_ptr == NULL)
-		{
-			mlx_destroy_window(data->mlx_ptr, data->window_ptr);
-			mlx_destroy_display(data->mlx_ptr);
-			free(data->mlx_ptr);
-			clean_map(*data, data->size_y);
-			exit(1);
-		}
+		mlx_clear_window(data->mlx_ptr, data->window_ptr);
+		mlx_destroy_image(data->mlx_ptr, data->image.image_ptr);
+		mlx_destroy_window(data->mlx_ptr, data->window_ptr);
+		mlx_destroy_display(data->mlx_ptr);
+		free(data->mlx_ptr);
+		clean_map(*data, data->size_y);
+		exit(1);
 	}
 	return (0);
 }
@@ -166,6 +164,7 @@ int	main(int argc, char **argv)
 	list = pm_read_map(&data, argv, list);
 	if (list == NULL)
 		return (-1);
+	map_resize_init(&data);
 	printf("data->size_y = %d\n", data.size_y);
 //	display_map(data);
 	data.mlx_ptr = mlx_init();

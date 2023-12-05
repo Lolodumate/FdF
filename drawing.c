@@ -41,11 +41,8 @@ void	drawing_line_x(t_mlx_data *data, int z)
 	drawing_init_data(data, x, y);
 	if (data->tmpx >= data->tmpy)
 	{
-		while (i <= data->tmpx)
+		while (i < data->tmpx)
 		{
-	//		printf("%s\n", data->tab_colors[data->tmpy][i]);
-	//		z = ft_atoi(data->tab_colors[data->tmpy][i]);
-	//		z = data->tab_colors[data->tmpy][i];
 			mlx_pixel_put(data->mlx_ptr, data->window_ptr, x, y, z);
 			x += data->xi;
 			data->ex -= data->dy;
@@ -56,6 +53,7 @@ void	drawing_line_x(t_mlx_data *data, int z)
 			}
 			i++;
 		}
+		printf("\n");
 	}
 }
 
@@ -69,9 +67,9 @@ void	drawing_line_y(t_mlx_data *data, int z)
 	x = data->x1;
 	y = data->y1;
 	drawing_init_data(data, x, y);
-	if (data->tmpx < data->tmpy)
+	if (data->tmpx <= data->tmpy)
 	{
-		while (i <= data->tmpy)
+		while (i < data->tmpy)
 		{
 			mlx_pixel_put(data->mlx_ptr, data->window_ptr, x, y, z);
 			y += data->yi;
@@ -83,47 +81,23 @@ void	drawing_line_y(t_mlx_data *data, int z)
 			}
 			i++;
 		}
+		printf("\n");
 	}
 }
 
 t_mlx_data	*drawing_get_color(t_mlx_data *data, int z1, int z2)
 {
-	if (z1 == 0 && z2 == 0)
-		data->color = 0xffffff;
-	else if (z1 < 0 || z2 < 0)
-		data->color = 0x00aaaa;
-	else if (z1 > 8 || z2 > 8)
-		data->color = 0xff0000;
-	else if (z1 > 15 || z2 > 15)
-		data->color = 0xff1000;
-	else if (z1 > 14 || z2 > 14)
-		data->color = 0xff2000;
-	else if (z1 > 13 || z2 > 13)
-		data->color = 0xff3000;
-	else if (z1 > 12 || z2 > 12)
-		data->color = 0xff4000;
-	else if (z1 > 11 || z2 > 11)
-		data->color = 0xff5000;
-	else if (z1 > 10 || z2 > 10)
-		data->color = 0xff6000;
-	else if (z1 > 9 || z2 > 9)
-		data->color = 0xff7000;
-	else if (z1 > 8 || z2 > 8)
-		data->color = 0xff8000;
-	else if (z1 > 7 || z2 > 7)
-		data->color = 0xff9000;
-	else if (z1 > 6 || z2 > 6)
-		data->color = 0xff0f00;
-	else if (z1 > 5 || z2 > 5)
-		data->color = 0xff1f00;
-	else if (z1 > 4 || z2 > 4)
-		data->color = 0xff2f00;
-	else if (z1 > 3 || z2 > 3)
-		data->color = 0xff3f00;
-	else if (z1 > 2 || z2 > 2)
-		data->color = 0xff4f00;
-	else if (z1 > 1 || z2 > 1)
-		data->color = 0xff5f00;
+	int		m;
+
+	m = 0;
+	if (z1 + z2 != 0)
+		m = (z1 + z2) / 2;
+	if (m == 0)
+		data->color = WHITE;
+	else if (m < 0)
+		data->color = BLUE;
+	else if (m > 0)
+		data->color = RED;
 	return (data);
 }
 
