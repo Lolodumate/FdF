@@ -29,11 +29,24 @@ t_mlx_data	*drawing_init_data(t_mlx_data *data, double x, double y)
 	return (data);
 }
 
-void	drawing_line_x(t_mlx_data *data, int z)
+void	put_pixel(t_mlx_data *data, int x, int y, unsigned int color)
+{
+	char	*pixel;
+	
+	if (y >= data->img.height || x >= data->img.width || y < 0 || x < 0)
+	{
+		//printf("Erreur put_pixel\n");
+		return ;
+	}
+	pixel = data->img.address + (y * data->img.line_len) + (x * data->img.bpp / 8);
+	*(unsigned int *)pixel = color;
+}
+
+void	drawing_line_x(t_mlx_data *data, unsigned int z)
 {
 	int			i;
-	double		x;
-	double		y;
+	int			x;
+	int			y;
 
 	i = 0;
 	x = data->x1;
@@ -43,7 +56,7 @@ void	drawing_line_x(t_mlx_data *data, int z)
 	{
 		while (i < data->tmpx)
 		{
-			mlx_pixel_put(data->mlx_ptr, data->window_ptr, x, y, z);
+			put_pixel(data, x, y, z);
 			x += data->xi;
 			data->ex -= data->dy;
 			if (data->ex < 0)
@@ -53,15 +66,14 @@ void	drawing_line_x(t_mlx_data *data, int z)
 			}
 			i++;
 		}
-		printf("\n");
 	}
 }
 
-void	drawing_line_y(t_mlx_data *data, int z)
+void	drawing_line_y(t_mlx_data *data, unsigned int z)
 {
 	int			i;
-	double		x;
-	double		y;
+	int			x;
+	int			y;
 
 	i = 0;
 	x = data->x1;
@@ -71,7 +83,7 @@ void	drawing_line_y(t_mlx_data *data, int z)
 	{
 		while (i < data->tmpy)
 		{
-			mlx_pixel_put(data->mlx_ptr, data->window_ptr, x, y, z);
+			put_pixel(data, x, y, z);
 			y += data->yi;
 			data->ey -= data->dx;
 			if (data->ey < 0)
@@ -81,11 +93,10 @@ void	drawing_line_y(t_mlx_data *data, int z)
 			}
 			i++;
 		}
-		printf("\n");
 	}
 }
 
-t_mlx_data	*drawing_get_color(t_mlx_data *data, int z1, int z2)
+t_mlx_data	*drawing_get_color(t_mlx_data *data, unsigned int z1, unsigned int z2)
 {
 	int		m;
 
@@ -139,4 +150,5 @@ void	drawing_web(t_mlx_data *data)
 			drawing_line_y(data, data->color);
 		}
 	}
+	mlx_put_image_to_window(data->mlx_ptr, data->window_ptr, data->img.img_ptr, 0, 0);
 }

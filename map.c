@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-t_mlx_data	map_init(t_mlx_data data, char **argv)
+t_mlx_data	map_init(t_mlx_data data, char **argv, t_img img)
 {
 	data.size_x = 0;
 	data.size_y = 0;
@@ -37,6 +37,7 @@ t_mlx_data	map_init(t_mlx_data data, char **argv)
 	data.shifty = -300;
 	data.map_name = argv[1];
 	data.mouse = 0;
+	data.img = img;
 	return (data);
 }
 

@@ -20,7 +20,7 @@ void	ft_putchar(char c)
 int	deal_key(int key, t_mlx_data *data)
 {
 	mlx_clear_window(data->mlx_ptr, data->window_ptr);
-	mlx_destroy_image(data->mlx_ptr, data->image.image_ptr);
+	mlx_destroy_image(data->mlx_ptr, data->img.img_ptr);
 	if (key == XK_Escape)
 	{
 		write(1, "Escape\n", 7);
@@ -117,8 +117,8 @@ int	deal_key(int key, t_mlx_data *data)
 	menu_move(data);
 	menu_change(data);
 	drawing_web(data);
-	data->image.image_ptr = mlx_new_image(data->mlx_ptr, 1800, 1000);
-	if (data->image.image_ptr == NULL)
+	data->img.img_ptr = mlx_new_image(data->mlx_ptr, data->img.width, data->img.height);
+	if (data->img.img_ptr == NULL)
 	{
 		mlx_destroy_window(data->mlx_ptr, data->window_ptr);
 		mlx_destroy_display(data->mlx_ptr);
@@ -126,27 +126,8 @@ int	deal_key(int key, t_mlx_data *data)
 		clean_map(*data, data->size_y);
 		exit(1);
 	}
+	mlx_put_image_to_window(data->mlx_ptr, data->window_ptr, data->img.img_ptr, 0, 0);
 	data->altitude = 0;
-	return (0);
-}
-
-int	mouse_hook(int k, int x, int y, t_mlx_data *data)
-{
-	if (k == 1)
-	{
-		if (x > 1700 && x <= 1800 && y >= 0 && y < 100)
-		{
-			printf("k == 1\n");
-			data->mouse = 1;
-		}
-		mlx_clear_window(data->mlx_ptr, data->window_ptr);
-		mlx_destroy_image(data->mlx_ptr, data->image.image_ptr);
-		mlx_destroy_window(data->mlx_ptr, data->window_ptr);
-		mlx_destroy_display(data->mlx_ptr);
-		free(data->mlx_ptr);
-		clean_map(*data, data->size_y);
-		exit(1);
-	}
 	return (0);
 }
 
@@ -155,43 +136,39 @@ int	main(int argc, char **argv)
 {
 	t_parsing	*list;
 	t_mlx_data	data;
+	t_img		img;
 
+	img.width = 1800;
+	img.height = 1000;
+	img.line_len = 1800;
+	img.bpp = 32;
+	img.address = NULL;
+	img.endian = 0;
 	list = NULL;
 	if (argc != 2)
 		return (0);
 	line_init(&data);
-	data = map_init(data, argv);
+	data = map_init(data, argv, img);
 	list = pm_read_map(&data, argv, list);
 	if (list == NULL)
 		return (-1);
 	map_resize_init(&data);
 	printf("data->size_y = %d\n", data.size_y);
 //	display_map(data);
+
 	data.mlx_ptr = mlx_init();
-	if (data.mlx_ptr == NULL)
-		exit(1);
-	data.window_ptr = mlx_new_window(data.mlx_ptr, 1800, 1000, "mlx_42");
-	if (data.window_ptr == NULL)
-	{
-		mlx_destroy_display(data.mlx_ptr);
-		free(data.mlx_ptr);
-		clean_map(data, data.size_y);
-		exit(1);
-	}
+	data.window_ptr = mlx_new_window(data.mlx_ptr, img.width, img.height, "mlx_42");
+	data.img.img_ptr = mlx_new_image(data.mlx_ptr, img.width, img.height);
+	if (img.img_ptr != NULL)
+		printf("img.img_ptr = %p\n", img.img_ptr);
+	data.img.address = mlx_get_data_addr(data.img.img_ptr, &data.img.bpp, &data.img.line_len, &img.endian);
+
+	drawing_web(&data);
 	menu_move(&data);
 	menu_change(&data);
-	data.image.image_ptr = mlx_new_image(data.mlx_ptr, 1800, 1000);
-	if (data.image.image_ptr == NULL)
-	{
-		mlx_destroy_window(data.mlx_ptr, data.window_ptr);
-		mlx_destroy_display(data.mlx_ptr);
-		free(data.mlx_ptr);
-		clean_map(data, data.size_y);
-		exit(1);
-	}
-	drawing_web(&data);
+	//mlx_put_image_to_window(data.mlx_ptr, data.window_ptr, data.img.img_ptr, 0, 0);
 	mlx_key_hook(data.window_ptr, deal_key, &data);
-	mlx_mouse_hook(data.window_ptr, mouse_hook, &data);
+	mlx_hook(data.window_ptr, 17, 0L, clean_close, &data);
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }

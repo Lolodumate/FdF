@@ -18,6 +18,19 @@ void	clean_map(t_mlx_data data, int size_y)
 	clean_tab_colors(data, size_y);
 }
 
+int	clean_close(t_mlx_data *data)
+{
+	mlx_destroy_window(data->mlx_ptr, data->window_ptr);
+	mlx_destroy_image(data->mlx_ptr, data->img.img_ptr);
+	mlx_destroy_display(data->mlx_ptr);
+	free(data->mlx_ptr);
+	data->window_ptr = NULL;
+	data->mlx_ptr = NULL;
+	clean_map(*data, data->size_y);
+	exit(0);
+	return (0);
+}
+
 void	clean_tab_int_map(t_mlx_data data, int size_y)
 {
 	int		y;

@@ -86,7 +86,6 @@ t_parsing	*colors_insert_colors(t_parsing *list, t_mlx_data *data)
 		list = list->next;
 		data->y--;
 		data->x = 0;
-		printf("\n");
 	}
 	data->y = 0;
 	return (ptr);

@@ -36,22 +36,25 @@ typedef enum e_bool
 	true
 }	t_bool;
 
-typedef struct s_image
+typedef struct s_img
 {
-	int		bit_per_pixel;
+	int		width;
+	int		height;
+	int		bpp;
 	int		endian;
 	int		line_len;
-	void	*image_ptr;
-	char	*image_pixel_ptr;
-}	t_image;
+	void	*img_ptr;
+	char	*address;
+}	t_img;
 
-typedef struct s_data_matrix
+typedef struct s_matrix
 {
+	int		*pixel_data;
 	int		x;
 	int		y;
 	int		z;
-	char	color[8];
-}	t_data_matrix;
+	//char	color[8];
+}	t_matrix;
 
 typedef struct s_parsing
 {
@@ -101,12 +104,12 @@ typedef struct s_mlx_data
 	unsigned int	**colorx;
 	char	***tab_colors;
 	char	*map_name;
-	t_image	image;
+	t_img	img;
 }	t_mlx_data;
 
+int			clean_close(t_mlx_data *data);
 int			values_abs(int n);
 int			deal_key(int key, t_mlx_data *data);
-int			mouse_hook(int k, int x, int y, t_mlx_data *data);
 int			split_map_contain_colors(char *line);
 int			pm_size_map(char *line_map, t_mlx_data *data);
 int			values_len_value(char *line, int i);
@@ -123,9 +126,8 @@ void		clean_tab_int_map(t_mlx_data data, int size_y);
 void		clean_tab_colors(t_mlx_data data, int size_y);
 void		clean_memory(t_mlx_data *data);
 void		colors_create_tab_colors(t_mlx_data *data);
-void		put_pixel(t_mlx_data *data, int color);
-void		drawing_line_x(t_mlx_data *data, int z);
-void		drawing_line_y(t_mlx_data *data, int z);
+void		drawing_line_x(t_mlx_data *data, unsigned int z);
+void		drawing_line_y(t_mlx_data *data, unsigned int z);
 void		drawing_web(t_mlx_data *data);
 void		iso_view(t_mlx_data *data, int *x, int *y, int z);
 void		map_resize_init(t_mlx_data *data);
@@ -134,10 +136,11 @@ void		menu_change(t_mlx_data *data);
 void		pm_create_tab_map(t_mlx_data *data);
 void		pm_insert_int_values(t_parsing *list, t_mlx_data *data);
 void		pm_reset_map(t_mlx_data *data);
+void		put_pixel(t_mlx_data *data, int x, int y, unsigned int color);
 void		line_init(t_mlx_data *data);
-t_mlx_data	map_init(t_mlx_data data, char **argv);
+t_mlx_data	map_init(t_mlx_data data, char **argv, t_img img);
 t_mlx_data	*drawing_init_data(t_mlx_data *data, double x, double y);
-t_mlx_data	*drawing_get_color(t_mlx_data *data, int z1, int z2);
+t_mlx_data	*drawing_get_color(t_mlx_data *data, unsigned int z1, unsigned int z2);
 t_parsing	*clear_node(t_parsing *list);
 t_parsing	*colors_insert_colors(t_parsing *list, t_mlx_data *data);
 t_parsing	*insert_node(t_parsing *list, char *line_map, int size);
