@@ -100,25 +100,6 @@ void	pm_create_tab_map(t_mlx_data *data)
 	}
 }
 
-void	pm_reset_map(t_mlx_data *data)
-{
-	int		x;
-	int		y;
-
-	x = 0;
-	y = 0;
-	while (y <= data->size_y)
-	{
-		while (x < data->size_x)
-		{
-			data->tab_map[y][x] = data->altitude_reset[y][x];
-			x++;
-		}
-		x = 0;
-		y++;
-	}
-}
-
 /* At this point, we got the size (x, y) of the map->and the **int tab. 
  * The following function Inserts int values in the **int tab
  */

@@ -12,13 +12,19 @@
 
 #include "fdf.h"
 
-void	line_init(t_mlx_data *data)
+void	line_init(t_mlx_data *data, t_img *img)
 {
 	data->x1 = 0;
 	data->y1 = 0;
 	data->x2 = 0;
 	data->y2 = 0;
 	data->up = 0;
+	img->width = 1800;
+	img->height = 1000;
+	img->line_len = 1800;
+	img->bpp = 32;
+	img->address = NULL;
+	img->endian = 0;
 }
 
 int	line_setx(t_mlx_data *data, int x, int y)

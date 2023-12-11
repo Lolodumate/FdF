@@ -20,8 +20,8 @@ void	clean_map(t_mlx_data data, int size_y)
 
 int	clean_close(t_mlx_data *data)
 {
-	mlx_destroy_window(data->mlx_ptr, data->window_ptr);
 	mlx_destroy_image(data->mlx_ptr, data->img.img_ptr);
+	mlx_destroy_window(data->mlx_ptr, data->window_ptr);
 	mlx_destroy_display(data->mlx_ptr);
 	free(data->mlx_ptr);
 	data->window_ptr = NULL;

@@ -24,7 +24,7 @@ void	display_int_array(t_mlx_data data)
 		while (i < data.size_x)
 		{
 			printf("%3d", data.tab_map[j][i]);
-			ft_putchar(' ');
+			printf(" ");
 			i++;
 		}
 		printf("\n");

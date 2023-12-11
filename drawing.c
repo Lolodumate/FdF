@@ -96,7 +96,7 @@ void	drawing_line_y(t_mlx_data *data, unsigned int z)
 	}
 }
 
-t_mlx_data	*drawing_get_color(t_mlx_data *data, unsigned int z1, unsigned int z2)
+t_mlx_data	*drawing_get_color(t_mlx_data *data, int z1, int z2)
 {
 	int		m;
 
