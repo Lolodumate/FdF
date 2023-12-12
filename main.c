@@ -18,7 +18,6 @@ int	deal_key(int key, t_mlx_data *data)
 	mlx_destroy_image(data->mlx_ptr, data->img.img_ptr);
 	if (key == XK_Escape)
 	{
-		write(1, "Escape\n", 7);
 		mlx_destroy_window(data->mlx_ptr, data->window_ptr);
 		mlx_destroy_display(data->mlx_ptr);
 		free(data->mlx_ptr);
@@ -26,92 +25,36 @@ int	deal_key(int key, t_mlx_data *data)
 		exit(0);
 	}
 	else if (key == XK_F12)
-	{
 		map_reset_map(data);
-		write(1, "Reset\n", 6);
-		printf("Reset de l'altitude");
-	}
 	else if (key == XK_u)
-	{
 		data->altitude = 2;
-		write(1, "u\n", 2);
-		printf("Valeur de data->altitude = %d\n", data->altitude);
-	}
 	else if (key == XK_d)
-	{
 		data->altitude = -2;
-		write(1, "d\n", 2);
-		printf("Valeur de data->altitude = %d\n", data->altitude);
-	}
 	else if (key == XK_Down)
-	{
 		data->up += -10;
-	}
 	else if (key == XK_Up)
-	{
 		data->up += 10;
-		write(1, "Up\n", 3);
-		printf("Valeur de data->up = %d\n", data->up);
-	}
 	else if (key == XK_Down)
-	{
 		data->up += -10;
-		write(1, "Down\n", 5);
-		printf("Valeur de data->up = %d\n", data->up);
-	}
 	else if (key == XK_Right)
-	{
 		data->right += 10;
-		write(1, "Right\n", 6);
-		printf("Valeur de data->right = %d\n", data->up);
-	}
 	else if (key == XK_Left)
-	{
 		data->right += -10;
-		write(1, "Left\n", 5);
-		printf("Valeur de data->right = %d\n", data->up);
-	}
 	else if (key == XK_F1)
-	{
 		data->upkp += 50;
-		write(1, "Up_F1\n", 6);
-		printf("Valeur de data->upkp = %d\n", data->upkp);
-	}
 	else if (key == XK_F2)
-	{
 		data->upkp += -50;
-		write(1, "Down_F2\n", 8);
-		printf("Valeur de data->upkp = %d\n", data->upkp);
-	}
 	else if (key == XK_F3)
-	{
 		data->rightkp += 50;
-		write(1, "Right_F3\n", 9);
-		printf("Valeur de data->rightkp = %d\n", data->upkp);
-	}
 	else if (key == XK_F4)
-	{
 		data->rightkp += -50;
-		write(1, "Left_F4\n", 8);
-		printf("Valeur de data->rightkp = %d\n", data->upkp);
-	}
 	else if (key == XK_F5)
-	{
 		data->zoom += 2;
-		write(1, "Zoom_F5\n", 8);
-		printf("Valeur de data->zoom = %d\n", data->zoom);
-	}
 	else if (key == XK_F6)
-	{
 		data->zoom += -2;
-		write(1, "Zoom_F5\n", 8);
-		printf("Valeur de data->zoom = %d\n", data->zoom);
-	}
-	
 	data->img.img_ptr = mlx_new_image(data->mlx_ptr, data->img.width, data->img.height);
 	if (data->img.img_ptr == NULL)
 	{
-		printf("data->img.img_ptr == NULL\n");
 		mlx_destroy_window(data->mlx_ptr, data->window_ptr);
 		mlx_destroy_display(data->mlx_ptr);
 		free(data->mlx_ptr);
@@ -119,7 +62,7 @@ int	deal_key(int key, t_mlx_data *data)
 		exit(1);
 	}
 	data->img.address = mlx_get_data_addr(data->img.img_ptr, &data->img.bpp, &data->img.line_len, &data->img.endian);
-	drawing_web(data);
+	draw_web(data);
 	menu_move(data);
 	menu_change(data);
 	data->altitude = 0;
@@ -137,12 +80,8 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (0);
 	img = map_initialisation(argv, &data, img, list);
-	printf("data->size_y = %d\n", data.size_y);
-	data.mlx_ptr = mlx_init();
-	data.window_ptr = mlx_new_window(data.mlx_ptr, img.width, img.height, "mlx_42");
-	data.img.img_ptr = mlx_new_image(data.mlx_ptr, img.width, img.height);
-	data.img.address = mlx_get_data_addr(data.img.img_ptr, &data.img.bpp, &data.img.line_len, &img.endian);
-	drawing_web(&data);
+	data = map_init_data(data);
+	draw_web(&data);
 	menu_move(&data);
 	menu_change(&data);
 	mlx_key_hook(data.window_ptr, deal_key, &data);

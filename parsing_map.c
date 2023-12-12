@@ -41,7 +41,7 @@ int	pm_size_map(char *line_map, t_mlx_data *data)
 				i++;
 		}
 	}
-	printf("pm_size_map - Valeur de map->size_x = %d\n", data->size_x);
+//	printf("pm_size_map - Valeur de map->size_x = %d\n", data->size_x);
 	return (data->size_x);
 }
 
@@ -89,8 +89,8 @@ void	pm_create_tab_map(t_mlx_data *data)
 		return ;
 	while (y <= data->size_y)
 	{
-		data->tab_map[y] = ft_calloc(sizeof(int), data->size_x + 1);
-		data->altitude_reset[y] = ft_calloc(sizeof(int), data->size_x + 1);
+		data->tab_map[y] = ft_calloc(sizeof(int), data->size_x + 2);
+		data->altitude_reset[y] = ft_calloc(sizeof(int), data->size_x + 2);
 		if (data->tab_map[y] == NULL || data->altitude_reset[y] == NULL)
 		{
 			free(data->tab_map);
@@ -115,7 +115,6 @@ void	pm_insert_int_values(t_parsing *list, t_mlx_data *data)
 		while (data->x < data->size_x)
 		{
 			value = list->parsing_value[data->x];
-//			printf("data->x = %d - value = %s\n", data->x, value);
 			data->tab_map[data->y][data->x] = ft_atoi(value);
 			data->altitude_reset[data->y][data->x] = data->tab_map[data->y][data->x];
 			free(value);

@@ -50,10 +50,10 @@ void	display_linked_list(t_mlx_data data, t_parsing *list)
 	{
 		while (list && (i < data.size_x))
 		{
-			printf("%3s ", list->parsing_value[i]);
+	//		printf("%3s ", list->parsing_value[i]);
 			i++;
 		}
-		printf("\n");
+	//	printf("\n");
 		list = list->next;
 		i = 0;
 	}

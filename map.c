@@ -78,3 +78,12 @@ t_img	map_initialisation(char **argv, t_mlx_data *data, t_img img, t_parsing *li
 	map_resize_init(data);
 	return (img);
 }
+
+t_mlx_data	map_init_data(t_mlx_data data)
+{
+	data.mlx_ptr = mlx_init();
+	data.window_ptr = mlx_new_window(data.mlx_ptr, data.img.width, data.img.height, "fdf");
+	data.img.img_ptr = mlx_new_image(data.mlx_ptr, data.img.width, data.img.height);
+	data.img.address = mlx_get_data_addr(data.img.img_ptr, &data.img.bpp, &data.img.line_len, &data.img.endian);
+	return (data);
+}

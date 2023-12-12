@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   drawing.c                                          :+:      :+:    :+:   */
+/*   draw.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-t_mlx_data	*drawing_init_data(t_mlx_data *data, double x, double y)
+t_mlx_data	*draw_init_data(t_mlx_data *data, double x, double y)
 {
 	data->xi = 1;
 	data->yi = 1;
@@ -34,15 +34,12 @@ void	put_pixel(t_mlx_data *data, int x, int y, unsigned int color)
 	char	*pixel;
 	
 	if (y >= data->img.height || x >= data->img.width || y < 0 || x < 0)
-	{
-		//printf("Erreur put_pixel\n");
 		return ;
-	}
 	pixel = data->img.address + (y * data->img.line_len) + (x * data->img.bpp / 8);
 	*(unsigned int *)pixel = color;
 }
 
-void	drawing_line_x(t_mlx_data *data, unsigned int z)
+void	draw_line_x(t_mlx_data *data, unsigned int z)
 {
 	int			i;
 	int			x;
@@ -51,7 +48,7 @@ void	drawing_line_x(t_mlx_data *data, unsigned int z)
 	i = 0;
 	x = data->x1;
 	y = data->y1;
-	drawing_init_data(data, x, y);
+	draw_init_data(data, x, y);
 	if (data->tmpx >= data->tmpy)
 	{
 		while (i < data->tmpx)
@@ -69,7 +66,7 @@ void	drawing_line_x(t_mlx_data *data, unsigned int z)
 	}
 }
 
-void	drawing_line_y(t_mlx_data *data, unsigned int z)
+void	draw_line_y(t_mlx_data *data, unsigned int z)
 {
 	int			i;
 	int			x;
@@ -78,7 +75,7 @@ void	drawing_line_y(t_mlx_data *data, unsigned int z)
 	i = 0;
 	x = data->x1;
 	y = data->y1;
-	drawing_init_data(data, x, y);
+	draw_init_data(data, x, y);
 	if (data->tmpx <= data->tmpy)
 	{
 		while (i < data->tmpy)
@@ -96,58 +93,34 @@ void	drawing_line_y(t_mlx_data *data, unsigned int z)
 	}
 }
 
-t_mlx_data	*drawing_get_color(t_mlx_data *data, int z1, int z2)
-{
-	int		m;
-
-	m = 0;
-	if (z1 + z2 != 0)
-		m = (z1 + z2) / 2;
-	if (m == 0)
-		data->color = WHITE;
-	else if (m < 0)
-		data->color = BLUE;
-	else if (m > 0)
-		data->color = RED;
-	return (data);
-}
-
-void	drawing_web(t_mlx_data *data)
+void	draw_web(t_mlx_data *data)
 {
 	int		x;
 	int		y;
 
 	y = -1;
-	printf("data->altitude = %d\n", data->altitude);
+	line_update_altitude(data, data->altitude);
 	while (++y < data->size_y)
 	{
 		x = 0;
-		while (x < data->size_x)
+		while (x <= data->size_x)
 		{
-			if (data->tab_map[y][x] != 0)
-			{
-				data->tab_map[y][x] += data->altitude;
-				if (data->tab_map[y][x] == 0 && data->altitude > 0)
-					data->tab_map[y][x] = -1;
-				if (data->tab_map[y][x] == 0 && data->altitude < 0)
-					data->tab_map[y][x] = 1;
-			}
-			drawing_get_color(data, data->tab_map[y][x], data->tab_map[y][x + 1]);
+			colors_get_color(data, data->tab_map[y][x], data->tab_map[y][x + 1]);
 			x = line_setx(data, x, y);
-			drawing_line_x(data, data->color);
-			drawing_line_y(data, data->color);
+			draw_line_x(data, data->color);
+			draw_line_y(data, data->color);
 		}
 	}
 	x = -1;
-	while (++x < data->size_x)
+	while (++x <= data->size_x)
 	{
 		y = 0;
 		while (y < data->size_y)
 		{
-			drawing_get_color(data, data->tab_map[y][x], data->tab_map[y + 1][x]);
+			colors_get_color(data, data->tab_map[y][x], data->tab_map[y + 1][x]);
 			y = line_sety(data, x, y);
-			drawing_line_x(data, data->color);
-			drawing_line_y(data, data->color);
+			draw_line_x(data, data->color);
+			draw_line_y(data, data->color);
 		}
 	}
 	mlx_put_image_to_window(data->mlx_ptr, data->window_ptr, data->img.img_ptr, 0, 0);

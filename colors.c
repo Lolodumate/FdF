@@ -36,7 +36,6 @@ void	colors_create_tab_colors(t_mlx_data *data)
 				free(data->tab_colors);
 				return ;
 			}
-		//	data->tab_colors[y][x][0] = '\0';
 		}
 		x = -1;
 	}
@@ -78,8 +77,6 @@ t_parsing	*colors_insert_colors(t_parsing *list, t_mlx_data *data)
 		{
 			tmp = list->parsing_color[data->x];
 			data->colorx[data->y][data->x] = 0x49ff00;
-		//	printf("tmp = %s\n", tmp);
-		//	printf("colorx = %u\n", data->colorx[data->y][data->x]);
 			free(tmp);
 			data->x++;
 		}
@@ -89,4 +86,20 @@ t_parsing	*colors_insert_colors(t_parsing *list, t_mlx_data *data)
 	}
 	data->y = 0;
 	return (ptr);
+}
+
+t_mlx_data	*colors_get_color(t_mlx_data *data, int z1, int z2)
+{
+	int		m;
+
+	m = 0;
+	if (z1 + z2 != 0)
+		m = (z1 + z2) / 2;
+	if (m == 0)
+		data->color = WHITE;
+	if (m < 0)
+		data->color = BLUE;
+	if (m > 0)
+		data->color = RED;
+	return (data);
 }

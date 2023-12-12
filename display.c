@@ -23,16 +23,16 @@ void	display_int_array(t_mlx_data data)
 	{
 		while (i < data.size_x)
 		{
-			printf("%3d", data.tab_map[j][i]);
-			printf(" ");
+//			printf("%3d", data.tab_map[j][i]);
+//			printf(" ");
 			i++;
 		}
-		printf("\n");
+//		printf("\n");
 		i = 0;
 		j++;
 	}
 }
-
+/*
 void	display_map(t_mlx_data data)
 {
 	printf("map.size_x = %d\n", data.size_x);
@@ -42,4 +42,4 @@ void	display_map(t_mlx_data data)
 	printf("map.position_x = %d\n", data.position_x);
 	printf("map.position_y = %d\n", data.position_y);
 	display_int_array(data);
-}
+}*/
