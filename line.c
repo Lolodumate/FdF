@@ -6,7 +6,7 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:51:09 by laroges           #+#    #+#             */
-/*   Updated: 2023/12/01 18:54:56 by laroges          ###   ########.fr       */
+/*   Updated: 2023/12/13 18:33:33 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	line_init(t_mlx_data *data, t_img *img)
 	img->height = 1000;
 	img->line_len = 1800;
 	img->bpp = 32;
-	img->address = NULL;
+	img->addr = NULL;
 	img->endian = 0;
 }
 
@@ -57,7 +57,7 @@ int	line_sety(t_mlx_data *data, int x, int y)
 	return (y);
 }
 
-void	line_update_altitude(t_mlx_data *data, int up)
+void	line_update_alt(t_mlx_data *data, int up)
 {
 	int		x;
 	int		y;

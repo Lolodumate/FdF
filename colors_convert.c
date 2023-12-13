@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   colors_convert.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/13 18:13:08 by laroges           #+#    #+#             */
+/*   Updated: 2023/12/13 18:49:44 by laroges          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
-int	c_trgb(unsigned char t, unsigned char r, unsigned char g, unsigned char b)
+int	c_trgb(char t, char r, char g, char b)
 {
 	return (*(int *)(unsigned char [4]){b, g, r, t});
 }
@@ -22,5 +34,5 @@ unsigned char	c_g(int trgb)
 
 unsigned char	c_b(int trgb)
 {
-	return (((unsigned char *)&trgb)[1]);
+	return (((unsigned char *)&trgb)[0]);
 }

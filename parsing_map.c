@@ -6,7 +6,7 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 14:48:05 by laroges           #+#    #+#             */
-/*   Updated: 2023/12/01 19:01:14 by laroges          ###   ########.fr       */
+/*   Updated: 2023/12/13 18:29:46 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,13 @@ int	pm_size_map(char *line_map, t_mlx_data *data)
 	int		i;
 
 	i = 0;
-//	printf("%s", line_map);
-//	printf("data->size_x = %d\n", data->size_x);
-//	printf(">>i[%d] %c\n", i, line_map[i]);
 	while (line_map[i] && line_map[i] == ' ')
 		i++;
 	while (line_map[i])
 	{
-//		printf("i[%d] %c\n", i, line_map[i]);
 		while (ft_isdigit(line_map[i]) || line_map[i] == '-')
-		{
-//			printf("i[%d] %c\n", i, line_map[i]);
 			i++;
-		}
-//		printf(" ");
 		data->size_x++;
-//		printf("data->size_x = %d\n", data->size_x);
 		if (line_map[i] == ',')
 		{
 			i++;
@@ -44,11 +35,12 @@ int	pm_size_map(char *line_map, t_mlx_data *data)
 			i++;
 		i++;
 	}
-//	printf("pm_size_map - Valeur de map->size_x = %d\n", data->size_x);
 	return (data->size_x);
 }
 
-// Calculate the map->(x, y) size and create a linked list containing the lines of the *.fdf file
+/* Calculate the map->(x, y) size and 
+ * create a linked list containing the lines of the *.fdf file
+ */
 t_parsing	*pm_read_map(t_mlx_data *data, char **argv, t_parsing *list)
 {
 	int		i;
@@ -74,8 +66,6 @@ t_parsing	*pm_read_map(t_mlx_data *data, char **argv, t_parsing *list)
 		line_map = get_next_line(fd);
 	}
 	pm_create_tab_map(data);
-//	colors_create_tab_colors(data);
-//	list = colors_insert_colors(list, data);
 	pm_insert_int_values(list, data);
 	return (list);
 }
@@ -84,17 +74,17 @@ t_parsing	*pm_read_map(t_mlx_data *data, char **argv, t_parsing *list)
 void	pm_create_tab_map(t_mlx_data *data)
 {
 	int		y;
-	
+
 	y = 0;
 	data->tab_map = ft_calloc(sizeof(int *), data->size_y + 1);
-	data->altitude_reset = ft_calloc(sizeof(int *), data->size_y + 1);
-	if (data->tab_map == NULL || data->altitude_reset == NULL)
+	data->alt_reset = ft_calloc(sizeof(int *), data->size_y + 1);
+	if (data->tab_map == NULL || data->alt_reset == NULL)
 		return ;
 	while (y <= data->size_y)
 	{
 		data->tab_map[y] = ft_calloc(sizeof(int), data->size_x + 1);
-		data->altitude_reset[y] = ft_calloc(sizeof(int), data->size_x + 1);
-		if (data->tab_map[y] == NULL || data->altitude_reset[y] == NULL)
+		data->alt_reset[y] = ft_calloc(sizeof(int), data->size_x + 1);
+		if (data->tab_map[y] == NULL || data->alt_reset[y] == NULL)
 		{
 			free(data->tab_map);
 			return ;
@@ -119,7 +109,7 @@ void	pm_insert_int_values(t_parsing *list, t_mlx_data *data)
 		{
 			value = list->parsing_value[data->x];
 			data->tab_map[data->y][data->x] = ft_atoi(value);
-			data->altitude_reset[data->y][data->x] = data->tab_map[data->y][data->x];
+			data->alt_reset[data->y][data->x] = data->tab_map[data->y][data->x];
 			free(value);
 			data->x++;
 		}
@@ -128,7 +118,7 @@ void	pm_insert_int_values(t_parsing *list, t_mlx_data *data)
 		list = clear_node(list);
 	}
 	data->y = 0;
-	data->altitude_top = values_get_top(data);
-	data->altitude_top_reset = data->altitude_top;
-	printf("data->altitude_top = %d\n", data->altitude_top);
+	data->alt_top = values_get_top(data);
+	data->alt_top_reset = data->alt_top;
+	printf("data->alt_top = %d\n", data->alt_top);
 }

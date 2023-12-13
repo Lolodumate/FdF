@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw.c                                          :+:      :+:    :+:   */
+/*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:19:00 by laroges           #+#    #+#             */
-/*   Updated: 2023/12/01 19:38:11 by laroges          ###   ########.fr       */
+/*   Updated: 2023/12/13 18:40:00 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ t_mlx_data	*draw_init_data(t_mlx_data *data, double x, double y)
 
 void	put_pixel(t_mlx_data *data, int x, int y, unsigned int color)
 {
-	char	*pixel;
-	
+	char	*pxl;
+
 	if (y >= data->img.height || x >= data->img.width || y < 0 || x < 0)
 		return ;
-	pixel = data->img.address + (y * data->img.line_len) + (x * data->img.bpp / 8);
-	*(unsigned int *)pixel = color;
+	pxl = data->img.addr + (y * data->img.line_len) + (x * data->img.bpp / 8);
+	*(unsigned int *)pxl = color;
 }
 
 void	draw_line_x(t_mlx_data *data, unsigned int z)
@@ -99,13 +99,13 @@ void	draw_web(t_mlx_data *data)
 	int		y;
 
 	y = -1;
-	line_update_altitude(data, data->altitude);
+	line_update_alt(data, data->alt);
 	while (++y < data->size_y)
 	{
 		x = 0;
 		while (x < data->size_x)
 		{
-			colors_get_color(data, data->tab_map[y][x], data->tab_map[y][x + 1]);
+			colors_get(data, data->tab_map[y][x], data->tab_map[y][x + 1]);
 			x = line_setx(data, x, y);
 			draw_line_x(data, data->color);
 			draw_line_y(data, data->color);
@@ -117,11 +117,11 @@ void	draw_web(t_mlx_data *data)
 		y = 0;
 		while (y < data->size_y)
 		{
-			colors_get_color(data, data->tab_map[y][x], data->tab_map[y + 1][x]);
+			colors_get(data, data->tab_map[y][x], data->tab_map[y + 1][x]);
 			y = line_sety(data, x, y);
 			draw_line_x(data, data->color);
 			draw_line_y(data, data->color);
 		}
 	}
-	mlx_put_image_to_window(data->mlx_ptr, data->window_ptr, data->img.img_ptr, 0, 0);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.img_ptr, 0, 0);
 }

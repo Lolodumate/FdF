@@ -6,12 +6,11 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:37:16 by laroges           #+#    #+#             */
-/*   Updated: 2023/12/01 18:32:45 by laroges          ###   ########.fr       */
+/*   Updated: 2023/12/13 19:10:00 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
 
 // Remplacer les int par des float
 //

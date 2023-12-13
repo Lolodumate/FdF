@@ -6,7 +6,7 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 03:00:31 by laroges           #+#    #+#             */
-/*   Updated: 2023/12/01 19:45:24 by laroges          ###   ########.fr       */
+/*   Updated: 2023/12/13 19:12:54 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int	deal_key(int key, t_mlx_data *data)
 {
-	mlx_clear_window(data->mlx_ptr, data->window_ptr);
+	mlx_clear_window(data->mlx_ptr, data->win_ptr);
 	mlx_destroy_image(data->mlx_ptr, data->img.img_ptr);
 	if (key == XK_Escape)
 	{
-		mlx_destroy_window(data->mlx_ptr, data->window_ptr);
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		mlx_destroy_display(data->mlx_ptr);
 		free(data->mlx_ptr);
 		clean_map(*data, data->size_y);
@@ -27,21 +27,21 @@ int	deal_key(int key, t_mlx_data *data)
 	else if (key == XK_F12)
 	{
 		map_reset_map(data);
-		data->altitude_top = data->altitude_top_reset;
+		data->alt_top = data->alt_top_reset;
 	}
 	else if (key == XK_u)
 	{
-		data->altitude = 2;
-		data->altitude_top += data->altitude;
-		if (data->altitude_top == 0)
-			data->altitude_top += data->altitude;
+		data->alt = 2;
+		data->alt_top += data->alt;
+		if (data->alt_top == 0)
+			data->alt_top += data->alt;
 	}
 	else if (key == XK_d)
 	{
-		data->altitude = -2;
-		data->altitude_top += data->altitude;
-		if (data->altitude_top == 0)
-			data->altitude_top += data->altitude;
+		data->alt = -2;
+		data->alt_top += data->alt;
+		if (data->alt_top == 0)
+			data->alt_top += data->alt;
 	}
 	else if (key == XK_Down)
 		data->up += -10;
@@ -68,21 +68,19 @@ int	deal_key(int key, t_mlx_data *data)
 	data->img.img_ptr = mlx_new_image(data->mlx_ptr, data->img.width, data->img.height);
 	if (data->img.img_ptr == NULL)
 	{
-		mlx_destroy_window(data->mlx_ptr, data->window_ptr);
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		mlx_destroy_display(data->mlx_ptr);
 		free(data->mlx_ptr);
 		clean_map(*data, data->size_y);
 		exit(1);
 	}
-	data->img.address = mlx_get_data_addr(data->img.img_ptr, &data->img.bpp, &data->img.line_len, &data->img.endian);
+	data->img.addr = mlx_get_data_addr(data->img.img_ptr, &data->img.bpp, &data->img.line_len, &data->img.endian);
 	draw_web(data);
 	menu(data);
-	data->altitude = 0;
-//	printf("data->altitude_top = %d\n", data->altitude_top);
+	data->alt = 0;
 	return (0);
 }
 
-// mlx_get_color_value : It takes a standard RGB color and return an unsigned int value.
 int	main(int argc, char **argv)
 {
 	t_parsing	*list;
@@ -92,14 +90,13 @@ int	main(int argc, char **argv)
 	list = NULL;
 	if (argc != 2)
 		return (0);
-	img = map_initialisation(argv, &data, img, list);
+	img = map_fdf_init(argv, &data, img, list);
 	data = map_init_data(data);
-//	display_int_array(data);
 	printf("data->size_x = %d\n", data.size_x);
 	draw_web(&data);
 	menu(&data);
-	mlx_key_hook(data.window_ptr, deal_key, &data);
-	mlx_hook(data.window_ptr, 17, 0L, clean_close, &data);
+	mlx_key_hook(data.win_ptr, deal_key, &data);
+	mlx_hook(data.win_ptr, 17, 0L, clean_close, &data);
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }
