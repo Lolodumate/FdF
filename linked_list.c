@@ -22,7 +22,7 @@ t_parsing	*insert_node(t_parsing *list, char *line_map, int size)
 	node->index = 0;
 	node->line = line_map;
 	node->parsing_value = split_get_value(line_map, size);
-	node->parsing_color = split_get_color(line_map, size);
+//	node->parsing_color = split_get_color(line_map, size);
 //	printf("node->parsing_color = %s\n", *node->parsing_color);
 	node->next = list;
 	return (node);
@@ -36,7 +36,7 @@ t_parsing	*clear_node(t_parsing *list)
 		return (NULL);
 	node = list->next;
 	free(list->parsing_value);
-	free(list->parsing_color);
+//	free(list->parsing_color);
 	free(list);
 	return (node);
 }

@@ -69,7 +69,7 @@ char	**split_get_value(char *line, int size)
 	}
 	return (value);
 }
-
+/*
 char	**split_get_color(char *line, int size)
 {
 	int		i;
@@ -102,12 +102,10 @@ char	**split_get_color(char *line, int size)
 				i++;
 				k++;
 			}
-			//printf("******color = %s\n", color[j]);
 			color[j][k] = '\0';
 			k = 0;
-			//printf("\n");
 		}
 		j++;
 	}
 	return (color);
-}
+}*/

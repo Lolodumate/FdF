@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
-
+/*
 void	colors_create_tab_colors(t_mlx_data *data)
 {
 	int		x;
@@ -40,7 +40,8 @@ void	colors_create_tab_colors(t_mlx_data *data)
 		x = -1;
 	}
 }
-
+*/
+/*
 void	colors_create_colorx(t_mlx_data *data)
 {
 	int		y;
@@ -60,7 +61,8 @@ void	colors_create_colorx(t_mlx_data *data)
 		y++;
 	}
 }
-
+*/
+/*
 t_parsing	*colors_insert_colors(t_parsing *list, t_mlx_data *data)
 {
 	t_parsing	*ptr;
@@ -76,6 +78,7 @@ t_parsing	*colors_insert_colors(t_parsing *list, t_mlx_data *data)
 		while (data->x < data->size_x)
 		{
 			tmp = list->parsing_color[data->x];
+			printf("tmp = %s\n", tmp);
 			data->colorx[data->y][data->x] = 0x49ff00;
 			free(tmp);
 			data->x++;
@@ -87,14 +90,20 @@ t_parsing	*colors_insert_colors(t_parsing *list, t_mlx_data *data)
 	data->y = 0;
 	return (ptr);
 }
-
+*/
 t_mlx_data	*colors_get_color(t_mlx_data *data, int z1, int z2)
 {
 	int		m;
 
 	m = 0;
-	if (z1 + z2 != 0)
-		m = (z1 + z2) / 2;
+	if ((((z1 + z2) / 2) * 100 <= INT_MAX) ||
+		(((z1 + z2) / 2) * 100 >= INT_MIN)) 
+		m = ((z1 + z2) / 2) * 100 / values_abs(data->altitude_top);
+//	if (m != 0)
+//		printf("m == (%d + %d) / 2 * 100 / %d == %d\n", z1, z2, data->altitude_top, m);
+	m *= 255 / 100;
+//	if (m != 0)
+//		printf("values_abs(m) == %d\n", m);
 	if (m == 0)
 		data->color = WHITE;
 	if (m < 0)

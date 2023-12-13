@@ -21,12 +21,13 @@ t_img	map_init(t_mlx_data *data, char **argv, t_img img)
 	data->position_x = 500;
 	data->position_y = 200;
 	data->altitude = 0;
-	data->rotation = 0;
+	data->altitude_top = 0;
+	data->altitude_top_reset = 0;
 	data->altitude_reset = NULL;
 	data->map_contain_colors = false;
 	data->tab_map = NULL;
 	data->tab_colors = NULL;
-	data->colorx = NULL;
+//	data->colorx = NULL;
 	data->zoom = 5;
 	data->color = 0xffffff;
 	data->up = 0;
@@ -36,7 +37,6 @@ t_img	map_init(t_mlx_data *data, char **argv, t_img img)
 	data->shiftx = 800;
 	data->shifty = -300;
 	data->map_name = argv[1];
-	data->mouse = 0;
 	data->img = img;
 	return (img);
 }

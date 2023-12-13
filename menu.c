@@ -38,3 +38,9 @@ void	menu_change(t_mlx_data *data)
 	mlx_string_put(data->mlx_ptr, data->window_ptr, 50, 200, c, zoom);
 	mlx_string_put(data->mlx_ptr, data->window_ptr, 50, 220, c, rs);
 }
+
+void	menu(t_mlx_data *data)
+{
+	menu_move(data);
+	menu_change(data);
+}

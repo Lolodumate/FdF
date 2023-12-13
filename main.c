@@ -25,11 +25,24 @@ int	deal_key(int key, t_mlx_data *data)
 		exit(0);
 	}
 	else if (key == XK_F12)
+	{
 		map_reset_map(data);
+		data->altitude_top = data->altitude_top_reset;
+	}
 	else if (key == XK_u)
+	{
 		data->altitude = 2;
+		data->altitude_top += data->altitude;
+		if (data->altitude_top == 0)
+			data->altitude_top += data->altitude;
+	}
 	else if (key == XK_d)
+	{
 		data->altitude = -2;
+		data->altitude_top += data->altitude;
+		if (data->altitude_top == 0)
+			data->altitude_top += data->altitude;
+	}
 	else if (key == XK_Down)
 		data->up += -10;
 	else if (key == XK_Up)
@@ -63,9 +76,9 @@ int	deal_key(int key, t_mlx_data *data)
 	}
 	data->img.address = mlx_get_data_addr(data->img.img_ptr, &data->img.bpp, &data->img.line_len, &data->img.endian);
 	draw_web(data);
-	menu_move(data);
-	menu_change(data);
+	menu(data);
 	data->altitude = 0;
+//	printf("data->altitude_top = %d\n", data->altitude_top);
 	return (0);
 }
 
@@ -81,9 +94,10 @@ int	main(int argc, char **argv)
 		return (0);
 	img = map_initialisation(argv, &data, img, list);
 	data = map_init_data(data);
+	display_int_array(data);
+	printf("data->size_x = %d\n", data.size_x);
 	draw_web(&data);
-	menu_move(&data);
-	menu_change(&data);
+	menu(&data);
 	mlx_key_hook(data.window_ptr, deal_key, &data);
 	mlx_hook(data.window_ptr, 17, 0L, clean_close, &data);
 	mlx_loop(data.mlx_ptr);

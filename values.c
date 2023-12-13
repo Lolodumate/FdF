@@ -38,3 +38,24 @@ int	values_abs(int n)
 		return (n);
 	return (n * -1);
 }
+
+int	values_get_top(t_mlx_data *data)
+{
+	int		top;
+	int		y;
+	int		x;
+
+	top = 0;
+	y = -1;
+	x = -1;
+	while (++y < data->size_y)
+	{
+		while (++x < data->size_x)
+		{
+			if (values_abs(top) < values_abs(data->tab_map[y][x]))
+				top = data->tab_map[y][x];
+		}
+		x = -1;
+	}	
+	return (top);
+}

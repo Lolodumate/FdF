@@ -24,6 +24,8 @@ SRC =	main.c \
 	split.c \
 	menu.c \
 	colors.c \
+	colors_convert.c \
+	colors_utils.c \
 
 CC =	gcc
 

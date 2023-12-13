@@ -23,11 +23,11 @@ void	display_int_array(t_mlx_data data)
 	{
 		while (i < data.size_x)
 		{
-//			printf("%3d", data.tab_map[j][i]);
-//			printf(" ");
+			printf("%3d", data.tab_map[j][i]);
+			printf(" ");
 			i++;
 		}
-//		printf("\n");
+		printf("\n");
 		i = 0;
 		j++;
 	}

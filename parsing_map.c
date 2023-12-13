@@ -42,7 +42,7 @@ int	pm_size_map(char *line_map, t_mlx_data *data)
 		}
 	}
 //	printf("pm_size_map - Valeur de map->size_x = %d\n", data->size_x);
-	return (data->size_x);
+	return (data->size_x + 1);
 }
 
 // Calculate the map->(x, y) size and create a linked list containing the lines of the *.fdf file
@@ -71,8 +71,8 @@ t_parsing	*pm_read_map(t_mlx_data *data, char **argv, t_parsing *list)
 		line_map = get_next_line(fd);
 	}
 	pm_create_tab_map(data);
-	colors_create_tab_colors(data);
-	list = colors_insert_colors(list, data);
+//	colors_create_tab_colors(data);
+//	list = colors_insert_colors(list, data);
 	pm_insert_int_values(list, data);
 	return (list);
 }
@@ -89,8 +89,8 @@ void	pm_create_tab_map(t_mlx_data *data)
 		return ;
 	while (y <= data->size_y)
 	{
-		data->tab_map[y] = ft_calloc(sizeof(int), data->size_x + 2);
-		data->altitude_reset[y] = ft_calloc(sizeof(int), data->size_x + 2);
+		data->tab_map[y] = ft_calloc(sizeof(int), data->size_x + 1);
+		data->altitude_reset[y] = ft_calloc(sizeof(int), data->size_x + 1);
 		if (data->tab_map[y] == NULL || data->altitude_reset[y] == NULL)
 		{
 			free(data->tab_map);
@@ -125,4 +125,7 @@ void	pm_insert_int_values(t_parsing *list, t_mlx_data *data)
 		list = clear_node(list);
 	}
 	data->y = 0;
+	data->altitude_top = values_get_top(data);
+	data->altitude_top_reset = data->altitude_top;
+	printf("data->altitude_top = %d\n", data->altitude_top);
 }

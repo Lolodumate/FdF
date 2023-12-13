@@ -103,7 +103,7 @@ void	draw_web(t_mlx_data *data)
 	while (++y < data->size_y)
 	{
 		x = 0;
-		while (x <= data->size_x)
+		while (x < data->size_x)
 		{
 			colors_get_color(data, data->tab_map[y][x], data->tab_map[y][x + 1]);
 			x = line_setx(data, x, y);
@@ -112,7 +112,7 @@ void	draw_web(t_mlx_data *data)
 		}
 	}
 	x = -1;
-	while (++x <= data->size_x)
+	while (++x < data->size_x)
 	{
 		y = 0;
 		while (y < data->size_y)
