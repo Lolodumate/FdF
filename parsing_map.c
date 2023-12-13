@@ -18,31 +18,34 @@ int	pm_size_map(char *line_map, t_mlx_data *data)
 	int		i;
 
 	i = 0;
+//	printf("%s", line_map);
+//	printf("data->size_x = %d\n", data->size_x);
+//	printf(">>i[%d] %c\n", i, line_map[i]);
 	while (line_map[i] && line_map[i] == ' ')
 		i++;
-	while (line_map[i++])
+	while (line_map[i])
 	{
-		if (line_map[i] && line_map[i] == ',')
+//		printf("i[%d] %c\n", i, line_map[i]);
+		while (ft_isdigit(line_map[i]) || line_map[i] == '-')
+		{
+//			printf("i[%d] %c\n", i, line_map[i]);
+			i++;
+		}
+//		printf(" ");
+		data->size_x++;
+//		printf("data->size_x = %d\n", data->size_x);
+		if (line_map[i] == ',')
 		{
 			i++;
 			while (line_map[i] && ft_isalnum(line_map[i]))
 				i++;
-			while (line_map[i] && line_map[i] == ' ')
-				i++;
-			data->size_x++;
 		}
-		else
-		{
-			while (ft_isdigit(line_map[i]))
-				i++;
-			if (line_map[i] == ' ')
-				data->size_x++;
-			while (line_map[i] == ' ')
-				i++;
-		}
+		while (line_map[i] && line_map[i] == ' ')
+			i++;
+		i++;
 	}
 //	printf("pm_size_map - Valeur de map->size_x = %d\n", data->size_x);
-	return (data->size_x + 1);
+	return (data->size_x);
 }
 
 // Calculate the map->(x, y) size and create a linked list containing the lines of the *.fdf file

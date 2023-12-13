@@ -43,7 +43,7 @@ char	**split_get_value(char *line, int size)
 		return (NULL);
 	while (j < size)
 	{
-		while (line[i] && !ft_isdigit(line[i]))
+		while (line[i] && !ft_isdigit(line[i]) && line[i] != '-')
 			i++;
 		len = values_len_value(line, i);
 		value[j] = ft_calloc(sizeof(char), len + 1);
@@ -52,7 +52,7 @@ char	**split_get_value(char *line, int size)
 			free(value);
 			return (NULL);
 		}
-		while (line[i] && ft_isdigit(line[i]))
+		while (line[i] && (ft_isdigit(line[i]) || line[i] == '-'))
 		{
 			value[j][k] = line[i];
 			i++;

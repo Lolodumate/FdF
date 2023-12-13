@@ -94,7 +94,7 @@ int	main(int argc, char **argv)
 		return (0);
 	img = map_initialisation(argv, &data, img, list);
 	data = map_init_data(data);
-	display_int_array(data);
+//	display_int_array(data);
 	printf("data->size_x = %d\n", data.size_x);
 	draw_web(&data);
 	menu(&data);
