@@ -126,8 +126,6 @@ unsigned char	c_t(int trgb);
 unsigned char	c_r(int trgb);
 unsigned char	c_g(int trgb);
 unsigned char	c_b(int trgb);
-double		iso_rotation(double ab, int angle);
-double		iso_correction_hypothenuse(double scale, double ab, int angle);
 char		**split_get_value(char *line, int size);
 //char		**split_get_color(char *line, int size);
 void		clean_map(t_mlx_data data, int size_y);
