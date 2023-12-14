@@ -106,6 +106,8 @@ typedef struct s_mlx_data
 }	t_mlx_data;
 
 int				clean_close(t_mlx_data *data);
+int				colors_int_limit(int color);
+int				colors_size_line(int z1, int z2);
 int				values_abs(int n);
 int				deal_key(int key, t_mlx_data *data);
 int				split_map_contain_colors(char *line);
@@ -132,8 +134,8 @@ void			clean_tab_int_map(t_mlx_data data, int size_y);
 void			clean_tab_colors(t_mlx_data data, int size_y);
 void			clean_memory(t_mlx_data *data);
 //void			colors_create_tab_colors(t_mlx_data *data);
-void			draw_line_x(t_mlx_data *data, unsigned int z);
-void			draw_line_y(t_mlx_data *data, unsigned int z);
+void			draw_line_x(t_mlx_data *data, int z);
+void			draw_line_y(t_mlx_data *data, int z);
 void			draw_web(t_mlx_data *data);
 void			iso_view(t_mlx_data *data, int *x, int *y, int z);
 void			map_resize_init(t_mlx_data *data);
@@ -148,6 +150,7 @@ void			put_pixel(t_mlx_data *data, int x, int y, unsigned int color);
 void			line_init(t_mlx_data *data, t_img *img);
 void			line_update_alt(t_mlx_data *data, int up);
 t_img			map_init(t_mlx_data *data, char **argv, t_img img);
+void			colors_side(t_mlx_data *data, int z1, int z2, int p);
 t_mlx_data		map_init_data(t_mlx_data data);
 t_mlx_data		*draw_init_data(t_mlx_data *data, double x, double y);
 t_mlx_data		*colors_get(t_mlx_data *data, int z1, int z2);

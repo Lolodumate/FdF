@@ -31,14 +31,14 @@ int	deal_key(int key, t_mlx_data *data)
 	}
 	else if (key == XK_u)
 	{
-		data->alt = 2;
+		data->alt = 20;
 		data->alt_top += data->alt;
 		if (data->alt_top == 0)
 			data->alt_top += data->alt;
 	}
 	else if (key == XK_d)
 	{
-		data->alt = -2;
+		data->alt = -20;
 		data->alt_top += data->alt;
 		if (data->alt_top == 0)
 			data->alt_top += data->alt;
@@ -47,8 +47,6 @@ int	deal_key(int key, t_mlx_data *data)
 		data->up += -10;
 	else if (key == XK_Up)
 		data->up += 10;
-	else if (key == XK_Down)
-		data->up += -10;
 	else if (key == XK_Right)
 		data->right += 10;
 	else if (key == XK_Left)

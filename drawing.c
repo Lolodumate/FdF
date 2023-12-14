@@ -39,7 +39,7 @@ void	put_pixel(t_mlx_data *data, int x, int y, unsigned int color)
 	*(unsigned int *)pxl = color;
 }
 
-void	draw_line_x(t_mlx_data *data, unsigned int z)
+void	draw_line_x(t_mlx_data *data, int z)
 {
 	int			i;
 	int			x;
@@ -66,7 +66,7 @@ void	draw_line_x(t_mlx_data *data, unsigned int z)
 	}
 }
 
-void	draw_line_y(t_mlx_data *data, unsigned int z)
+void	draw_line_y(t_mlx_data *data, int z)
 {
 	int			i;
 	int			x;
