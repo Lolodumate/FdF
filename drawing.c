@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-t_mlx_data	*draw_init_data(t_mlx_data *data, double x, double y)
+t_mlx_data	*draw_init_data(t_mlx_data *data, int x, int y)
 {
 	data->xi = 1;
 	data->yi = 1;
@@ -107,8 +107,11 @@ void	draw_web(t_mlx_data *data)
 		{
 			colors_get(data, data->tab_map[y][x], data->tab_map[y][x + 1]);
 			x = line_setx(data, x, y);
-			draw_line_x(data, data->color);
-			draw_line_y(data, data->color);
+			if (line_in_the_screen(data))
+			{
+				draw_line_x(data, data->color);
+				draw_line_y(data, data->color);
+			}
 		}
 	}
 	x = -1;
@@ -119,8 +122,11 @@ void	draw_web(t_mlx_data *data)
 		{
 			colors_get(data, data->tab_map[y][x], data->tab_map[y + 1][x]);
 			y = line_sety(data, x, y);
-			draw_line_x(data, data->color);
-			draw_line_y(data, data->color);
+			if (line_in_the_screen(data))
+			{
+				draw_line_x(data, data->color);
+				draw_line_y(data, data->color);
+			}
 		}
 	}
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.img_ptr, 0, 0);

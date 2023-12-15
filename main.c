@@ -14,7 +14,7 @@
 
 int	deal_key(int key, t_mlx_data *data)
 {
-	mlx_clear_window(data->mlx_ptr, data->win_ptr);
+	//mlx_clear_window(data->mlx_ptr, data->win_ptr);
 	mlx_destroy_image(data->mlx_ptr, data->img.img_ptr);
 	if (key == XK_Escape)
 	{

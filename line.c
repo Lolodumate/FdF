@@ -57,6 +57,27 @@ int	line_sety(t_mlx_data *data, int x, int y)
 	return (y);
 }
 
+int	line_bool(int x, int y, int width, int height)
+{
+	if (x >= 0 && x <= width)
+		if (y >= 0 && y <= height)
+			return (1);
+	return (0);
+}
+
+int	line_in_the_screen(t_mlx_data *data)
+{
+	int		w;
+	int		h;
+
+	w = data->img.width;
+	h = data->img.height;
+	if (line_bool(data->x1, data->y1, w, h)
+		|| line_bool(data->x2, data->y2, w, h))
+			return (1);
+	return (0);
+}
+
 void	line_update_alt(t_mlx_data *data, int up)
 {
 	int		x;

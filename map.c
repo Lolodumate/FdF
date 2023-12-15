@@ -18,8 +18,6 @@ t_img	map_init(t_mlx_data *data, char **argv, t_img img)
 	data->size_y = 0;
 	data->x = 0;
 	data->y = 0;
-	data->position_x = 500;
-	data->position_y = 200;
 	data->alt = 0;
 	data->alt_top = 0;
 	data->alt_top_reset = 0;
