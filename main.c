@@ -84,6 +84,10 @@ int	deal_key(int key, t_mlx_data *data)
 		data->zoom += (2 + data->boost);
 	else if (key == XK_F6)
 		data->zoom += (-2 - data->boost);
+	else if (key == XK_F7)
+		data->zoom += (10 + data->boost);
+	else if (key == XK_F8)
+		data->zoom += (-10 - data->boost);
 	data->img.img_ptr = mlx_new_image(data->mlx_ptr, data->img.width, data->img.height);
 	if (data->img.img_ptr == NULL)
 	{

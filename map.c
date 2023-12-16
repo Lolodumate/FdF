@@ -48,7 +48,10 @@ void	map_resize_init(t_mlx_data *data)
 	n = data->size_x;
 	if (data->size_y > data->size_x)
 		n = data->size_y;
-	data->zoom = (1000 / n);
+	if (n < data->img.height)
+		data->zoom = (data->img.height / n);
+	else
+		data->zoom = 1;
 }
 
 void	map_reset_map(t_mlx_data *data)

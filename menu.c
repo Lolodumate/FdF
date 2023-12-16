@@ -43,17 +43,18 @@ void	menu_change(t_mlx_data *data)
 	{
 		mlx_string_put(mlx, win, 50, 220, WHITE, "- Altitude : u/d");
 		mlx_string_put(mlx, win, 50, 240, WHITE, "- Reset altitude : F12");
-		mlx_string_put(mlx, win, 50, 260, WHITE, "- Zoom : F5/F6");
-		mlx_string_put(mlx, win, 50, 280, WHITE, "- Boost : b ");
-		mlx_string_put(mlx, win, 50, 300, WHITE, "- Isometry : i ");
+		mlx_string_put(mlx, win, 50, 260, WHITE, "- Zoom x2 : F5/F6");
+		mlx_string_put(mlx, win, 50, 280, WHITE, "- Zoom x10 : F7/F8");
+		mlx_string_put(mlx, win, 50, 300, WHITE, "- Boost : b ");
+		mlx_string_put(mlx, win, 50, 320, WHITE, "- Isometry : i ");
 		if (data->boost == 0)
-			mlx_string_put(mlx, win, 120, 280, RED, "OFF");
+			mlx_string_put(mlx, win, 120, 300, RED, "OFF");
 		else
-			mlx_string_put(mlx, win, 120, 280, GREEN, "ON");
+			mlx_string_put(mlx, win, 120, 300, GREEN, "ON");
 		if (data->iso == 0)
-			mlx_string_put(mlx, win, 140, 300, RED, "OFF");
+			mlx_string_put(mlx, win, 140, 320, RED, "OFF");
 		else
-			mlx_string_put(mlx, win, 140, 300, GREEN, "ON");
+			mlx_string_put(mlx, win, 140, 320, GREEN, "ON");
 	}
 }
 
