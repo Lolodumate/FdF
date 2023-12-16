@@ -14,6 +14,9 @@
 
 t_img	map_init(t_mlx_data *data, char **argv, t_img img)
 {
+	data->boost = 0;
+	data->menu = true;
+	data->iso = true;
 	data->size_x = 0;
 	data->size_y = 0;
 	data->x = 0;

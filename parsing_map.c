@@ -120,5 +120,4 @@ void	pm_insert_int_values(t_parsing *list, t_mlx_data *data)
 	data->y = 0;
 	data->alt_top = values_get_top(data);
 	data->alt_top_reset = data->alt_top;
-	printf("data->alt_top = %d\n", data->alt_top);
 }

@@ -29,6 +29,27 @@ int	deal_key(int key, t_mlx_data *data)
 		map_reset_map(data);
 		data->alt_top = data->alt_top_reset;
 	}
+	else if (key == XK_b)
+	{
+		if (data->boost == 0)
+			data->boost = 10;
+		else
+			data->boost = 0;
+	}
+	else if (key == XK_m)
+	{
+		if (data->menu == false)
+			data->menu = true;
+		else
+			data->menu = false;
+	}
+	else if (key == XK_i)
+	{
+		if (data->iso)
+			data->iso = false;
+		else
+			data->iso = true;
+	}
 	else if (key == XK_u)
 	{
 		data->alt = 20;
@@ -44,25 +65,25 @@ int	deal_key(int key, t_mlx_data *data)
 			data->alt_top += data->alt;
 	}
 	else if (key == XK_Down)
-		data->up += -10;
+		data->up += (-10 - data->boost);
 	else if (key == XK_Up)
-		data->up += 10;
+		data->up += (10 + data->boost);
 	else if (key == XK_Right)
-		data->right += 10;
+		data->right += (10 + data->boost);
 	else if (key == XK_Left)
-		data->right += -10;
+		data->right += (-10 - data->boost);
 	else if (key == XK_F1)
-		data->upkp += 50;
+		data->upkp += (50 + data->boost);
 	else if (key == XK_F2)
-		data->upkp += -50;
+		data->upkp += (-50 - data->boost);
 	else if (key == XK_F3)
-		data->rightkp += 50;
+		data->rightkp += (50 + data->boost);
 	else if (key == XK_F4)
-		data->rightkp += -50;
+		data->rightkp += (-50 - data->boost);
 	else if (key == XK_F5)
-		data->zoom += 2;
+		data->zoom += (2 + data->boost);
 	else if (key == XK_F6)
-		data->zoom += -2;
+		data->zoom += (-2 - data->boost);
 	data->img.img_ptr = mlx_new_image(data->mlx_ptr, data->img.width, data->img.height);
 	if (data->img.img_ptr == NULL)
 	{
@@ -72,7 +93,6 @@ int	deal_key(int key, t_mlx_data *data)
 		clean_map(*data, data->size_y);
 		exit(1);
 	}
-	data->img.addr = mlx_get_data_addr(data->img.img_ptr, &data->img.bpp, &data->img.line_len, &data->img.endian);
 	draw_web(data);
 	menu(data);
 	data->alt = 0;
@@ -90,7 +110,6 @@ int	main(int argc, char **argv)
 		return (0);
 	img = map_fdf_init(argv, &data, img, list);
 	data = map_init_data(data);
-	printf("data->size_x = %d\n", data.size_x);
 	draw_web(&data);
 	menu(&data);
 	mlx_key_hook(data.win_ptr, deal_key, &data);

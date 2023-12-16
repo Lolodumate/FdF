@@ -19,7 +19,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-# include <stdio.h>
+//# include <stdio.h>
 # include <limits.h>
 # include <math.h>
 
@@ -27,6 +27,7 @@ typedef enum e_color
 {
 	WHITE = 0xffffff,
 	BLUE = 0x0000ff,
+	GREEN = 0x00ff00,
 	RED = 0xff00000
 }	t_color;
 
@@ -68,6 +69,9 @@ typedef struct s_mlx_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
+	int		boost;
+	int		menu;
+	int		iso;
 	int		size_x;
 	int		size_y;
 	int		**alt_reset;
