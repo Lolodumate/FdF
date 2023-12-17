@@ -88,15 +88,7 @@ int	deal_key(int key, t_mlx_data *data)
 		data->zoom += (10 + data->boost);
 	else if (key == XK_F8)
 		data->zoom += (-10 - data->boost);
-	data->img.img_ptr = mlx_new_image(data->mlx_ptr, data->img.width, data->img.height);
-	if (data->img.img_ptr == NULL)
-	{
-		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-		mlx_destroy_display(data->mlx_ptr);
-		free(data->mlx_ptr);
-		clean_map(*data, data->size_y);
-		exit(1);
-	}
+	data->img.img_ptr = display_img_ptr(data, data->img.img_ptr, data->img.width, data->img.height);
 	draw_web(data);
 	menu(data);
 	data->alt = 0;
@@ -116,7 +108,7 @@ int	main(int argc, char **argv)
 	data = map_init_data(data);
 	draw_web(&data);
 	menu(&data);
-	mlx_key_hook(data.win_ptr, deal_key, &data);
+	mlx_hook(data.win_ptr, 2, 1L << 0, deal_key, &data);
 	mlx_hook(data.win_ptr, 17, 0L, clean_close, &data);
 	mlx_loop(data.mlx_ptr);
 	return (0);

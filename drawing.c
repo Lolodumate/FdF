@@ -95,11 +95,16 @@ void	draw_line_y(t_mlx_data *data, int z)
 
 void	draw_web(t_mlx_data *data)
 {
+//	int		w;
+//	int		h;
 	int		x;
 	int		y;
 
-	y = -1;
+//	w = data->img.width;
+//	h = data->img.height;
+//	data->img.img_ptr = display_img_ptr(data, data->img.img_ptr, w, h);
 	line_update_alt(data, data->alt);
+	y = -1;
 	while (++y < data->size_y)
 	{
 		x = 0;

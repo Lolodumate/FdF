@@ -138,6 +138,7 @@ void			clean_tab_int_map(t_mlx_data data, int size_y);
 void			clean_tab_colors(t_mlx_data data, int size_y);
 void			clean_memory(t_mlx_data *data);
 //void			colors_create_tab_colors(t_mlx_data *data);
+void			*display_img_ptr(t_mlx_data *data,void * img, int width, int height);
 void			draw_line_x(t_mlx_data *data, int z);
 void			draw_line_y(t_mlx_data *data, int z);
 void			draw_web(t_mlx_data *data);

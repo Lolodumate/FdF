@@ -12,6 +12,20 @@
 
 #include "fdf.h"
 
+void	*display_img_ptr(t_mlx_data *data, void *img, int width, int height)
+{
+	img = mlx_new_image(data->mlx_ptr, width, height);
+	if (data->img.img_ptr == NULL)
+	{
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+		mlx_destroy_display(data->mlx_ptr);
+		free(data->mlx_ptr);
+		clean_map(*data, data->size_y);
+		exit(1);
+	}
+	return (img);
+}
+
 void	display_int_array(t_mlx_data data)
 {
 	int		i;
