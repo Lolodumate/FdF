@@ -17,9 +17,12 @@ void	menu_move(t_mlx_data *data)
 	void	*mlx;
 	void	*win;
 
+
 	mlx = data->mlx_ptr;
 	win = data->win_ptr;
-	mlx_string_put(mlx, win, 10, 980, WHITE, "Press m to display the menu");
+	if (data->menu == false)
+		mlx_string_put(mlx, win, 10, 980, WHITE, "Menu - Press m");
+	if (data->menu)
 	if (data->menu)
 	{
 		mlx_string_put(mlx, win, 50, 80, WHITE, data->map_name);
@@ -45,8 +48,9 @@ void	menu_change(t_mlx_data *data)
 		mlx_string_put(mlx, win, 50, 240, WHITE, "- Reset altitude : F12");
 		mlx_string_put(mlx, win, 50, 260, WHITE, "- Zoom x2 : F5/F6");
 		mlx_string_put(mlx, win, 50, 280, WHITE, "- Zoom x10 : F7/F8");
-		mlx_string_put(mlx, win, 50, 300, WHITE, "- Boost : b ");
-		mlx_string_put(mlx, win, 50, 320, WHITE, "- Isometry : i ");
+		mlx_string_put(mlx, win, 50, 300, WHITE, "- Boost : b");
+		mlx_string_put(mlx, win, 50, 320, WHITE, "- Isometry : i");
+		mlx_string_put(mlx, win, 50, 340, WHITE, "- Erase menu : m");
 		if (data->boost == 0)
 			mlx_string_put(mlx, win, 120, 300, RED, "OFF");
 		else

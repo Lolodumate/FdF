@@ -26,34 +26,38 @@ void	*display_img_ptr(t_mlx_data *data, void *img, int width, int height)
 	return (img);
 }
 
-void	display_int_array(t_mlx_data data)
+void	display_web_x(t_mlx_data *data, int x, int y)
 {
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	while (j < data.size_y)
+	while (++y < data->size_y)
 	{
-		while (i < data.size_x)
+		x = 0;
+		while (x < data->size_x)
 		{
-//			printf("%3d", data.tab_map[j][i]);
-//			printf(" ");
-			i++;
+			colors_get(data, data->tab_map[y][x], data->tab_map[y][x + 1]);
+			x = line_setx(data, x, y);
+			if (line_in_the_screen(data))
+			{
+				draw_line_x(data, data->color);
+				draw_line_y(data, data->color);
+			}
 		}
-//		printf("\n");
-		i = 0;
-		j++;
 	}
 }
-/*
-void	display_map(t_mlx_data data)
+
+void	display_web_y(t_mlx_data *data, int x, int y)
 {
-	printf("map.size_x = %d\n", data.size_x);
-	printf("map.size_y = %d\n", data.size_y);
-	printf("map.x = %d\n", data.x);
-	printf("map.x = %d\n", data.x);
-	printf("map.position_x = %d\n", data.position_x);
-	printf("map.position_y = %d\n", data.position_y);
-	display_int_array(data);
-}*/
+	while (++x < data->size_x)
+	{
+		y = 0;
+		while (y < data->size_y)
+		{
+			colors_get(data, data->tab_map[y][x], data->tab_map[y + 1][x]);
+			y = line_sety(data, x, y);
+			if (line_in_the_screen(data))
+			{
+				draw_line_x(data, data->color);
+				draw_line_y(data, data->color);
+			}
+		}
+	}
+}

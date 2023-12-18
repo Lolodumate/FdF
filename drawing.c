@@ -95,44 +95,15 @@ void	draw_line_y(t_mlx_data *data, int z)
 
 void	draw_web(t_mlx_data *data)
 {
-//	int		w;
-//	int		h;
 	int		x;
 	int		y;
 
-//	w = data->img.width;
-//	h = data->img.height;
-//	data->img.img_ptr = display_img_ptr(data, data->img.img_ptr, w, h);
-	line_update_alt(data, data->alt);
+	values_update_alt(data, data->alt);
+	x = 0;
 	y = -1;
-	while (++y < data->size_y)
-	{
-		x = 0;
-		while (x < data->size_x)
-		{
-			colors_get(data, data->tab_map[y][x], data->tab_map[y][x + 1]);
-			x = line_setx(data, x, y);
-			if (line_in_the_screen(data))
-			{
-				draw_line_x(data, data->color);
-				draw_line_y(data, data->color);
-			}
-		}
-	}
+	display_web_x(data, x, y);
+	y = 0;
 	x = -1;
-	while (++x < data->size_x)
-	{
-		y = 0;
-		while (y < data->size_y)
-		{
-			colors_get(data, data->tab_map[y][x], data->tab_map[y + 1][x]);
-			y = line_sety(data, x, y);
-			if (line_in_the_screen(data))
-			{
-				draw_line_x(data, data->color);
-				draw_line_y(data, data->color);
-			}
-		}
-	}
+	display_web_y(data, x, y);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.img_ptr, 0, 0);
 }

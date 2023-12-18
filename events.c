@@ -11,40 +11,99 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
-/*
-void	ev_up_and_down(t_mlx_data *data, t_map *map)
-{
-	int		v;
-	int		i;
-	int		j;
 
-	v = 0;
-	i = 0;
-	j = 0;
-	map = ev_update_map(data, map, v);
-	ft_putnbr_fd(map->tab_map[j][i], 1);
+int	events_key(int key, t_mlx_data *data)
+{
+	mlx_destroy_image(data->mlx_ptr, data->img.img_ptr);
+	events_key_altitude(key, data);
+	events_key_move(key, data);
+	events_key_zoom(key, data);
+	events_key_others(key, data);
+	data->img.img_ptr = display_img_ptr(data, data->img.img_ptr, data->img.width, data->img.height);
+	draw_web(data);
+	menu(data);
+	data->alt = 0;
+	return (0);
 }
 
-t_map	*ev_update_map(t_mlx_data *data, t_map *map, int v)
+int	events_key_others(int key, t_mlx_data *data)
 {
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	while (j < map->size_y)
+	if (key == XK_b)
 	{
-		while (i < map->size_x)
-		{
-			if (map->tab_map[j][i] != 0)
-				map->tab_map[j][i] += v;
-			ft_putnbr_fd(map->tab_map[j][i], 1);
-			write(1, " ", 1);
-			i++;
-		}
-		write(1, "\n", 1);
-		i = 0;
-		j++;
+		if (data->boost == 0)
+			data->boost = 10;
+		else
+			data->boost = 0;
 	}
-	return (map);
-}*/
+	else if (key == XK_m)
+		data->menu = values_reverse_bool(data->menu);
+	else if (key == XK_i)
+		data->iso = values_reverse_bool(data->iso);
+	else if (key == XK_Escape)
+	{
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+		mlx_destroy_display(data->mlx_ptr);
+		free(data->mlx_ptr);
+		clean_map(*data, data->size_y);
+		exit(0);
+	}
+	return (0);
+}
+
+int	events_key_zoom(int key, t_mlx_data *data)
+{
+	if (key == XK_F5)
+		data->zoom += (2 + data->boost);
+	else if (key == XK_F6)
+		data->zoom += (-2 - data->boost);
+	else if (key == XK_F7)
+		data->zoom += (10 + data->boost);
+	else if (key == XK_F8)
+		data->zoom += (-10 - data->boost);
+	return (0);
+}
+
+int	events_key_move(int key, t_mlx_data *data)
+{
+	if (key == XK_Down)
+		data->up += (-1 - data->boost);
+	else if (key == XK_Up)
+		data->up += (1 + data->boost);
+	else if (key == XK_Right)
+		data->right += (1 + data->boost);
+	else if (key == XK_Left)
+		data->right += (-1 - data->boost);
+	else if (key == XK_F1)
+		data->upkp += (5 + data->boost);
+	else if (key == XK_F2)
+		data->upkp += (-5 - data->boost);
+	else if (key == XK_F3)
+		data->rightkp += (5 + data->boost);
+	else if (key == XK_F4)
+		data->rightkp += (-5 - data->boost);
+	return (0);
+}
+
+int	events_key_altitude(int key, t_mlx_data *data)
+{
+	if (key == XK_u)
+	{
+		data->alt = 20;
+		data->alt_top += data->alt;
+		if (data->alt_top == 0)
+			data->alt_top += data->alt; // Probleme pour la map plat.fdf
+	}	
+	else if (key == XK_d)
+	{
+		data->alt = -20;
+		data->alt_top -= data->alt;
+		if (data->alt_top == 0)
+			data->alt_top -= data->alt; // Probleme pour la map plat.fdf
+	}
+	else if (key == XK_F12)
+	{
+		map_reset_map(data);
+		data->alt_top = data->alt_top_reset;
+	}
+	return (0);
+}

@@ -17,10 +17,6 @@ t_img	map_init(t_mlx_data *data, char **argv, t_img img)
 	data->boost = 0;
 	data->menu = true;
 	data->iso = true;
-	data->size_x = 0;
-	data->size_y = 0;
-	data->x = 0;
-	data->y = 0;
 	data->alt = 0;
 	data->alt_top = 0;
 	data->alt_top_reset = 0;
@@ -28,7 +24,7 @@ t_img	map_init(t_mlx_data *data, char **argv, t_img img)
 	data->map_contain_colors = false;
 	data->tab_map = NULL;
 	data->tab_colors = NULL;
-	data->zoom = 5;
+	data->zoom = 2;
 	data->color = 0xffffff;
 	data->up = 0;
 	data->upkp = 0;
@@ -84,9 +80,14 @@ t_img	map_fdf_init(char **argv, t_mlx_data *data, t_img img, t_parsing *list)
 
 t_mlx_data	map_init_data(t_mlx_data data)
 {
+	int		w;
+	int		h;
+
+	w = data.img.width;
+	h = data.img.height;
 	data.mlx_ptr = mlx_init();
-	data.win_ptr = mlx_new_window(data.mlx_ptr, data.img.width, data.img.height, "fdf");
-	data.img.img_ptr = mlx_new_image(data.mlx_ptr, data.img.width, data.img.height);
+	data.win_ptr = mlx_new_window(data.mlx_ptr, w, h, "fdf");
+	data.img.img_ptr = mlx_new_image(data.mlx_ptr, w, h);
 	data.img.addr = mlx_get_data_addr(data.img.img_ptr, &data.img.bpp, &data.img.line_len, &data.img.endian);
 	return (data);
 }

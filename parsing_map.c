@@ -98,6 +98,7 @@ void	pm_create_tab_map(t_mlx_data *data)
  */
 void	pm_insert_int_values(t_parsing *list, t_mlx_data *data)
 {
+	int		*p;
 	char	*value;
 
 	if (list == NULL)
@@ -107,9 +108,10 @@ void	pm_insert_int_values(t_parsing *list, t_mlx_data *data)
 	{
 		while (data->x < data->size_x)
 		{
+			p = &data->tab_map[data->y][data->x];
 			value = list->parsing_value[data->x];
 			data->tab_map[data->y][data->x] = ft_atoi(value);
-			data->alt_reset[data->y][data->x] = data->tab_map[data->y][data->x];
+			data->alt_reset[data->y][data->x] = *p;
 			free(value);
 			data->x++;
 		}
