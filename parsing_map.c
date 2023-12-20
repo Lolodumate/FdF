@@ -6,7 +6,7 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 14:48:05 by laroges           #+#    #+#             */
-/*   Updated: 2023/12/13 18:29:46 by laroges          ###   ########.fr       */
+/*   Updated: 2023/12/20 08:38:40 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,9 @@ int	pm_size_map(char *line_map, t_mlx_data *data)
 	return (data->size_x);
 }
 
-/* Calculate the map->(x, y) size and 
- * create a linked list containing the lines of the *.fdf file
- */
-t_parsing	*pm_read_map(t_mlx_data *data, char **argv, t_parsing *list)
+// Calculate the map->(x, y) size and 
+// create a linked list containing the lines of the *.fdf file
+void	pm_read_map(t_mlx_data *data, char **argv, t_parsing *list)
 {
 	int		i;
 	int		fd;
@@ -50,7 +49,7 @@ t_parsing	*pm_read_map(t_mlx_data *data, char **argv, t_parsing *list)
 	i = 0;
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
-		return (NULL);
+		clean_error_fd("Error open fd", 1);
 	line_map = get_next_line(fd);
 	data->size_x = pm_size_map(line_map, data);
 	while (line_map != NULL)
@@ -65,13 +64,13 @@ t_parsing	*pm_read_map(t_mlx_data *data, char **argv, t_parsing *list)
 		free(line_map);
 		line_map = get_next_line(fd);
 	}
-	pm_create_tab_map(data);
-	pm_insert_int_values(list, data);
-	return (list);
+	if (close(fd) == -1)
+		clean_error_fd("Error close fd", 1);
+	pm_create_tab_map(data, list);
 }
 
 // Create the two dimensions int tab size (called in read_map->function)
-void	pm_create_tab_map(t_mlx_data *data)
+void	pm_create_tab_map(t_mlx_data *data, t_parsing *list)
 {
 	int		y;
 
@@ -79,7 +78,7 @@ void	pm_create_tab_map(t_mlx_data *data)
 	data->tab_map = ft_calloc(sizeof(int *), data->size_y + 1);
 	data->alt_reset = ft_calloc(sizeof(int *), data->size_y + 1);
 	if (data->tab_map == NULL || data->alt_reset == NULL)
-		return ;
+		clean_error_fd("Error ft_calloc", 1);
 	while (y <= data->size_y)
 	{
 		data->tab_map[y] = ft_calloc(sizeof(int), data->size_x + 1);
@@ -87,10 +86,11 @@ void	pm_create_tab_map(t_mlx_data *data)
 		if (data->tab_map[y] == NULL || data->alt_reset[y] == NULL)
 		{
 			free(data->tab_map);
-			return ;
+			clean_error_fd("Error ft_calloc", 1);
 		}
 		y++;
 	}
+	pm_insert_int_values(list, data);
 }
 
 /* At this point, we got the size (x, y) of the map->and the **int tab. 
@@ -102,7 +102,7 @@ void	pm_insert_int_values(t_parsing *list, t_mlx_data *data)
 	char	*value;
 
 	if (list == NULL)
-		return ;
+		clean_error_fd("Error list == NULL fct pm_insert_int_values", 1);
 	data->y = data->size_y - 1;
 	while (list && (data->y >= 0))
 	{

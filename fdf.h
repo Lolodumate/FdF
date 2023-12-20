@@ -6,7 +6,7 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 01:38:31 by laroges           #+#    #+#             */
-/*   Updated: 2023/12/20 06:59:39 by laroges          ###   ########.fr       */
+/*   Updated: 2023/12/20 08:23:33 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <mlx.h>
 # include <X11/keysym.h>
 # include <unistd.h>
+# include <stdio.h>
+# include <errno.h>
 # include <stdlib.h>
 # include <limits.h>
 # include <math.h>
@@ -137,6 +139,7 @@ unsigned char	c_b(int trgb);
 char			**split_get_value(char *line, int size);
 char			**split_malloc_value_a(char **value, char *line, int size);
 char			*split_malloc_value_b(char **value_a, char *value, int len);
+void			clean_error_fd(char *error, int sys_fct);
 void			clean_map(t_mlx_data data, int size_y);
 void			clean_tab_int_map(t_mlx_data data, int size_y);
 void			clean_tab_colors(t_mlx_data data, int size_y);
@@ -152,7 +155,7 @@ void			map_resize_init(t_mlx_data *data);
 void			menu(t_mlx_data *data);
 void			menu_move(t_mlx_data *data);
 void			menu_change(t_mlx_data *data);
-void			pm_create_tab_map(t_mlx_data *data);
+void			pm_create_tab_map(t_mlx_data *data, t_parsing *list);
 void			pm_insert_int_values(t_parsing *list, t_mlx_data *data);
 void			map_reset_map(t_mlx_data *data);
 void			put_pixel(t_mlx_data *data, int x, int y, unsigned int color);
@@ -166,6 +169,6 @@ t_mlx_data		*draw_init_data(t_mlx_data *data, int x, int y);
 t_mlx_data		*colors_get(t_mlx_data *data, int z1, int z2);
 t_parsing		*clear_node(t_parsing *list);
 t_parsing		*insert_node(t_parsing *list, char *line_map, int size);
-t_parsing		*pm_read_map(t_mlx_data *data, char **argv, t_parsing *list);
+void			pm_read_map(t_mlx_data *data, char **argv, t_parsing *list);
 
 #endif

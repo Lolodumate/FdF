@@ -6,7 +6,7 @@
 #    By: laroges <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 01:52:45 by laroges           #+#    #+#              #
-#    Updated: 2023/11/02 17:56:59 by laroges          ###   ########.fr        #
+#    Updated: 2023/12/20 08:46:56 by laroges          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,6 @@ SRC =	main.c \
 	split.c \
 	menu.c \
 	colors.c \
-	colors_convert.c \
 	colors_utils.c \
 
 CC =	gcc

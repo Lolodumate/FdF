@@ -6,7 +6,7 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 20:02:14 by laroges           #+#    #+#             */
-/*   Updated: 2023/12/13 19:04:13 by laroges          ###   ########.fr       */
+/*   Updated: 2023/12/20 08:34:34 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_parsing	*insert_node(t_parsing *list, char *line_map, int size)
 
 	node = malloc(sizeof(t_parsing));
 	if (node == NULL)
-		return (NULL);
+		clean_error_fd("Error malloc fct insert_node", 1);
 	node->index = 0;
 	node->line = line_map;
 	node->parsing_value = split_get_value(line_map, size);
@@ -31,7 +31,7 @@ t_parsing	*clear_node(t_parsing *list)
 	t_parsing	*node;
 
 	if (list == NULL)
-		return (NULL);
+		clean_error_fd("Error list == NULL fct clear_node", 1);
 	node = list->next;
 	free(list->parsing_value);
 	free(list);

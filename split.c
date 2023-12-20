@@ -6,7 +6,7 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:38:11 by laroges           #+#    #+#             */
-/*   Updated: 2023/12/20 06:55:01 by laroges          ###   ########.fr       */
+/*   Updated: 2023/12/20 08:41:10 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	**split_malloc_value_a(char **value, char *line, int size)
 {
 	value = malloc(sizeof(char *) * size);
 	if (line == NULL || value == NULL)
-		return (NULL);
+		clean_error_fd("Error malloc fct split_malloc_value_a", 1);
 	return (value);
 }
 
@@ -40,7 +40,7 @@ char	*split_malloc_value_b(char **value_a, char *value, int len)
 	if (value == NULL)
 	{
 		free(value_a);
-		return (NULL);
+		clean_error_fd("Error malloc fct split_malloc_value_b", 1);
 	}
 	return (value);
 }
