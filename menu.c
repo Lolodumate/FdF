@@ -6,7 +6,7 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:55:13 by laroges           #+#    #+#             */
-/*   Updated: 2023/12/13 18:40:57 by laroges          ###   ########.fr       */
+/*   Updated: 2023/12/20 06:06:00 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,10 @@ void	menu_move(t_mlx_data *data)
 	void	*mlx;
 	void	*win;
 
-
 	mlx = data->mlx_ptr;
 	win = data->win_ptr;
 	if (data->menu == false)
 		mlx_string_put(mlx, win, 10, 980, WHITE, "Menu - Press m");
-	if (data->menu)
 	if (data->menu)
 	{
 		mlx_string_put(mlx, win, 50, 80, WHITE, data->map_name);
@@ -31,7 +29,6 @@ void	menu_move(t_mlx_data *data)
 		mlx_string_put(mlx, win, 50, 160, WHITE, "- Monter : F2");
 		mlx_string_put(mlx, win, 50, 180, WHITE, "- Droite : F3");
 		mlx_string_put(mlx, win, 50, 200, WHITE, "- Gauche : F4");
-
 	}
 }
 

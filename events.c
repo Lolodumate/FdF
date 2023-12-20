@@ -6,7 +6,7 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 14:57:43 by laroges           #+#    #+#             */
-/*   Updated: 2023/10/30 15:01:39 by laroges          ###   ########.fr       */
+/*   Updated: 2023/12/20 06:02:46 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,17 @@
 
 int	events_key(int key, t_mlx_data *data)
 {
+	int		w;
+	int		h;
+
+	w = data->img.width;
+	h = data->img.height;
 	mlx_destroy_image(data->mlx_ptr, data->img.img_ptr);
 	events_key_altitude(key, data);
 	events_key_move(key, data);
 	events_key_zoom(key, data);
 	events_key_others(key, data);
-	data->img.img_ptr = display_img_ptr(data, data->img.img_ptr, data->img.width, data->img.height);
+	data->img.img_ptr = display_img_ptr(data, data->img.img_ptr, w, h);
 	draw_web(data);
 	menu(data);
 	data->alt = 0;
@@ -91,14 +96,14 @@ int	events_key_altitude(int key, t_mlx_data *data)
 		data->alt = 20;
 		data->alt_top += data->alt;
 		if (data->alt_top == 0)
-			data->alt_top += data->alt; // Probleme pour la map plat.fdf
+			data->alt_top += data->alt;
 	}	
 	else if (key == XK_d)
 	{
 		data->alt = -20;
 		data->alt_top -= data->alt;
 		if (data->alt_top == 0)
-			data->alt_top -= data->alt; // Probleme pour la map plat.fdf
+			data->alt_top -= data->alt;
 	}
 	else if (key == XK_F12)
 	{

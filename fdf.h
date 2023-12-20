@@ -6,7 +6,7 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 01:38:31 by laroges           #+#    #+#             */
-/*   Updated: 2023/12/13 18:56:06 by laroges          ###   ########.fr       */
+/*   Updated: 2023/12/20 06:59:39 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 # include <X11/keysym.h>
 # include <unistd.h>
 # include <stdlib.h>
-
-//# include <stdio.h>
 # include <limits.h>
 # include <math.h>
 
@@ -137,13 +135,13 @@ unsigned char	c_r(int trgb);
 unsigned char	c_g(int trgb);
 unsigned char	c_b(int trgb);
 char			**split_get_value(char *line, int size);
-//char			**split_get_color(char *line, int size);
+char			**split_malloc_value_a(char **value, char *line, int size);
+char			*split_malloc_value_b(char **value_a, char *value, int len);
 void			clean_map(t_mlx_data data, int size_y);
 void			clean_tab_int_map(t_mlx_data data, int size_y);
 void			clean_tab_colors(t_mlx_data data, int size_y);
 void			clean_memory(t_mlx_data *data);
-//void			colors_create_tab_colors(t_mlx_data *data);
-void			*display_img_ptr(t_mlx_data *data,void * img, int width, int height);
+void			*display_img_ptr(t_mlx_data *data, void *img, int w, int h);
 void			display_web_x(t_mlx_data *data, int x, int y);
 void			display_web_y(t_mlx_data *data, int x, int y);
 void			draw_line_x(t_mlx_data *data, int z);
@@ -156,18 +154,17 @@ void			menu_move(t_mlx_data *data);
 void			menu_change(t_mlx_data *data);
 void			pm_create_tab_map(t_mlx_data *data);
 void			pm_insert_int_values(t_parsing *list, t_mlx_data *data);
-t_img			map_fdf_init(char **argv, t_mlx_data *data, t_img img, t_parsing *list);
 void			map_reset_map(t_mlx_data *data);
 void			put_pixel(t_mlx_data *data, int x, int y, unsigned int color);
 void			line_init(t_mlx_data *data, t_img *img);
 void			values_update_alt(t_mlx_data *data, int up);
-t_img			map_init(t_mlx_data *data, char **argv, t_img img);
 void			colors_side(t_mlx_data *data, int z1, int z2, int p);
+t_img			map_fdf_init(char **a, t_mlx_data *d, t_img i, t_parsing *l);
+t_img			map_init(t_mlx_data *data, char **argv, t_img img);
 t_mlx_data		map_init_data(t_mlx_data data);
 t_mlx_data		*draw_init_data(t_mlx_data *data, int x, int y);
 t_mlx_data		*colors_get(t_mlx_data *data, int z1, int z2);
 t_parsing		*clear_node(t_parsing *list);
-//t_parsing		*colors_insert_colors(t_parsing *list, t_mlx_data *data);
 t_parsing		*insert_node(t_parsing *list, char *line_map, int size);
 t_parsing		*pm_read_map(t_mlx_data *data, char **argv, t_parsing *list);
 

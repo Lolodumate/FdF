@@ -6,7 +6,7 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:51:09 by laroges           #+#    #+#             */
-/*   Updated: 2023/12/13 18:33:33 by laroges          ###   ########.fr       */
+/*   Updated: 2023/12/20 06:16:37 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int	line_setx(t_mlx_data *data, int x, int y)
 	{
 		data->x2 = x * data->zoom;
 		data->y2 = y * data->zoom;
-	if (data->iso)
-		iso_view(data, &data->x2, &data->y2, data->tab_map[y][x]);
+		if (data->iso)
+			iso_view(data, &data->x2, &data->y2, data->tab_map[y][x]);
 	}
 	return (x);
 }
@@ -82,6 +82,6 @@ int	line_in_the_screen(t_mlx_data *data)
 	h = data->img.height;
 	if (line_bool(data->x1, data->y1, w, h)
 		|| line_bool(data->x2, data->y2, w, h))
-			return (1);
+		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:16:57 by laroges           #+#    #+#             */
-/*   Updated: 2023/12/13 18:39:18 by laroges          ###   ########.fr       */
+/*   Updated: 2023/12/20 06:14:59 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	clean_map(t_mlx_data data, int size_y)
 {
 	clean_tab_int_map(data, size_y);
-	//clean_tab_colors(data, size_y);
 }
 
 int	clean_close(t_mlx_data *data)

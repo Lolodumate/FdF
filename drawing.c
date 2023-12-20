@@ -6,7 +6,7 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:19:00 by laroges           #+#    #+#             */
-/*   Updated: 2023/12/13 18:40:00 by laroges          ###   ########.fr       */
+/*   Updated: 2023/12/20 06:04:23 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,9 @@ void	draw_web(t_mlx_data *data)
 {
 	int		x;
 	int		y;
+	void	*img;
 
+	img = data->img.img_ptr;
 	values_update_alt(data, data->alt);
 	x = 0;
 	y = -1;
@@ -105,5 +107,5 @@ void	draw_web(t_mlx_data *data)
 	y = 0;
 	x = -1;
 	display_web_y(data, x, y);
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.img_ptr, 0, 0);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, img, 0, 0);
 }

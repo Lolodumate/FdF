@@ -6,7 +6,7 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:23:26 by laroges           #+#    #+#             */
-/*   Updated: 2023/12/13 19:02:38 by laroges          ###   ########.fr       */
+/*   Updated: 2023/12/20 06:13:42 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,18 @@ t_mlx_data	map_init_data(t_mlx_data data)
 {
 	int		w;
 	int		h;
+	int		*bpp;
+	int		*len;
+	int		*endian;
 
+	bpp = &data.img.bpp;
+	len = &data.img.line_len;
+	endian = &data.img.endian;
 	w = data.img.width;
 	h = data.img.height;
 	data.mlx_ptr = mlx_init();
 	data.win_ptr = mlx_new_window(data.mlx_ptr, w, h, "fdf");
 	data.img.img_ptr = mlx_new_image(data.mlx_ptr, w, h);
-	data.img.addr = mlx_get_data_addr(data.img.img_ptr, &data.img.bpp, &data.img.line_len, &data.img.endian);
+	data.img.addr = mlx_get_data_addr(data.img.img_ptr, bpp, len, endian);
 	return (data);
 }

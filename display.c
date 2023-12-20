@@ -6,15 +6,15 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 14:51:39 by laroges           #+#    #+#             */
-/*   Updated: 2023/11/21 19:11:16 by laroges          ###   ########.fr       */
+/*   Updated: 2023/12/20 06:09:10 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	*display_img_ptr(t_mlx_data *data, void *img, int width, int height)
+void	*display_img_ptr(t_mlx_data *data, void *img, int w, int h)
 {
-	img = mlx_new_image(data->mlx_ptr, width, height);
+	img = mlx_new_image(data->mlx_ptr, w, h);
 	if (data->img.img_ptr == NULL)
 	{
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);

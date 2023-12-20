@@ -6,7 +6,7 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:38:11 by laroges           #+#    #+#             */
-/*   Updated: 2023/12/01 18:51:43 by laroges          ###   ########.fr       */
+/*   Updated: 2023/12/20 06:55:01 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,25 @@ int	split_map_contain_colors(char *line)
 	return (false);
 }
 
+char	**split_malloc_value_a(char **value, char *line, int size)
+{
+	value = malloc(sizeof(char *) * size);
+	if (line == NULL || value == NULL)
+		return (NULL);
+	return (value);
+}
+
+char	*split_malloc_value_b(char **value_a, char *value, int len)
+{
+	value = ft_calloc(sizeof(char), len + 1);
+	if (value == NULL)
+	{
+		free(value_a);
+		return (NULL);
+	}
+	return (value);
+}
+
 char	**split_get_value(char *line, int size)
 {
 	int		i;
@@ -35,77 +54,22 @@ char	**split_get_value(char *line, int size)
 	char	**value;
 
 	i = 0;
-	j = 0;
+	j = -1;
 	k = 0;
-	len = 0;
-	value = malloc(sizeof(char *) * size);
-	if (line == NULL || value == NULL)
-		return (NULL);
-	while (j < size)
+	value = NULL;
+	value = split_malloc_value_a(value, line, size);
+	while (++j < size)
 	{
 		while (line[i] && !ft_isdigit(line[i]) && line[i] != '-')
 			i++;
 		len = values_len_value(line, i);
-		value[j] = ft_calloc(sizeof(char), len + 1);
-		if (value[j] == NULL)
-		{
-			free(value);
-			return (NULL);
-		}
+		value[j] = split_malloc_value_b(value, value[j], len);
 		while (line[i] && (ft_isdigit(line[i]) || line[i] == '-'))
-		{
-			value[j][k] = line[i];
-			i++;
-			k++;
-		}
-		if (line[i] == ',')
-		{
-			i++;
+			value[j][k++] = line[i++];
+		if (line[i++] == ',')
 			while (ft_isalnum(line[i]))
 				i++;
-		}
 		k = 0;
-		j++;
 	}
 	return (value);
 }
-/*
-char	**split_get_color(char *line, int size)
-{
-	int		i;
-	int		j;
-	int		k;
-	char	**color;
-
-	i = 0;
-	j = 0;
-	k = 0;
-	color = malloc(sizeof(char **) * size);
-	if (line == NULL || color == NULL)
-		return (NULL);
-	while (j < size)
-	{
-		color[j] = ft_calloc(sizeof(char *), 8 + 1);
-		if (color[j] == NULL)
-		{
-			free(color);
-			return (NULL);
-		}
-		while (line[i] && line[i] != ',')
-			i++;
-		if (line[i] && line[i] == ',')
-		{
-			i++;
-			while (line[i] && ft_isalnum(line[i]))
-			{
-				color[j][k] = line[i];
-				i++;
-				k++;
-			}
-			color[j][k] = '\0';
-			k = 0;
-		}
-		j++;
-	}
-	return (color);
-}*/
