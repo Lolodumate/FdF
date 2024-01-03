@@ -6,7 +6,7 @@
 /*   By: laroges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:23:26 by laroges           #+#    #+#             */
-/*   Updated: 2023/12/20 08:18:54 by laroges          ###   ########.fr       */
+/*   Updated: 2024/01/02 07:58:11 by laroges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,14 @@ t_mlx_data	map_init_data(t_mlx_data data)
 	w = data.img.width;
 	h = data.img.height;
 	data.mlx_ptr = mlx_init();
+	if (!data.mlx_ptr)
+		exit(EXIT_FAILURE);
 	data.win_ptr = mlx_new_window(data.mlx_ptr, w, h, "fdf");
+	if (!data.win_ptr)
+	{
+		free(data.mlx_ptr);
+		exit(EXIT_FAILURE);
+	}
 	data.img.img_ptr = mlx_new_image(data.mlx_ptr, w, h);
 	data.img.addr = mlx_get_data_addr(data.img.img_ptr, bpp, len, endian);
 	return (data);
